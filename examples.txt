@@ -1,0 +1,22 @@
+>>>WHO #world9918
+<<<:world9918.tmi.twitch.tv 315 world9918 #world9918 :End of /WHO list
+>>>MODE #world9918
+>>>PRIVMSG #world9918 :test
+<<<:jtv PRIVMSG world9918 :USERCOLOR world9918 #2E8B57
+
+
+<<< :pheast12!pheast12@pheast12.tmi.twitch.tv JOIN #append
+<<< :pheast12!pheast12@pheast12.tmi.twitch.tv PART #append
+
+
+<<< :jtv MODE #append +o lee27827272
+<<< :jtv MODE #append -o lee27827272
+
+
+
+<<< :megasonimon!megasonimon@megasonimon.tmi.twitch.tv JOIN #append
+
+
+NAMES [<channels>]
+<<< :megasonimon.tmi.twitch.tv 353 megasonimon = #append :searis44 nonopopp rbot123 world9918 ppurpp123 opasslu kohakuxsaber pstunna koveal append fjff0209 wan947719 zx456456101 shinkon1000 oldnoob kippc0349 fuserion guyver403 vetickley applemany mengxiang devil740613 sandymelodyivy megasonimon
+<<< :megasonimon.tmi.twitch.tv 366 megasonimon #append :End of /NAMES list
