@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package jtchat;
 
 import java.io.BufferedReader;
@@ -12,15 +9,16 @@ import java.io.OutputStreamWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.PriorityQueue;
 
-/**
- *
- * @author leeyc
- */
+
 public class IRCBot {
     private Socket socket;
     private BufferedWriter writer;
     private BufferedReader reader;
+    private PriorityQueue<String> sendMsgQueue;
+    private SendThread sendThread;
+    private ReceiveThread receiveThread;
     public void connect(String server, int port, String nickname, String login, String password){
         // Connect to the IRC server.
 
@@ -130,6 +128,18 @@ public class IRCBot {
                 //threw by writer
                
             }
+        }
+    }
+    
+    private class SendThread extends Thread{
+        public void run() {
+            
+        }
+    }
+    
+    private class ReceiveThread extends Thread{
+        public void run() {
+            
         }
     }
 }
