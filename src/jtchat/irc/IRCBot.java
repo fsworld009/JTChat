@@ -17,6 +17,8 @@ public class IRCBot {
     private BufferedWriter writer;
     private BufferedReader reader;
     private PriorityQueue<String> sendMsgQueue;
+    
+    boolean threadRunning;
     private SendThread sendThread;
     private ReceiveThread receiveThread;
     public void connect(String server, int port, String nickname, String login, String password){
@@ -40,8 +42,13 @@ public class IRCBot {
             }
             
             //setup input and output thread
+            threadRunning = true;
+            
             receiveThread = new ReceiveThread();
             receiveThread.start();
+            
+            sendThread = new SendThread();
+            sendThread.start();
 
         }catch(Exception e){
             if(e instanceof UnknownHostException){
@@ -70,9 +77,11 @@ public class IRCBot {
        
     public void close(){
         try{
+            threadRunning = false;
             writer.close();
             reader.close();
             socket.close();
+            System.out.println("ircbot closed");
         }catch(Exception e){
             if(e instanceof IOException){
                 //threw by writer
@@ -82,8 +91,11 @@ public class IRCBot {
     }
     
     private class SendThread extends Thread{
+        
         public void run() {
-            
+            while (threadRunning) {
+            }
+            System.out.println("SendThread closed");
         }
     }
     
@@ -96,7 +108,7 @@ public class IRCBot {
                 //writer.write(send);
                 //System.out.printf(">>> %s",send);
                 //writer.flush();
-                while (true) {
+                while (threadRunning) {
                     //print line
                     line = reader.readLine();
                     if(line != null){
@@ -122,6 +134,7 @@ public class IRCBot {
                         System.out.printf("null\r\n");
                     }
                 }
+                System.out.println("ReceiveThread closed");
             }catch(Exception e){
                 System.out.printf("%s",e.toString());
                 if(e instanceof IOException){

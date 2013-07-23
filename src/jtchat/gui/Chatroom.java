@@ -3,6 +3,8 @@ package jtchat.gui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,19 +15,35 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.text.BadLocationException;
+import jtchat.irc.IRCBot;
 
 
 public class Chatroom extends JFrame{
-    public Chatroom(){
+    private IRCBot ircbot;
+    public Chatroom(String server, int port, String nickname, String login, String password){
         super();
+        
+        //ircbot
+        ircbot = new IRCBot();
+        ircbot.connect(server,port,nickname,login,password);
+        ircbot.join("#append");
+        
         init();
+        
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(350,500);
         this.setResizable(false);
+        
+        //stop ircbot on close
+        this.addWindowListener(new closeEventWindowListener());
+        
+        
     }
     
     //initialize UI components
     private void init(){
+    
+
         //BorderLayout layoutMgr = 
         this.setLayout(new BorderLayout());
         
@@ -57,5 +75,11 @@ public class Chatroom extends JFrame{
             Logger.getLogger(Chatroom.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.add(chatMsgs,BorderLayout.CENTER);
+    }
+    
+    private class closeEventWindowListener extends WindowAdapter{
+        public void windowClosing(WindowEvent e) {
+            Chatroom.this.ircbot.close();
+        }
     }
 }
