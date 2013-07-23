@@ -1,5 +1,5 @@
 
-package jtchat;
+package jtchat.irc;
 
 
 public interface IRCBotListener {

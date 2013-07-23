@@ -1,6 +1,6 @@
 
 import javax.swing.SwingUtilities;
-import jtchat.IRCBot;
+import jtchat.irc.IRCBot;
 import jtchat.gui.Chatroom;
 
 
