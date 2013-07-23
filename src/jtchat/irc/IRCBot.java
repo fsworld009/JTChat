@@ -40,7 +40,7 @@ public class IRCBot {
         }
         result+=log.replaceAll("\r\n", "");
         System.out.println(result);
-        
+        onLog(result);
     }
     
     public void sendRaw(String message){
@@ -213,6 +213,8 @@ public class IRCBot {
                                 String response = "PONG " + line.substring(5) + "\r\n";
                                 sendRaw(response);
                                 log(response,IRCBot.LogType.SEND);
+                            }else{
+                                parseMessage(line);
                             }
                        
                         }else{
