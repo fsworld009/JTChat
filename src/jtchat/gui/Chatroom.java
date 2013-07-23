@@ -26,7 +26,7 @@ public class Chatroom extends JFrame{
         //ircbot
         ircbot = new IRCBot();
         ircbot.connect(server,port,nickname,login,password);
-        ircbot.join("#append");
+        ircbot.join("#joindotared");
         
         init();
         
