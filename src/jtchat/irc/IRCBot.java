@@ -141,6 +141,25 @@ public class IRCBot {
         }
     }
     
+    
+    private void parseMessage(String message){
+        
+    }
+    
+    //override these functions on subclass
+    public void onLog(String log){
+        
+    }
+    public void onChatMsg(String channel, String message){
+        
+    }
+    public void onChatAction(String channel, String action){
+        
+    }
+    public void onPrivateMsg(String sender, String message){
+        
+    }
+    
     private class SendThread extends Thread{
         
         public void run() {

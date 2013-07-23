@@ -34,6 +34,7 @@ chat
 >>> PRIVMSG #world9918 :ACTION atest
 PRIVMSG #world9918 : ACTION a
 
+<<< :megasonimon!megasonimon@megasonimon.tmi.twitch.tv PRIVMSG #world9918 :fff
 <<< :world9918!world9918@world9918.tmi.twitch.tv PRIVMSG #world9918 :ACTION 動作訊息
 <<< :world9918!world9918@world9918.tmi.twitch.tv PRIVMSG #world9918 :ACTION あああ
 
