@@ -10,6 +10,8 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.PriorityQueue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class IRCBot {
@@ -78,9 +80,21 @@ public class IRCBot {
     public void close(){
         try{
             threadRunning = false;
+            /*try {
+                //while(sendThread.isAlive() || receiveThread.isAlive()){
+                    
+                    Thread.sleep(5000);
+                //}
+            } catch(InterruptedException e){
+                //threw by Thread.sleep()
+            }*/
             writer.close();
             reader.close();
             socket.close();
+            //sendThread.interrupt();
+            //receiveThread.interrupt();
+
+
             System.out.println("ircbot closed");
         }catch(Exception e){
             if(e instanceof IOException){
@@ -94,10 +108,16 @@ public class IRCBot {
         
         public void run() {
             while (threadRunning) {
+                try {
+                    Thread.sleep(50);
+                } catch(InterruptedException e){
+                    //threw by Thread.sleep()
+                }
             }
             System.out.println("SendThread closed");
         }
     }
+
     
     private class ReceiveThread extends Thread{
         public void run() {
@@ -111,6 +131,7 @@ public class IRCBot {
                 while (threadRunning) {
                     //print line
                     line = reader.readLine();
+                    
                     if(line != null){
                         int colon_pos = line.indexOf(':');
 
@@ -133,15 +154,21 @@ public class IRCBot {
                     }else{
                         System.out.printf("null\r\n");
                     }
+                    
+                    
+
+                    
                 }
-                System.out.println("ReceiveThread closed");
+                
             }catch(Exception e){
-                System.out.printf("%s",e.toString());
                 if(e instanceof IOException){
                     //threw by writer
 
                 }
+                
             }
+            System.out.println("ReceiveThread closed");
+            
         }
     }
 }

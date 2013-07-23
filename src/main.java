@@ -1,5 +1,7 @@
 
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 import jtchat.irc.IRCBot;
 import jtchat.gui.Chatroom;
@@ -20,5 +22,6 @@ public class main {
             }
         });
         
+        System.out.println("END");
     }
 }

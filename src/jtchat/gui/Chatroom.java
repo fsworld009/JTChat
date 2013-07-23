@@ -79,6 +79,14 @@ public class Chatroom extends JFrame{
     
     private class closeEventWindowListener extends WindowAdapter{
         public void windowClosing(WindowEvent e) {
+            /*Thread closeIrcBotThread = new Thread(new Runnable(){
+                public void run(){
+                    System.out.println("close start");
+                    Chatroom.this.ircbot.close();
+                    System.out.println("close end");
+                }
+            });
+            closeIrcBotThread.start();*/
             Chatroom.this.ircbot.close();
         }
     }
