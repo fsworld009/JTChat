@@ -38,7 +38,7 @@ public class IRCBot {
         }else{
             
         }
-        result+=log;
+        result+=log.replaceAll("\r\n", "");
         System.out.println(result);
         
     }

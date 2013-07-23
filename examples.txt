@@ -1,4 +1,4 @@
->>>WHO #world9918
+﻿>>>WHO #world9918
 <<<:world9918.tmi.twitch.tv 315 world9918 #world9918 :End of /WHO list
 >>>MODE #world9918
 >>>PRIVMSG #world9918 :test
@@ -20,3 +20,41 @@
 NAMES [<channels>]
 <<< :megasonimon.tmi.twitch.tv 353 megasonimon = #append :searis44 nonopopp rbot123 world9918 ppurpp123 opasslu kohakuxsaber pstunna koveal append fjff0209 wan947719 zx456456101 shinkon1000 oldnoob kippc0349 fuserion guyver403 vetickley applemany mengxiang devil740613 sandymelodyivy megasonimon
 <<< :megasonimon.tmi.twitch.tv 366 megasonimon #append :End of /NAMES list
+
+
+<<< :jtv PRIVMSG megasonimon :USERCOLOR fibokser #8A2BE2
+
+
+timeout
+>>> PRIVMSG #world9918 :/timeout megasonimon 1
+<<< :jtv PRIVMSG megasonimon :CLEARCHAT megasonimon
+
+chat
+>>> PRIVMSG #world9918 : what
+>>> PRIVMSG #world9918 :ACTION atest
+PRIVMSG #world9918 : ACTION a
+
+<<< :world9918!world9918@world9918.tmi.twitch.tv PRIVMSG #world9918 :ACTION 動作訊息
+<<< :world9918!world9918@world9918.tmi.twitch.tv PRIVMSG #world9918 :ACTION あああ
+
+ban
+>>> PRIVMSG #world9918 :/ban megasonimon
+<<< jtv PRIVMSG megasonimon :CLEARCHAT megasonimon
+
+unban
+>>> PRIVMSG #world9918 :/unban megasonimon
+
+user commands
+PRIVMSG #world9918 :/color #5F9EA0
+
+/color
+/me
+
+mod commands
+/timeout
+/ban
+/unban
+/clear
+/slow
+/slowoff
+/mods

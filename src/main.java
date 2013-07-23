@@ -17,7 +17,7 @@ public class main {
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                Chatroom chatroom = new Chatroom("irc.twitch.tv", 443, "megasonimon", "", main.password);
+                Chatroom chatroom = new Chatroom("irc.twitch.tv", 443, "world9918", "", main.password);
                 chatroom.setVisible(true);
             }
         });

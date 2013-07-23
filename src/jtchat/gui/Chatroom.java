@@ -3,6 +3,8 @@ package jtchat.gui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -20,13 +22,15 @@ import jtchat.irc.IRCBot;
 
 public class Chatroom extends JFrame{
     private IRCBot ircbot;
+    private JTextField inputField;
     public Chatroom(String server, int port, String nickname, String login, String password){
         super();
         
         //ircbot
         ircbot = new IRCBot();
         ircbot.connect(server,port,nickname,login,password);
-        ircbot.join("#joindotared");
+        ircbot.join("#world9918");
+        ircbot.sendRaw("JTVCLIENT");
         
         init();
         
@@ -52,7 +56,15 @@ public class Chatroom extends JFrame{
         JPanel textBoxPanel = new JPanel();
         textBoxPanel.setLayout(new FlowLayout());
         
-        JTextField inputField = new JTextField(14);
+        inputField = new JTextField(14);
+        
+        inputField.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ircbot.sendRaw(inputField.getText());
+            }
+        });
+        
+        
         JButton sendButton = new JButton("Chat");
         textBoxPanel.add(inputField);
         textBoxPanel.add(sendButton);
