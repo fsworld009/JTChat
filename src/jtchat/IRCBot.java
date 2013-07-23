@@ -38,15 +38,11 @@ public class IRCBot {
                 //writer.write("USER " + login + " 8 * : Java IRC Hacks Bot\r\n");
                 writer.flush();
             }
+            
+            //setup input and output thread
+            receiveThread = new ReceiveThread();
+            receiveThread.start();
 
-            
-            
-
-            
-            
-            
-            
-            
         }catch(Exception e){
             if(e instanceof UnknownHostException){
                 //no such host
@@ -71,53 +67,7 @@ public class IRCBot {
             }
         }
     }
-    
-    //only for testing
-    public void loop(){
-        
-
-        String line;
-        try{
-            //writer.write("USER " + login + " 8 * : Java IRC Hacks Bot\r\n");
-            String send = "NAMES #append\r\n";
-            writer.write(send);
-            System.out.printf(">>> %s",send);
-            writer.flush();
-            while (true) {
-                //print line
-                line = reader.readLine();
-                if(line != null){
-                    int colon_pos = line.indexOf(':');
-                    
-                    if (line.charAt(0) != ':' && colon_pos > 0){
-                        //if an irc message begins with " ", then trim the leading spaces
-                        line=line.substring(colon_pos);
-                    }else if(colon_pos == -1 && line.contains("PONG")){
-                        //trim leading spaces for PONG message
-                        line=line.substring(line.indexOf('P'));
-                    }
-                    
-                    System.out.printf("<<< %s\r\n",line);
-                    if (line.toUpperCase().startsWith("PING ")) {
-                        // respond to PINGs
-                        String response = "PONG " + line.substring(5) + "\r\n";
-                        writer.write(response);
-                        writer.flush();
-                        System.out.printf(">>> %s",response);
-                    }
-                }else{
-                    System.out.printf("null\r\n");
-                }
-            }
-        }catch(Exception e){
-            System.out.printf("%s",e.toString());
-            if(e instanceof IOException){
-                //threw by writer
-               
-            }
-        }
-    }
-    
+       
     public void close(){
         try{
             writer.close();
@@ -139,7 +89,46 @@ public class IRCBot {
     
     private class ReceiveThread extends Thread{
         public void run() {
-            
+            String line;
+            try{
+                //writer.write("USER " + login + " 8 * : Java IRC Hacks Bot\r\n");
+                //String send = "NAMES #append\r\n";
+                //writer.write(send);
+                //System.out.printf(">>> %s",send);
+                //writer.flush();
+                while (true) {
+                    //print line
+                    line = reader.readLine();
+                    if(line != null){
+                        int colon_pos = line.indexOf(':');
+
+                        if (line.charAt(0) != ':' && colon_pos > 0){
+                            //if an irc message begins with " ", then trim the leading spaces
+                            line=line.substring(colon_pos);
+                        }else if(colon_pos == -1 && line.contains("PONG")){
+                            //trim leading spaces for PONG message
+                            line=line.substring(line.indexOf('P'));
+                        }
+
+                        System.out.printf("<<< %s\r\n",line);
+                        if (line.toUpperCase().startsWith("PING ")) {
+                            // respond to PINGs
+                            String response = "PONG " + line.substring(5) + "\r\n";
+                            writer.write(response);
+                            writer.flush();
+                            System.out.printf(">>> %s",response);
+                        }
+                    }else{
+                        System.out.printf("null\r\n");
+                    }
+                }
+            }catch(Exception e){
+                System.out.printf("%s",e.toString());
+                if(e instanceof IOException){
+                    //threw by writer
+
+                }
+            }
         }
     }
 }
