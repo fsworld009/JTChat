@@ -28,7 +28,8 @@ public class IRCBot {
     private ReceiveThread receiveThread;
     
 
-    Timer aliveCheckTask  = new Timer();
+    Timer aliveCheckTask;
+    Timer pingTask;
     
     private enum LogType{
         SEND, RECEIVE, SYS
@@ -69,7 +70,7 @@ public class IRCBot {
                 //setup message queqe
                 sendMsgQueue = new PriorityQueue<String>(10,new MsgComparator());
                 
-                //must send before creating thread
+                // Log on to the server, must sent before creating thread
                 writer.write("PASS " + password + "\r\n");
                 log("PASS " + password,IRCBot.LogType.SEND);
                 writer.write("NICK " + nickname + "\r\n");
@@ -77,8 +78,6 @@ public class IRCBot {
                 writer.write("USER " + "JTChat" + "\r\n");
                 log("USER " + "JTChat",IRCBot.LogType.SEND);
                 writer.flush();
-                
-                
                 
                 //setup input and output thread
                 threadRunning = true;
@@ -89,10 +88,13 @@ public class IRCBot {
                 sendThread = new SendThread();
                 sendThread.start();
                 
-                // Log on to the server.
-
-                aliveCheckTask =  new Timer(); 
+                
+                //setup disconnection checking timer
+                aliveCheckTask = new Timer(); 
                 aliveCheckTask.scheduleAtFixedRate(new AliveCheckTask(), 10000,10000);
+                
+                pingTask = new Timer(); 
+                pingTask.scheduleAtFixedRate(new PingTask(), 30000,30000);
  
                 
                 return true;
@@ -266,10 +268,16 @@ public class IRCBot {
         public void run(){
             if(!sendThread.isAlive() || !receiveThread.isAlive()){
                 IRCBot.this.close();
-                onAccidentDisconnection();
+                IRCBot.this.onAccidentDisconnection();
             }else{
                 //log("Connection alive",IRCBot.LogType.SYS);
             }
+        }
+    }
+    
+    private class PingTask extends TimerTask{
+        public void run(){
+            IRCBot.this.sendRaw("PING");
         }
     }
 }
