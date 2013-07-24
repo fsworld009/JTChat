@@ -23,7 +23,7 @@ public class IRCBot {
     private BufferedReader reader;
     private PriorityQueue<String> sendMsgQueue;
     
-    boolean threadRunning;
+    boolean threadRunning = false;
     private SendThread sendThread;
     private ReceiveThread receiveThread;
     
@@ -146,10 +146,10 @@ public class IRCBot {
                 socket.close();
                 //sendThread.interrupt();
                 //receiveThread.interrupt();
-                log("connection closed",IRCBot.LogType.SYS);
+                log("Disconnect from server",IRCBot.LogType.SYS);
             }else{
                 //socket has already closed
-                log("connection has already closed",IRCBot.LogType.SYS);
+                log("Connection has already closed, duplicate IRCBot.close() call",IRCBot.LogType.SYS);
             }
         }catch(Exception e){
             if(e instanceof IOException){
@@ -178,8 +178,9 @@ public class IRCBot {
         
     }
     
-    public void onDisconnect(boolean error){
-        //if error then the connection is closed by accident
+    //the connection is closed by accident
+    public void onAccidentDisconnection(){
+        
     }
     
     private class SendThread extends Thread{
@@ -264,9 +265,8 @@ public class IRCBot {
     private class AliveCheckTask extends TimerTask{
         public void run(){
             if(!sendThread.isAlive() || !receiveThread.isAlive()){
-                log("Disconnect from server",IRCBot.LogType.SYS);
                 IRCBot.this.close();
-                onDisconnect(true);
+                onAccidentDisconnection();
             }else{
                 //log("Connection alive",IRCBot.LogType.SYS);
             }
