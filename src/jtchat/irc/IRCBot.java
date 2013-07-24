@@ -11,8 +11,10 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Comparator;
 import java.util.PriorityQueue;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Timer;
 
 
 public class IRCBot {
@@ -25,8 +27,11 @@ public class IRCBot {
     private SendThread sendThread;
     private ReceiveThread receiveThread;
     
+
+    Timer aliveCheckTask  = new Timer();
+    
     private enum LogType{
-        SEND, RECEIVE, OTHER
+        SEND, RECEIVE, SYS
     }
     
     private void log(String log, IRCBot.LogType type ){
@@ -36,7 +41,8 @@ public class IRCBot {
         }else if(type == IRCBot.LogType.RECEIVE){
             result+="<<< ";
         }else{
-            
+            //SYS
+            result+="[SYS] ";
         }
         result+=log.replaceAll("\r\n", "");
         System.out.println(result);
@@ -56,7 +62,7 @@ public class IRCBot {
             socket = new Socket();
             socket.connect(new InetSocketAddress(server, port),10000);
             if(socket.isConnected()){
-                log(String.format("Connectted to %s:%s",socket.getInetAddress(),socket.getPort()),IRCBot.LogType.OTHER);
+                log(String.format("Connectted to %s:%s",socket.getInetAddress(),socket.getPort()),IRCBot.LogType.SYS);
                 writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                 reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 
@@ -84,6 +90,9 @@ public class IRCBot {
                 sendThread.start();
                 
                 // Log on to the server.
+
+                aliveCheckTask =  new Timer(); 
+                aliveCheckTask.scheduleAtFixedRate(new AliveCheckTask(), 10000,10000);
  
                 
                 return true;
@@ -92,10 +101,10 @@ public class IRCBot {
         }catch(Exception e){
             if(e instanceof UnknownHostException){
                 //no such host
-                System.out.printf("cannot connect to host\r\n");
+                log(String.format("cannot connect to host\r\n"),IRCBot.LogType.SYS);
             }else if(e instanceof IOException){
                 //threw by socket.getOutputStream( ) and socket.getInputStream( ) and writer, reader
-                System.out.printf("error when trying to establish I/O\r\n");
+                log(String.format("error when trying to establish I/O\r\n"),IRCBot.LogType.SYS);
             }
             
         }
@@ -116,23 +125,32 @@ public class IRCBot {
        
     public void close(){
         try{
-            threadRunning = false;
-            /*try {
-                //while(sendThread.isAlive() || receiveThread.isAlive()){
-                    
-                    Thread.sleep(5000);
-                //}
-            } catch(InterruptedException e){
-                //threw by Thread.sleep()
-            }*/
-            writer.close();
-            reader.close();
-            socket.close();
-            //sendThread.interrupt();
-            //receiveThread.interrupt();
+            //close connection only once
+            if(threadRunning){
+                //cancel alive checking task
+                aliveCheckTask.cancel();
+                System.out.println("Timer closed");
 
+                //close input and output thread
+                threadRunning = false;
+                /*try {
+                    //while(sendThread.isAlive() || receiveThread.isAlive()){
 
-            System.out.println("ircbot closed");
+                        Thread.sleep(5000);
+                    //}
+                } catch(InterruptedException e){
+                    //threw by Thread.sleep()
+                }*/
+                writer.close();
+                reader.close();
+                socket.close();
+                //sendThread.interrupt();
+                //receiveThread.interrupt();
+                log("connection closed",IRCBot.LogType.SYS);
+            }else{
+                //socket has already closed
+                log("connection has already closed",IRCBot.LogType.SYS);
+            }
         }catch(Exception e){
             if(e instanceof IOException){
                 //threw by writer
@@ -160,6 +178,10 @@ public class IRCBot {
         
     }
     
+    public void onDisconnect(boolean error){
+        //if error then the connection is closed by accident
+    }
+    
     private class SendThread extends Thread{
         
         public void run() {
@@ -176,7 +198,8 @@ public class IRCBot {
                                 }
                                 writer.flush();
                             }catch(IOException e){
-                                log("Send thread I/O error",IRCBot.LogType.OTHER);
+                                log("Send thread I/O error",IRCBot.LogType.SYS);
+                                break;
                             }
                         }
                     }
@@ -190,12 +213,12 @@ public class IRCBot {
     private class ReceiveThread extends Thread{
         public void run() {
             String line;
-            try{
-                while (threadRunning) {
-                    //print line
-                    synchronized(reader){
+            
+            while (threadRunning) {
+                //print line
+                synchronized(reader){
+                    try{
                         line = reader.readLine();
-
                         if(line != null){
                             int colon_pos = line.indexOf(':');
 
@@ -216,16 +239,16 @@ public class IRCBot {
                             }else{
                                 parseMessage(line);
                             }
-                       
+
                         }else{
                             System.out.printf("null\r\n");
                         }
-                     }
-                }
-            }catch(IOException e){
-                //threw by reader
-                log("Receive thread I/O error",IRCBot.LogType.OTHER);
-                
+                    }catch(IOException e){
+                        //threw by reader
+                        log("Receive thread I/O error",IRCBot.LogType.SYS);
+                        break;
+                    }
+                 }
             }
             System.out.println("ReceiveThread closed");
             
@@ -236,8 +259,18 @@ public class IRCBot {
         public int compare(String s1, String s2){
             return 0;
         }
-        
-
+    }
+    
+    private class AliveCheckTask extends TimerTask{
+        public void run(){
+            if(!sendThread.isAlive() || !receiveThread.isAlive()){
+                log("Disconnect from server",IRCBot.LogType.SYS);
+                IRCBot.this.close();
+                onDisconnect(true);
+            }else{
+                //log("Connection alive",IRCBot.LogType.SYS);
+            }
+        }
     }
 }
 
