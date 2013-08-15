@@ -163,7 +163,16 @@ public class IRCBot {
     
     
     private void parseMessage(String message){
-        
+        String firstParse[] = message.split(" ",3);
+        //action at firstParse[1]
+        if(firstParse[1].equals("PRIVMSG")){
+            String parse[] = message.split(" ",4);
+            //parse[0]: sender
+            
+            //parse[2]: target channel/user
+            
+            //parse[3].subString(1): message
+        }
     }
     
     //override these functions on subclass
