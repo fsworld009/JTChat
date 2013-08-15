@@ -5,13 +5,14 @@ import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 import jtchat.irc.IRCBot;
 import jtchat.gui.Chatroom;
+import jtchat.gui.MainWindow;
 
 
 public class main {
     public static String password = "";
     public static void main(String[] args){
         //enter password
-        Scanner sc = new Scanner(System.in);
+        /*Scanner sc = new Scanner(System.in);
         System.out.print("Password:");
         main.password = sc.nextLine();
 
@@ -22,6 +23,13 @@ public class main {
             }
         });
         
-        System.out.println("END");
+        System.out.println("END");*/
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.setVisible(true);
+            }
+        });
+        
     }
 }
