@@ -8,6 +8,8 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -129,5 +131,17 @@ public class IRCSetPane extends JPanel{
         this.add(bConnect,gbc);
  
 
+    }
+    
+    public void regConnectListener(){
+        
+    }
+    
+    private class ButtonListener implements ActionListener{
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource() == bConnect){
+                    
+                }
+            }
     }
 }

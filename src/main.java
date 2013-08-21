@@ -4,8 +4,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 import jtchat.irc.IRCBot;
-import jtchat.gui.Chatroom;
 import jtchat.gui.MainWindow;
+import jtchat.gui.SettingWindow;
 
 
 public class main {
@@ -26,7 +26,7 @@ public class main {
         System.out.println("END");*/
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                MainWindow mainWindow = new MainWindow();
+                SettingWindow mainWindow = new SettingWindow();
                 mainWindow.setVisible(true);
             }
         });
