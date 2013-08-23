@@ -32,9 +32,7 @@ public class SettingWindow extends JFrame{
         tabPane.addTab("Log", logPane);
     }
     
-    public void showChatroom(){
-        chatroomWindow = new MainWindow("",433,"","","");
-    }
+
     
 
 }

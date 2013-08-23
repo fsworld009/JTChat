@@ -23,14 +23,10 @@ import jtchat.irc.IRCBot;
 public class MainWindow extends JFrame{
     private IRCBot ircbot;
     private JTextField inputField;
-    public MainWindow(String server, int port, String nickname, String login, String password){
+    public MainWindow(){
         super();
         
-        //ircbot
-        ircbot = new IRCBot();
-        ircbot.connect(server,port,nickname,login,password);
-        ircbot.join("#world9918");
-        ircbot.sendRaw("JTVCLIENT");
+
         
         init();
         
@@ -42,6 +38,14 @@ public class MainWindow extends JFrame{
         this.addWindowListener(new closeEventWindowListener());
         
         
+    }
+    
+    public void connect(){
+        //ircbot
+        ircbot = new IRCBot();
+        ircbot.connect("irc.twitch.tv",443,"world9918","JTChat","");
+        ircbot.join("#world9918");
+        ircbot.sendRaw("JTVCLIENT");
     }
     
     //initialize UI components
