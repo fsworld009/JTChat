@@ -14,7 +14,7 @@ public class SettingWindow extends JFrame{
     MainWindow chatroomWindow;
     public SettingWindow(){
         init();
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(300,500);
         this.setResizable(false);
     }

@@ -4,11 +4,14 @@ import java.util.HashMap;
 
 //singleton
 public class SettingTable {
-    private static SettingTable ins;
+    private static SettingTable ins = null;
     private HashMap<String,String> settingMap;
     
     public SettingTable(){
-        
+        settingMap.put("IRCserver","irc.twitch.tv");
+        settingMap.put("IRCport","443");
+        settingMap.put("IRCnickname","world9918");
+        settingMap.put("IRCchannel","#world9918");
     }
     
     public static SettingTable ins(){

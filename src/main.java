@@ -26,7 +26,7 @@ public class main {
         System.out.println("END");*/
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                SettingWindow mainWindow = new SettingWindow();
+                MainWindow mainWindow = new MainWindow();
                 mainWindow.setVisible(true);
             }
         });

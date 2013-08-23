@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.text.BadLocationException;
 import jtchat.irc.IRCBot;
 
@@ -23,6 +24,10 @@ import jtchat.irc.IRCBot;
 public class MainWindow extends JFrame{
     private IRCBot ircbot;
     private JTextField inputField;
+    private JButton setButton;
+    private JButton sendButton;
+    private SettingWindow settingWindow;
+    private ChatActionListener chatActionListener = new ChatActionListener();
     public MainWindow(){
         super();
         
@@ -62,16 +67,18 @@ public class MainWindow extends JFrame{
         
         inputField = new JTextField(14);
         
-        inputField.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                ircbot.sendRaw(inputField.getText());
-            }
-        });
+        //inputField.addActionListener();
         
         
-        JButton sendButton = new JButton("Chat");
+        sendButton = new JButton("Chat");
+        setButton = new JButton("Setting");
         textBoxPanel.add(inputField);
         textBoxPanel.add(sendButton);
+        textBoxPanel.add(setButton);
+        
+        
+        setButton.addActionListener(chatActionListener);
+        
         
         
         this.add(textBoxPanel,BorderLayout.SOUTH);
@@ -103,7 +110,26 @@ public class MainWindow extends JFrame{
                 }
             });
             closeIrcBotThread.start();*/
-            MainWindow.this.ircbot.close();
+            if(MainWindow.this.ircbot != null){
+                MainWindow.this.ircbot.close();
+            }
         }
+    }
+    
+    private class ChatActionListener implements ActionListener{
+        public void actionPerformed(ActionEvent e) {
+            if(e.getSource() == MainWindow.this.setButton){
+                if(settingWindow == null || !settingWindow.isVisible()){
+                    SwingUtilities.invokeLater(new Runnable() {
+                               public void run() {
+                                   settingWindow = new SettingWindow();
+                                   settingWindow.setVisible(true);
+                               }
+                           });
+                }
+            }
+        }
+        
+        //ircbot.sendRaw(inputField.getText());
     }
 }
