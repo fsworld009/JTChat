@@ -1,36 +1,23 @@
 
 package jtchat.gui;
-import java.util.HashMap;
 
-//singleton
+//singleton data structure
 public class SettingTable {
     private static SettingTable ins = null;
-    private HashMap<String,String> settingMap;
-    
-    public SettingTable(){
-        settingMap = new HashMap<String,String>();
-        settingMap.put("IRCserver","irc.twitch.tv");
-        settingMap.put("IRCport","443");
-        settingMap.put("IRCnickname","world9918");
-        settingMap.put("IRCservpass","");
-        settingMap.put("IRCchannel","#world9918");
-    }
-    
+    //private HashMap<String,String> settingMap;
+    public String IRCserver = "";
+    public int IRCport = 443;
+    public String IRCnickname = "";
+    public String IRCservpass="";
+    public String IRCchannel="";
+       
     public static SettingTable ins(){
         if(ins == null){
             ins = new SettingTable();
         }
         return ins;
     }
-    
-    public String read(String option){
-        return settingMap.get(option);
-    }
-    
-    public void put(String option, String setting){
-        settingMap.put(option, setting);
-    }
-    
+
 
     
 }

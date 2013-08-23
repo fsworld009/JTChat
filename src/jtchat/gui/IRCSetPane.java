@@ -136,11 +136,11 @@ public class IRCSetPane extends JPanel{
     }
     
     public void save(){
-        SettingTable.ins().put("IRCserver", tIrcServer.getText());
-        SettingTable.ins().put("IRCport",tIrcPort.getText());
-        SettingTable.ins().put("IRCnickname",tIrcNick.getText());
-        SettingTable.ins().put("IRCservpass",new String(tIrcServerPass.getPassword()));
-        SettingTable.ins().put("IRCchannel",tIrcChannel.getText());
+        SettingTable.ins().IRCserver = tIrcServer.getText();
+        SettingTable.ins().IRCport = Integer.parseInt(tIrcPort.getText());
+        SettingTable.ins().IRCnickname = tIrcNick.getText();
+        SettingTable.ins().IRCservpass = new String(tIrcServerPass.getPassword());
+        SettingTable.ins().IRCchannel = tIrcChannel.getText();
         
     }
 }

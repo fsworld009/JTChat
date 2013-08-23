@@ -48,8 +48,8 @@ public class MainWindow extends JFrame{
     public void connect(){
         //ircbot
         ircbot = new IRCBot();
-        ircbot.connect("irc.twitch.tv",443,"world9918","JTChat","");
-        ircbot.join("#world9918");
+        ircbot.connect(SettingTable.ins().IRCserver,SettingTable.ins().IRCport,SettingTable.ins().IRCnickname,"JTChat",SettingTable.ins().IRCservpass);
+        ircbot.join(SettingTable.ins().IRCchannel);
         ircbot.sendRaw("JTVCLIENT");
     }
     
@@ -79,7 +79,7 @@ public class MainWindow extends JFrame{
         
 
         
-        
+        sendButton.addActionListener(chatActionListener);
         setButton.addActionListener(chatActionListener);
         
         
@@ -129,6 +129,9 @@ public class MainWindow extends JFrame{
                                }
                            });
                 }
+            }else if(e.getSource() == MainWindow.this.sendButton){
+                sendButton.setText("Chat");
+                MainWindow.this.connect();
             }
         }
         
