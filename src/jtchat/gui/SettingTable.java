@@ -8,9 +8,11 @@ public class SettingTable {
     private HashMap<String,String> settingMap;
     
     public SettingTable(){
+        settingMap = new HashMap<String,String>();
         settingMap.put("IRCserver","irc.twitch.tv");
         settingMap.put("IRCport","443");
         settingMap.put("IRCnickname","world9918");
+        settingMap.put("IRCservpass","");
         settingMap.put("IRCchannel","#world9918");
     }
     
@@ -28,5 +30,7 @@ public class SettingTable {
     public void put(String option, String setting){
         settingMap.put(option, setting);
     }
+    
+
     
 }

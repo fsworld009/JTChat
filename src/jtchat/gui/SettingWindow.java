@@ -3,6 +3,8 @@ package jtchat.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 
@@ -17,6 +19,7 @@ public class SettingWindow extends JFrame{
         //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(300,500);
         this.setResizable(false);
+        this.addWindowListener(new closeEventWindowListener());
     }
     
     private void init(){
@@ -33,6 +36,11 @@ public class SettingWindow extends JFrame{
     }
     
 
-    
+    private class closeEventWindowListener extends WindowAdapter{
+        public void windowClosing(WindowEvent e) {
+            //save setting
+            ircSetPane.save();
+        }
+    }
 
 }

@@ -26,7 +26,7 @@ public class MainWindow extends JFrame{
     private JTextField inputField;
     private JButton setButton;
     private JButton sendButton;
-    private SettingWindow settingWindow;
+    private SettingWindow settingWindow = new SettingWindow();;
     private ChatActionListener chatActionListener = new ChatActionListener();
     public MainWindow(){
         super();
@@ -66,15 +66,18 @@ public class MainWindow extends JFrame{
         textBoxPanel.setLayout(new FlowLayout());
         
         inputField = new JTextField(14);
+        sendButton = new JButton("Connect");
+        setButton = new JButton("Setting");
         
         //inputField.addActionListener();
         
         
-        sendButton = new JButton("Chat");
-        setButton = new JButton("Setting");
+        
         textBoxPanel.add(inputField);
         textBoxPanel.add(sendButton);
         textBoxPanel.add(setButton);
+        
+
         
         
         setButton.addActionListener(chatActionListener);
@@ -119,10 +122,9 @@ public class MainWindow extends JFrame{
     private class ChatActionListener implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             if(e.getSource() == MainWindow.this.setButton){
-                if(settingWindow == null || !settingWindow.isVisible()){
+                if(!settingWindow.isVisible()){
                     SwingUtilities.invokeLater(new Runnable() {
                                public void run() {
-                                   settingWindow = new SettingWindow();
                                    settingWindow.setVisible(true);
                                }
                            });

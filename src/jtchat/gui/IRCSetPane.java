@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -26,7 +27,7 @@ public class IRCSetPane extends JPanel{
     private JLabel lIrcPort;
     private JTextField tIrcPort;
     private JLabel lIrcServerPass;
-    private JTextField tIrcServerPass;
+    private JPasswordField tIrcServerPass;
     private JLabel lIrcNick;
     private JTextField tIrcNick;
     private JLabel lIrcChannel;
@@ -48,7 +49,7 @@ public class IRCSetPane extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(lIrcServer,gbc);
 
-        tIrcServer = new JTextField();
+        tIrcServer = new JTextField("irc.twitch.tv");
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -64,7 +65,7 @@ public class IRCSetPane extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(lIrcPort,gbc);
         
-        tIrcPort = new JTextField();
+        tIrcPort = new JTextField("443");
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 1;
@@ -80,7 +81,7 @@ public class IRCSetPane extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(lIrcServerPass,gbc);
 
-        tIrcServerPass = new JTextField();
+        tIrcServerPass = new JPasswordField();
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 2;
@@ -96,7 +97,7 @@ public class IRCSetPane extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(lIrcNick,gbc);
 
-        tIrcNick = new JTextField();
+        tIrcNick = new JTextField("world9918");
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 3;
@@ -112,7 +113,7 @@ public class IRCSetPane extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(lIrcChannel,gbc);
 
-        tIrcChannel = new JTextField("#");
+        tIrcChannel = new JTextField("#world9918");
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 4;
@@ -121,6 +122,7 @@ public class IRCSetPane extends JPanel{
         this.add(tIrcChannel,gbc);
         
         //Connect
+        /*
         bConnect = new JButton("Connect");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -128,20 +130,17 @@ public class IRCSetPane extends JPanel{
         gbc.gridwidth = 2;
         
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        this.add(bConnect,gbc);
+        this.add(bConnect,gbc);*/
  
 
     }
     
-    public void regConnectListener(){
+    public void save(){
+        SettingTable.ins().put("IRCserver", tIrcServer.getText());
+        SettingTable.ins().put("IRCport",tIrcPort.getText());
+        SettingTable.ins().put("IRCnickname",tIrcNick.getText());
+        SettingTable.ins().put("IRCservpass",new String(tIrcServerPass.getPassword()));
+        SettingTable.ins().put("IRCchannel",tIrcChannel.getText());
         
-    }
-    
-    private class ButtonListener implements ActionListener{
-            public void actionPerformed(ActionEvent e) {
-                if(e.getSource() == bConnect){
-                    
-                }
-            }
     }
 }
