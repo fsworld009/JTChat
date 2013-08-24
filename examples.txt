@@ -38,6 +38,8 @@ PRIVMSG #world9918 : ACTION a
 <<< :world9918!world9918@world9918.tmi.twitch.tv PRIVMSG #world9918 :ACTION 動作訊息
 <<< :world9918!world9918@world9918.tmi.twitch.tv PRIVMSG #world9918 :ACTION あああ
 
+:a48624 PRIVMSG #natsushion :法可阿阿阿/__\
+
 ban
 >>> PRIVMSG #world9918 :/ban megasonimon
 <<< jtv PRIVMSG megasonimon :CLEARCHAT megasonimon

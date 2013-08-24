@@ -17,11 +17,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.text.BadLocationException;
-import jtchat.irc.IRCBot;
+import jtchat.irc.JtvIRCBot;
 
 
 public class MainWindow extends JFrame{
-    private IRCBot ircbot;
+    private JtvIRCBot ircbot;
     private JTextField inputField;
     private JButton setButton;
     private JButton sendButton;
@@ -47,7 +47,7 @@ public class MainWindow extends JFrame{
     
     public void connect(){
         //ircbot
-        ircbot = new IRCBot();
+        ircbot = new JtvIRCBot();
         ircbot.connect(SettingTable.ins().IRCserver,SettingTable.ins().IRCport,SettingTable.ins().IRCnickname,"JTChat",SettingTable.ins().IRCservpass);
         ircbot.join(SettingTable.ins().IRCchannel);
         ircbot.sendRaw("JTVCLIENT");
