@@ -51,7 +51,7 @@ public class IRCSetPane extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(lIrcServer,gbc);
 
-        tIrcServer = new JTextField("011kentdban.jtvirc.com");
+        tIrcServer = new JTextField("irc.twitch.tv");
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -115,7 +115,7 @@ public class IRCSetPane extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(lIrcChannel,gbc);
 
-        tIrcChannel = new JTextField("#011kentdban");
+        tIrcChannel = new JTextField("#ptken");
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 4;

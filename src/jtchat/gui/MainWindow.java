@@ -17,15 +17,18 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.text.BadLocationException;
+import jtchat.irc.ChatMsgListener;
 import jtchat.irc.JtvIRCBot;
 
 
-public class MainWindow extends JFrame{
+
+public class MainWindow extends JFrame implements ChatMsgListener{
     private JtvIRCBot ircbot;
     private JTextField inputField;
     private JButton setButton;
     private JButton sendButton;
     private JButton connectButton;
+    private JEditorPane chatMsgs;
     private SettingWindow settingWindow = new SettingWindow();;
     private ChatActionListener chatActionListener = new ChatActionListener();
     public MainWindow(){
@@ -52,7 +55,7 @@ public class MainWindow extends JFrame{
             //initialize ircbot
             ircbot = new JtvIRCBot();
             ircbot.registerLogListener(settingWindow.logPaneRef());
-            
+            ircbot.registerMsgListener(this);
         
         }
         ircbot.connect(SettingTable.ins().IRCserver,SettingTable.ins().IRCport,SettingTable.ins().IRCnickname,"JTChat",SettingTable.ins().IRCservpass);
@@ -99,18 +102,15 @@ public class MainWindow extends JFrame{
         
         
         //text area that displays chat
-        JEditorPane chatMsgs=null;
         chatMsgs = new JEditorPane();
         
         chatMsgs.setEditable(false);
         chatMsgs.setOpaque(false);
-        try {
+        //try {
             //chatMsgs.setText("asdasdadadsadsa");
-            chatMsgs.getDocument().insertString(chatMsgs.getDocument().getLength(), "abc\n", null);
-            chatMsgs.getDocument().insertString(chatMsgs.getDocument().getLength(), "efg\n", null);
-        } catch (BadLocationException ex) {
-            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            //chatMsgs.getDocument().insertString(chatMsgs.getDocument().getLength(), "abc\n", null);
+            //chatMsgs.getDocument().insertString(chatMsgs.getDocument().getLength(), "efg\n", null);
+        //} 
         this.add(chatMsgs,BorderLayout.CENTER);
     }
     
@@ -128,6 +128,21 @@ public class MainWindow extends JFrame{
                 MainWindow.this.ircbot.close();
             }
         }
+    }
+    
+    public void onChatMsg(String channel, String sender, String message){
+        try {
+            chatMsgs.getDocument().insertString(chatMsgs.getDocument().getLength(), String.format("%s: %s\r\n",sender,message), null);
+        } catch (BadLocationException ex) {
+            //need improved
+            System.err.println("BadLocationException");
+        }
+    }
+    public void onChatAction(String channel, String sender, String action){
+        
+    }
+    public void onPrivateMsg(String sender, String message){
+        
     }
     
     private class ChatActionListener implements ActionListener{
