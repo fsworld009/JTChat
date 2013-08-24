@@ -10,8 +10,9 @@ import javax.swing.JTabbedPane;
 public class SettingWindow extends JFrame{
     JTabbedPane tabPane;
     LogPane logPane;
+    ChatroomSetPane chatSetPane;
     IRCSetPane ircSetPane;
-    MainWindow chatroomWindow;
+    //MainWindow chatroomWindow;
     public SettingWindow(){
         super("JTChat Setting");
         init();
@@ -28,8 +29,9 @@ public class SettingWindow extends JFrame{
         this.add(tabPane);
         logPane = new LogPane();
         ircSetPane = new IRCSetPane();
+        chatSetPane = new ChatroomSetPane();
         tabPane.addTab("IRC Set", ircSetPane);
-        //tabPane.addTab("Chat Set", logPane);
+        tabPane.addTab("Chat Set", chatSetPane);
         //tabPane.addTab("Chat", logPane);
         tabPane.addTab("Log", logPane);
     }
