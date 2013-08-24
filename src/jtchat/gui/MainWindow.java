@@ -38,7 +38,7 @@ public class MainWindow extends JFrame implements ChatMsgListener{
     private String nickname = "";
     private SimpleAttributeSet chatAttr;
     public MainWindow(){
-        super();
+        super("JTChat");
         chatAttr = new SimpleAttributeSet();
         
 

@@ -13,6 +13,7 @@ public class SettingWindow extends JFrame{
     IRCSetPane ircSetPane;
     MainWindow chatroomWindow;
     public SettingWindow(){
+        super("JTChat Setting");
         init();
         //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(300,500);
