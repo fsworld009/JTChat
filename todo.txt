@@ -1,0 +1,7 @@
+Font, color, bk color setting
+Chat window resize setting
+OBS parameter counting
+JTV user color catch
+save/load settings
+action/jtv commands display
+emulate twitch chat ui functions

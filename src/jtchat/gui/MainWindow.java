@@ -12,6 +12,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
@@ -127,8 +128,8 @@ public class MainWindow extends JFrame implements ChatMsgListener{
             //chatMsgs.getDocument().insertString(chatMsgs.getDocument().getLength(), "abc\n", null);
             //chatMsgs.getDocument().insertString(chatMsgs.getDocument().getLength(), "efg\n", null);
         //} 
-        this.add(chatMsgs,BorderLayout.CENTER);
-    }
+        this.add(new JScrollPane(chatMsgs,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER),BorderLayout.CENTER);
+      }
     
     private class closeEventWindowListener extends WindowAdapter{
         public void windowClosing(WindowEvent e) {
