@@ -28,6 +28,9 @@ public class main {
             public void run() {
                 MainWindow mainWindow = new MainWindow();
                 mainWindow.setVisible(true);
+                
+                
+
             }
         });
         

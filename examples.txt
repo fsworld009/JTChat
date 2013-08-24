@@ -43,6 +43,7 @@ PRIVMSG #world9918 : ACTION a
 ban
 >>> PRIVMSG #world9918 :/ban megasonimon
 <<< jtv PRIVMSG megasonimon :CLEARCHAT megasonimon
+<<< :jtv PRIVMSG world9918 :CLEARCHAT jason40005
 
 unban
 >>> PRIVMSG #world9918 :/unban megasonimon
@@ -61,3 +62,7 @@ mod commands
 /slow
 /slowoff
 /mods
+
+purge這個功能
+
+» timeout 1秒

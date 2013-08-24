@@ -158,13 +158,17 @@ public class MainWindow extends JFrame implements ChatMsgListener{
 
     }
     
-    private void append(String message){
-        try{
-            chatMsgs.getDocument().insertString(chatMsgs.getDocument().getLength(), message, null);
-        } catch (BadLocationException ex) {
-            //need improved
-            System.err.println("BadLocationException");
-        }
+    private void append(final String message){
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run(){
+                try{
+                    chatMsgs.getDocument().insertString(chatMsgs.getDocument().getLength(), message, null);
+                } catch (BadLocationException ex) {
+                    //need improved
+                    System.err.println("BadLocationException");
+                }
+            }
+        });
     }
     
     private class ChatActionListener implements ActionListener{
