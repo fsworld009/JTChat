@@ -131,18 +131,31 @@ public class MainWindow extends JFrame implements ChatMsgListener{
     }
     
     public void onChatMsg(String channel, String sender, String message){
-        try {
-            chatMsgs.getDocument().insertString(chatMsgs.getDocument().getLength(), String.format("%s: %s\r\n",sender,message), null);
-        } catch (BadLocationException ex) {
-            //need improved
-            System.err.println("BadLocationException");
-        }
+        //SwingUtilities.invokeLater(new Runnable() {
+        //    public void run() {
+                try {
+                    chatMsgs.getDocument().insertString(chatMsgs.getDocument().getLength(), String.format("%s: %s\r\n",sender,message), null);
+                } catch (BadLocationException ex) {
+                    //need improved
+                    System.err.println("BadLocationException");
+                }
+            //}
+        //}
     }
     public void onChatAction(String channel, String sender, String action){
         
     }
     public void onPrivateMsg(String sender, String message){
         
+    }
+    
+    public void onSysMsg(String message){
+            try {
+                chatMsgs.getDocument().insertString(chatMsgs.getDocument().getLength(), String.format("[SYS] %s\r\n",message), null);
+            } catch (BadLocationException ex) {
+                //need improved
+                System.err.println("BadLocationException");
+            }
     }
     
     private class ChatActionListener implements ActionListener{
@@ -163,4 +176,6 @@ public class MainWindow extends JFrame implements ChatMsgListener{
         
         //ircbot.sendRaw(inputField.getText());
     }
+    
+    
 }

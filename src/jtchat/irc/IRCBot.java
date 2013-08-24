@@ -27,6 +27,13 @@ public class IRCBot {
     private SendThread sendThread;
     private ReceiveThread receiveThread;
     
+    //latest connect info
+    private String lastIRCServer = "";
+    private int lastIRCPort = 0;
+    private String lastIRCServerPass = "";
+    private String lastIRCNickname = "";
+    private String lastIRCLogin = "";
+    
 
     Timer aliveCheckTask;
     Timer pingTask;
@@ -45,9 +52,14 @@ public class IRCBot {
             //SYS
             result+="[SYS] ";
         }
-        result+=log.replaceAll("\r\n", "");
+        String logWithoutReturn = log.replaceAll("\r\n", "");
+        result+=logWithoutReturn;
         System.out.println(result);
         onLog(result);
+        
+        if(type == IRCBot.LogType.SYS){
+            onSysMsg(logWithoutReturn);
+        }
     }
     
     public void sendRaw(String message){
@@ -64,6 +76,13 @@ public class IRCBot {
             socket.connect(new InetSocketAddress(server, port),10000);
             if(socket.isConnected()){
                 log(String.format("Connectted to %s:%s",socket.getInetAddress(),socket.getPort()),IRCBot.LogType.SYS);
+                //save connection info
+                lastIRCServer = server;
+                lastIRCPort = port;
+                lastIRCServerPass = password;
+                lastIRCNickname = nickname;
+                lastIRCLogin = login;
+                
                 writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                 reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 
@@ -75,7 +94,7 @@ public class IRCBot {
                 log("PASS " + password,IRCBot.LogType.SEND);
                 writer.write("NICK " + nickname + "\r\n");
                 log("NICK " + nickname,IRCBot.LogType.SEND);
-                writer.write("USER " + "JTChat" + "\r\n");
+                writer.write("USER " + login + "\r\n");
                 log("USER " + "JTChat",IRCBot.LogType.SEND);
                 writer.flush();
                 
@@ -162,6 +181,16 @@ public class IRCBot {
     }
     
     
+    private String getUsername(String sender){
+        //parse twitch username from twitch chats
+        //ex: user!user@user.tmi.twitch.tv -> user
+        if(sender.contains("!")){
+            return sender.substring(0,sender.indexOf('!'));
+        }else{
+            return sender;
+        }
+    }
+    
     private void parseMessage(String message){
         String firstParse[] = message.split(" ",3);
         //action at firstParse[1]
@@ -176,11 +205,20 @@ public class IRCBot {
              * parse[3].subString(1): message
              */
             if(parse[2].charAt(0)=='#'){
-                onChatMsg(parse[2].substring(1),parse[0].substring(1),parse[3].substring(1));
+                onChatMsg(parse[2].substring(1),getUsername(parse[0].substring(1)),parse[3].substring(1));
             }else{
-                onPrivateMsg(parse[0].substring(1), parse[3].substring(1));
+                onPrivateMsg(getUsername(parse[0].substring(1)), parse[3].substring(1));
             }
             
+        }else if(firstParse[1].equals("JOIN")){
+
+            String parse[] = message.split(" ",3);
+            //user succesffully joins a channel
+            if(getUsername(parse[0].substring(1)).equals(lastIRCNickname)){
+                log(String.format("Joined %s",parse[2]),IRCBot.LogType.SYS);
+            }
+            
+            //other users join the channel
         }
     }
     
@@ -197,6 +235,11 @@ public class IRCBot {
     public void onPrivateMsg(String sender, String message){
         
     }
+    
+    public void onSysMsg(String message){
+        
+    }
+    
     
     //the connection is closed by accident
     public void onAccidentDisconnection(){

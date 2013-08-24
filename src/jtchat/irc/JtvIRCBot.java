@@ -36,7 +36,7 @@ public class JtvIRCBot extends IRCBot{
         }
     }
     
-    private String getTwitchId(String sender){
+    /*private String getTwitchId(String sender){
         //parse twitch username from twitch chats
         //ex: user!user@user.tmi.twitch.tv -> user
         if(sender.contains("!")){
@@ -44,10 +44,10 @@ public class JtvIRCBot extends IRCBot{
         }else{
             return sender;
         }
-    }
+    }*/
     
     public void onChatMsg(String channel, String sender, String message){
-        sender = getTwitchId(sender);
+        //sender = getTwitchId(sender);
         for(int i=0;i<msgListeners.size();i++){
             msgListeners.get(i).onChatMsg(channel, sender, message);
         }
@@ -60,9 +60,15 @@ public class JtvIRCBot extends IRCBot{
     }
     
     public void onPrivateMsg(String sender, String message){
-        sender = getTwitchId(sender);
+        //sender = getTwitchId(sender);
         for(int i=0;i<msgListeners.size();i++){
             msgListeners.get(i).onPrivateMsg(sender, message);
+        }
+    }
+    
+    public void onSysMsg(String message){
+        for(int i=0;i<msgListeners.size();i++){
+            msgListeners.get(i).onSysMsg(message);
         }
     }
 }
