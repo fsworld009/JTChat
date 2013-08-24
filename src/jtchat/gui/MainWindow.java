@@ -2,7 +2,9 @@
 package jtchat.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,8 +17,12 @@ import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
 import jtchat.irc.ChatMsgListener;
 import jtchat.irc.JtvIRCBot;
 
@@ -28,15 +34,17 @@ public class MainWindow extends JFrame implements ChatMsgListener{
     private JButton setButton;
     private JButton sendButton;
     private JButton connectButton;
-    private JEditorPane chatMsgs;
+    private JTextPane chatMsgs;
     private SettingWindow settingWindow = new SettingWindow();;
     private ChatActionListener chatActionListener = new ChatActionListener();
     
     //for chat
     private String channel = "";
     private String nickname = "";
+    private SimpleAttributeSet chatAttr;
     public MainWindow(){
         super();
+        chatAttr = new SimpleAttributeSet();
         
 
         
@@ -53,7 +61,7 @@ public class MainWindow extends JFrame implements ChatMsgListener{
         
     }
     
-    public void connect(){
+    private void connect(){
         
         if(ircbot==null){
             //initialize ircbot
@@ -71,6 +79,10 @@ public class MainWindow extends JFrame implements ChatMsgListener{
         
     }
     
+    private void disconnect(){
+        ircbot.close();
+    }
+    
     //initialize UI components
     private void init(){
     
@@ -84,6 +96,7 @@ public class MainWindow extends JFrame implements ChatMsgListener{
         textBoxPanel.setLayout(new FlowLayout());
         
         inputField = new JTextField(14);
+        inputField.setFont(new Font("Arial Unicode MS",Font.PLAIN,12));
         sendButton = new JButton("Chat");
         sendButton.setMargin(new Insets(0,0,0,0));
         setButton = new JButton("Setting");
@@ -110,9 +123,10 @@ public class MainWindow extends JFrame implements ChatMsgListener{
         
         
         //text area that displays chat
-        chatMsgs = new JEditorPane();
+        chatMsgs = new JTextPane();
         
         chatMsgs.setEditable(false);
+        chatMsgs.setFont(new Font("Serif",Font.PLAIN,14));
         chatMsgs.setOpaque(false);
         //try {
             //chatMsgs.setText("asdasdadadsadsa");
@@ -159,10 +173,13 @@ public class MainWindow extends JFrame implements ChatMsgListener{
     }
     
     private void append(final String message){
+        
+        //chatAttr.addAttribute(StyleConstants.CharacterConstants.Foreground, Color.decode("#FF0000"));
+        //Style style = chatMsgs.addStyle("Red", null);
         SwingUtilities.invokeLater(new Runnable() {
             public void run(){
                 try{
-                    chatMsgs.getDocument().insertString(chatMsgs.getDocument().getLength(), message, null);
+                    chatMsgs.getDocument().insertString(chatMsgs.getDocument().getLength(), message, chatAttr);
                 } catch (BadLocationException ex) {
                     //need improved
                     System.err.println("BadLocationException");
@@ -182,18 +199,27 @@ public class MainWindow extends JFrame implements ChatMsgListener{
                            });
                 }
             }else if(e.getSource() == MainWindow.this.connectButton){
-                connectButton.setText("Disconnect");
-                MainWindow.this.connect();
+                if(ircbot == null || !ircbot.isConnected()){
+                    //connect
+                    MainWindow.this.connect();
+                    connectButton.setText("Disconnect");
+                }else if(ircbot != null && ircbot.isConnected()){
+                    MainWindow.this.disconnect();
+                    connectButton.setText("Connect");
+                }
+                
             }else if(e.getSource() == sendButton || e.getSource() == inputField){
                 String message = MainWindow.this.inputField.getText();
-                ircbot.chat(MainWindow.this.channel, message);
+                if(ircbot != null && ircbot.isConnected()){
+                    ircbot.chat(MainWindow.this.channel, message);
+                    append(String.format("%s: %s\r\n",MainWindow.this.nickname,message));
+                }
                 inputField.setText("");
-                append(String.format("%s: %s\r\n",MainWindow.this.nickname,message));
+                
             }
             
         }
         
-        //ircbot.sendRaw(inputField.getText());
     }
     
     

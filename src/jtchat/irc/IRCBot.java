@@ -260,7 +260,7 @@ public class IRCBot {
                                 }
                                 writer.flush();
                             }catch(IOException e){
-                                log("Send thread I/O error",IRCBot.LogType.SYS);
+                                //log("Send thread I/O error",IRCBot.LogType.SYS);
                                 break;
                             }
                         }
@@ -307,7 +307,7 @@ public class IRCBot {
                         }
                     }catch(IOException e){
                         //threw by reader
-                        log("Receive thread I/O error",IRCBot.LogType.SYS);
+                        //log("Receive thread I/O error",IRCBot.LogType.SYS);
                         break;
                     }
                  }
@@ -339,5 +339,16 @@ public class IRCBot {
             IRCBot.this.sendRaw("PING");
         }
     }
+    
+    public boolean isConnected(){
+        if(socket==null){
+            return false;
+        }else if(socket.isConnected() && sendThread.isAlive() && receiveThread.isAlive()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
 }
 
