@@ -12,8 +12,6 @@ import java.net.UnknownHostException;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.Timer;
 
 
@@ -36,6 +34,7 @@ public class IRCBot {
     
 
     Timer aliveCheckTask;
+    Timer reconnectTask = null;    //only used for repeatly trying to reconnect
     Timer pingTask;
     
     private enum LogType{
@@ -65,6 +64,23 @@ public class IRCBot {
     public void sendRaw(String message){
         synchronized(sendMsgQueue){
             sendMsgQueue.add(message+"\r\n");
+        }
+    }
+    
+    public void reconnect(){
+        if(connect(lastIRCServer,lastIRCPort,lastIRCNickname,lastIRCLogin,lastIRCServerPass)){
+            //delete reconnectTask
+            if(reconnectTask != null){
+                reconnectTask.cancel();
+                reconnectTask = null;
+            }
+            onReconnect();
+        }else{
+            //establish reconnect task
+            if(reconnectTask == null){
+                reconnectTask = new Timer(); 
+                reconnectTask.scheduleAtFixedRate(new ReconnectTask(), 5000,5000);
+            }
         }
     }
     
@@ -122,10 +138,11 @@ public class IRCBot {
         }catch(Exception e){
             if(e instanceof UnknownHostException){
                 //no such host
-                log(String.format("cannot connect to host\r\n"),IRCBot.LogType.SYS);
+                log(String.format("Cannot connect to %s\r\n",server),IRCBot.LogType.SYS);
             }else if(e instanceof IOException){
                 //threw by socket.getOutputStream( ) and socket.getInputStream( ) and writer, reader
-                log(String.format("error when trying to establish I/O\r\n"),IRCBot.LogType.SYS);
+                //log(String.format("error when trying to establish I/O\r\n"),IRCBot.LogType.SYS);
+                log(String.format("Cannot connect to %s\r\n",server),IRCBot.LogType.SYS);
             }
             
         }
@@ -148,6 +165,7 @@ public class IRCBot {
             if(threadRunning){
                 //cancel alive checking task
                 aliveCheckTask.cancel();
+                pingTask.cancel();
                 System.out.println("Timer closed");
 
                 //close input and output thread
@@ -168,7 +186,7 @@ public class IRCBot {
                 log("Disconnect from server",IRCBot.LogType.SYS);
             }else{
                 //socket has already closed
-                log("Connection has already closed, duplicate IRCBot.close() call",IRCBot.LogType.SYS);
+                log("Connection has already closed",IRCBot.LogType.SYS);
             }
         }catch(Exception e){
             if(e instanceof IOException){
@@ -241,6 +259,10 @@ public class IRCBot {
     
     //the connection is closed by accident
     public void onAccidentDisconnection(){
+        
+    }
+    
+    public void onReconnect(){
         
     }
     
@@ -331,6 +353,13 @@ public class IRCBot {
             }else{
                 //log("Connection alive",IRCBot.LogType.SYS);
             }
+        }
+    }
+    
+    private class ReconnectTask extends TimerTask{
+        public void run(){
+            System.out.println("Reconnect Task");
+            IRCBot.this.reconnect();
         }
     }
     

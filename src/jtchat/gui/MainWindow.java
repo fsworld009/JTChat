@@ -2,7 +2,6 @@
 package jtchat.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Insets;
@@ -10,10 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
-import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -21,8 +17,6 @@ import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.Style;
-import javax.swing.text.StyleConstants;
 import jtchat.irc.ChatMsgListener;
 import jtchat.irc.JtvIRCBot;
 
@@ -168,9 +162,14 @@ public class MainWindow extends JFrame implements ChatMsgListener{
     }
     
     public void onSysMsg(String message){
-            append(String.format("[SYS] %s\r\n",message));
+        append(String.format("[SYS] %s\r\n",message));
 
     }
+    
+    public void onReconnect(){
+        ircbot.join(this.channel);
+    }
+    
     
     private void append(final String message){
         

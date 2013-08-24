@@ -66,9 +66,20 @@ public class JtvIRCBot extends IRCBot{
         }
     }
     
+    public void onAccidentDisconnection(){
+        //auto reconnect
+        reconnect();
+    }
+    
     public void onSysMsg(String message){
         for(int i=0;i<msgListeners.size();i++){
             msgListeners.get(i).onSysMsg(message);
+        }
+    }
+    
+    public void onReconnect(){
+        for(int i=0;i<msgListeners.size();i++){
+            msgListeners.get(i).onReconnect();
         }
     }
 }
