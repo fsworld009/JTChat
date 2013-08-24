@@ -167,8 +167,12 @@ public class MainWindow extends JFrame implements ChatMsgListener{
 
     }
     
-    public void onReconnect(){
+    public void onReconnectSuccess(){
         ircbot.join(this.channel);
+    }
+    
+    public void onLoginFailed(){
+        connectButton.setText("Connect");
     }
     
     

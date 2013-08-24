@@ -32,10 +32,13 @@ public class IRCBot {
     private String lastIRCNickname = "";
     private String lastIRCLogin = "";
     
+    private boolean loginSuccessful;
+    
 
-    Timer aliveCheckTask;
-    Timer reconnectTask = null;    //only used for repeatly trying to reconnect
-    Timer pingTask;
+    private Timer aliveCheckTask;
+    private Timer reconnectTask = null;    //only used for repeatly trying to reconnect
+    private Timer pingTask;
+    private Timer loginCheckTask;
     
     private enum LogType{
         SEND, RECEIVE, SYS
@@ -54,7 +57,10 @@ public class IRCBot {
         String logWithoutReturn = log.replaceAll("\r\n", "");
         result+=logWithoutReturn;
         System.out.println(result);
-        onLog(result);
+        //discard PING sent by client and PONG by server
+        if(!result.matches("^>>> PING") && !result.matches("^<<< PONG.*")){
+            onLog(result);
+        }
         
         if(type == IRCBot.LogType.SYS){
             onSysMsg(logWithoutReturn);
@@ -74,7 +80,7 @@ public class IRCBot {
                 reconnectTask.cancel();
                 reconnectTask = null;
             }
-            onReconnect();
+            onReconnectSuccess();
         }else{
             //establish reconnect task
             if(reconnectTask == null){
@@ -85,6 +91,12 @@ public class IRCBot {
     }
     
     public boolean connect(String server, int port, String nickname, String login, String password){
+        lastIRCServer = server;
+        lastIRCPort = port;
+        lastIRCServerPass = password;
+        lastIRCNickname = nickname;
+        lastIRCLogin = login;
+        
         // Connect to the IRC server.
 
         try{
@@ -93,11 +105,7 @@ public class IRCBot {
             if(socket.isConnected()){
                 log(String.format("Connectted to %s:%s",socket.getInetAddress(),socket.getPort()),IRCBot.LogType.SYS);
                 //save connection info
-                lastIRCServer = server;
-                lastIRCPort = port;
-                lastIRCServerPass = password;
-                lastIRCNickname = nickname;
-                lastIRCLogin = login;
+
                 
                 writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                 reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -130,8 +138,11 @@ public class IRCBot {
                 
                 pingTask = new Timer(); 
                 pingTask.scheduleAtFixedRate(new PingTask(), 30000,30000);
- 
                 
+                loginCheckTask= new Timer();
+                loginCheckTask.schedule(new LoginCheckTask(), 10000);
+ 
+                loginSuccessful = false;
                 return true;
                 
             }
@@ -166,6 +177,7 @@ public class IRCBot {
                 //cancel alive checking task
                 aliveCheckTask.cancel();
                 pingTask.cancel();
+                loginCheckTask.cancel();
                 System.out.println("Timer closed");
 
                 //close input and output thread
@@ -235,6 +247,9 @@ public class IRCBot {
             }
             
             //other users join the channel
+        }else if(firstParse[1].equals("001")){
+            //login successful
+            loginSuccessful = true;
         }
     }
     
@@ -256,13 +271,17 @@ public class IRCBot {
         
     }
     
+    public void onLoginFailed(){
+        
+    }
+    
     
     //the connection is closed by accident
     public void onAccidentDisconnection(){
         
     }
     
-    public void onReconnect(){
+    public void onReconnectSuccess(){
         
     }
     
@@ -366,6 +385,16 @@ public class IRCBot {
     private class PingTask extends TimerTask{
         public void run(){
             IRCBot.this.sendRaw("PING");
+        }
+    }
+    
+    private class LoginCheckTask extends TimerTask{
+        public void run(){
+            if(!loginSuccessful){
+                log("Incorrect login information",IRCBot.LogType.SYS);
+                IRCBot.this.close();
+                onLoginFailed();
+            }
         }
     }
     

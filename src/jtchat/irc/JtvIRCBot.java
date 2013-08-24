@@ -77,9 +77,15 @@ public class JtvIRCBot extends IRCBot{
         }
     }
     
-    public void onReconnect(){
+    public void onReconnectSuccess(){
         for(int i=0;i<msgListeners.size();i++){
-            msgListeners.get(i).onReconnect();
+            msgListeners.get(i).onReconnectSuccess();
+        }
+    }
+    
+    public void onLoginFailed(){
+        for(int i=0;i<msgListeners.size();i++){
+            msgListeners.get(i).onLoginFailed();
         }
     }
 }
