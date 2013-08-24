@@ -31,6 +31,10 @@ public class MainWindow extends JFrame implements ChatMsgListener{
     private JEditorPane chatMsgs;
     private SettingWindow settingWindow = new SettingWindow();;
     private ChatActionListener chatActionListener = new ChatActionListener();
+    
+    //for chat
+    private String channel = "";
+    private String nickname = "";
     public MainWindow(){
         super();
         
@@ -58,9 +62,13 @@ public class MainWindow extends JFrame implements ChatMsgListener{
             ircbot.registerMsgListener(this);
         
         }
-        ircbot.connect(SettingTable.ins().IRCserver,SettingTable.ins().IRCport,SettingTable.ins().IRCnickname,"JTChat",SettingTable.ins().IRCservpass);
-        ircbot.join(SettingTable.ins().IRCchannel);
-        ircbot.sendRaw("JTVCLIENT");
+        if(ircbot.connect(SettingTable.ins().IRCserver,SettingTable.ins().IRCport,SettingTable.ins().IRCnickname,"JTChat",SettingTable.ins().IRCservpass)){
+            ircbot.join(SettingTable.ins().IRCchannel);
+            ircbot.sendRaw("JTVCLIENT");
+            this.channel = SettingTable.ins().IRCchannel;
+            this.nickname = SettingTable.ins().IRCnickname;
+        }
+        
     }
     
     //initialize UI components
@@ -83,7 +91,7 @@ public class MainWindow extends JFrame implements ChatMsgListener{
         connectButton = new JButton("Connect");
         connectButton.setMargin(new Insets(0,0,0,0));
         
-        //inputField.addActionListener();
+        //
         
         
         
@@ -96,7 +104,7 @@ public class MainWindow extends JFrame implements ChatMsgListener{
         sendButton.addActionListener(chatActionListener);
         setButton.addActionListener(chatActionListener);
         connectButton.addActionListener(chatActionListener);
-        
+        inputField.addActionListener(chatActionListener);
         
         this.add(textBoxPanel,BorderLayout.SOUTH);
         
@@ -133,14 +141,10 @@ public class MainWindow extends JFrame implements ChatMsgListener{
     public void onChatMsg(String channel, String sender, String message){
         //SwingUtilities.invokeLater(new Runnable() {
         //    public void run() {
-                try {
-                    chatMsgs.getDocument().insertString(chatMsgs.getDocument().getLength(), String.format("%s: %s\r\n",sender,message), null);
-                } catch (BadLocationException ex) {
-                    //need improved
-                    System.err.println("BadLocationException");
-                }
+
             //}
         //}
+        append(String.format("%s: %s\r\n",sender,message));
     }
     public void onChatAction(String channel, String sender, String action){
         
@@ -150,12 +154,17 @@ public class MainWindow extends JFrame implements ChatMsgListener{
     }
     
     public void onSysMsg(String message){
-            try {
-                chatMsgs.getDocument().insertString(chatMsgs.getDocument().getLength(), String.format("[SYS] %s\r\n",message), null);
-            } catch (BadLocationException ex) {
-                //need improved
-                System.err.println("BadLocationException");
-            }
+            append(String.format("[SYS] %s\r\n",message));
+
+    }
+    
+    private void append(String message){
+        try{
+            chatMsgs.getDocument().insertString(chatMsgs.getDocument().getLength(), message, null);
+        } catch (BadLocationException ex) {
+            //need improved
+            System.err.println("BadLocationException");
+        }
     }
     
     private class ChatActionListener implements ActionListener{
@@ -171,7 +180,13 @@ public class MainWindow extends JFrame implements ChatMsgListener{
             }else if(e.getSource() == MainWindow.this.connectButton){
                 connectButton.setText("Disconnect");
                 MainWindow.this.connect();
+            }else if(e.getSource() == sendButton || e.getSource() == inputField){
+                String message = MainWindow.this.inputField.getText();
+                ircbot.chat(MainWindow.this.channel, message);
+                inputField.setText("");
+                append(String.format("%s: %s\r\n",MainWindow.this.nickname,message));
             }
+            
         }
         
         //ircbot.sendRaw(inputField.getText());
