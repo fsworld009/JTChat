@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -32,7 +33,8 @@ public class IRCSetPane extends JPanel{
     private JTextField tIrcNick;
     private JLabel lIrcChannel;
     private JTextField tIrcChannel;
-    private JButton bConnect;
+    private JButton bSave;
+    private SetActionListener setActionListener = new SetActionListener();
     public IRCSetPane(){
         init();
     }
@@ -122,16 +124,16 @@ public class IRCSetPane extends JPanel{
         this.add(tIrcChannel,gbc);
         
         //Connect
-        /*
-        bConnect = new JButton("Connect");
+        
+        bSave = new JButton("Save");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 5;
         gbc.gridwidth = 2;
         
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        this.add(bConnect,gbc);*/
- 
+        //gbc.fill = GridBagConstraints.HORIZONTAL;
+        this.add(bSave,gbc);
+        bSave.addActionListener(setActionListener);
 
     }
     
@@ -142,5 +144,15 @@ public class IRCSetPane extends JPanel{
         SettingTable.ins().IRCservpass = new String(tIrcServerPass.getPassword());
         SettingTable.ins().IRCchannel = tIrcChannel.getText();
         
+    }
+    
+    private class SetActionListener implements ActionListener{
+        public void actionPerformed(ActionEvent e) {
+            if(e.getSource() == bSave){
+                save();
+            }
+        }
+        
+        //ircbot.sendRaw(inputField.getText());
     }
 }

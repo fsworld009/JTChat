@@ -35,6 +35,7 @@ public class MainWindow extends JFrame{
         
         init();
         
+        
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(350,500);
         this.setResizable(false);
@@ -46,8 +47,14 @@ public class MainWindow extends JFrame{
     }
     
     public void connect(){
-        //ircbot
-        ircbot = new JtvIRCBot();
+        
+        if(ircbot==null){
+            //initialize ircbot
+            ircbot = new JtvIRCBot();
+            ircbot.registerLogListener(settingWindow.logPaneRef());
+            
+        
+        }
         ircbot.connect(SettingTable.ins().IRCserver,SettingTable.ins().IRCport,SettingTable.ins().IRCnickname,"JTChat",SettingTable.ins().IRCservpass);
         ircbot.join(SettingTable.ins().IRCchannel);
         ircbot.sendRaw("JTVCLIENT");

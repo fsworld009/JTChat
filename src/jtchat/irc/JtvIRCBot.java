@@ -31,12 +31,14 @@ public class JtvIRCBot extends IRCBot{
     }
     
     public void onLog(String log){
-        for(int i=0;i<msgListeners.size();i++){
+        for(int i=0;i<logListeners.size();i++){
             logListeners.get(i).onLog(log);
         }
     }
     
     private String getTwitchId(String sender){
+        //parse twitch username from twitch chats
+        //ex: user!user@user.tmi.twitch.tv -> user
         if(sender.contains("!")){
             return sender.substring(0,sender.indexOf('!'));
         }else{
@@ -45,22 +47,20 @@ public class JtvIRCBot extends IRCBot{
     }
     
     public void onChatMsg(String channel, String sender, String message){
-        //parse twitch username from twitch chats
-        //ex: user!user@user.tmi.twitch.tv -> user
-        
-        System.out.printf("get %s %s : %s\n",channel,getTwitchId(sender),message);
+        sender = getTwitchId(sender);
         for(int i=0;i<msgListeners.size();i++){
             msgListeners.get(i).onChatMsg(channel, sender, message);
         }
     }
     
-    public void onChatAction(String channel, String action){
+    public void onChatAction(String channel, String sender, String action){
         for(int i=0;i<msgListeners.size();i++){
-            msgListeners.get(i).onChatAction(channel, action);
+            msgListeners.get(i).onChatAction(channel, sender, action);
         }
     }
     
     public void onPrivateMsg(String sender, String message){
+        sender = getTwitchId(sender);
         for(int i=0;i<msgListeners.size();i++){
             msgListeners.get(i).onPrivateMsg(sender, message);
         }

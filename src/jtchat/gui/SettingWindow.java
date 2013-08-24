@@ -42,5 +42,12 @@ public class SettingWindow extends JFrame{
             ircSetPane.save();
         }
     }
+    
+
+    //temp method
+    public LogPane logPaneRef(){
+        return logPane;
+    }
+    
 
 }
