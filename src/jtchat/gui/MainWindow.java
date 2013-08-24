@@ -3,18 +3,17 @@ package jtchat.gui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.text.BadLocationException;
@@ -26,6 +25,7 @@ public class MainWindow extends JFrame{
     private JTextField inputField;
     private JButton setButton;
     private JButton sendButton;
+    private JButton connectButton;
     private SettingWindow settingWindow = new SettingWindow();;
     private ChatActionListener chatActionListener = new ChatActionListener();
     public MainWindow(){
@@ -66,8 +66,12 @@ public class MainWindow extends JFrame{
         textBoxPanel.setLayout(new FlowLayout());
         
         inputField = new JTextField(14);
-        sendButton = new JButton("Connect");
+        sendButton = new JButton("Chat");
+        sendButton.setMargin(new Insets(0,0,0,0));
         setButton = new JButton("Setting");
+        setButton.setMargin(new Insets(0,0,0,0));
+        connectButton = new JButton("Connect");
+        connectButton.setMargin(new Insets(0,0,0,0));
         
         //inputField.addActionListener();
         
@@ -76,12 +80,12 @@ public class MainWindow extends JFrame{
         textBoxPanel.add(inputField);
         textBoxPanel.add(sendButton);
         textBoxPanel.add(setButton);
-        
+        textBoxPanel.add(connectButton);        
 
         
         sendButton.addActionListener(chatActionListener);
         setButton.addActionListener(chatActionListener);
-        
+        connectButton.addActionListener(chatActionListener);
         
         
         this.add(textBoxPanel,BorderLayout.SOUTH);
@@ -129,8 +133,8 @@ public class MainWindow extends JFrame{
                                }
                            });
                 }
-            }else if(e.getSource() == MainWindow.this.sendButton){
-                sendButton.setText("Chat");
+            }else if(e.getSource() == MainWindow.this.connectButton){
+                connectButton.setText("Disconnect");
                 MainWindow.this.connect();
             }
         }

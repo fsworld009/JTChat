@@ -165,6 +165,9 @@ public class IRCBot {
     private void parseMessage(String message){
         String firstParse[] = message.split(" ",3);
         //action at firstParse[1]
+        if(firstParse.length<2){
+            return;
+        }
         if(firstParse[1].equals("PRIVMSG")){
             String parse[] = message.split(" ",4);
             //parse[0]: sender
