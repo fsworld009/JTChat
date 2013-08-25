@@ -2,6 +2,7 @@
 package jtchat.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Insets;
@@ -18,6 +19,7 @@ import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 import jtchat.irc.ChatMsgListener;
 import jtchat.irc.JtvIRCBot;
 
@@ -175,7 +177,8 @@ public class MainWindow extends JFrame implements ChatMsgListener{
 
             //}
         //}
-        append(String.format("%s: %s\r\n",sender,message));
+        append(String.format("%s: ",sender),SettingTable.ins().ChatNickColor,SettingTable.ins().ChatNickFont);
+        append(String.format("%s\r\n",message),SettingTable.ins().ChatTextColor,SettingTable.ins().ChatTextFont);
     }
     public void onChatAction(String channel, String sender, String action){
         
@@ -185,7 +188,7 @@ public class MainWindow extends JFrame implements ChatMsgListener{
     }
     
     public void onSysMsg(String message){
-        append(String.format("[SYS] %s\r\n",message));
+        append(String.format("[SYS] %s\r\n",message),SettingTable.ins().ChatTextColor,SettingTable.ins().ChatTextFont);
 
     }
     
@@ -198,13 +201,14 @@ public class MainWindow extends JFrame implements ChatMsgListener{
     }
     
     
-    private void append(final String message){
-        
-        //chatAttr.addAttribute(StyleConstants.CharacterConstants.Foreground, Color.decode("#FF0000"));
-        //Style style = chatMsgs.addStyle("Red", null);
+    private void append(final String message,final Color color,final Font font){
+
         SwingUtilities.invokeLater(new Runnable() {
             public void run(){
                 try{
+                    chatAttr.addAttribute(StyleConstants.CharacterConstants.Foreground, color);
+                    chatAttr.addAttribute(StyleConstants.FontConstants.FontFamily, font.getFamily());
+                    chatAttr.addAttribute(StyleConstants.FontConstants.FontSize, font.getSize());
                     chatMsgs.getDocument().insertString(chatMsgs.getDocument().getLength(), message, chatAttr);
                 } catch (BadLocationException ex) {
                     //need improved
@@ -277,8 +281,10 @@ public class MainWindow extends JFrame implements ChatMsgListener{
             }else if(e.getSource() == sendButton || e.getSource() == inputField){
                 String message = MainWindow.this.inputField.getText();
                 if(ircbot != null && ircbot.isConnected()){
-                    ircbot.chat(MainWindow.this.channel, message);
-                    append(String.format("%s: %s\r\n",MainWindow.this.nickname,message));
+                    //ircbot.chat(MainWindow.this.channel, message);
+                    System.out.println(SettingTable.ins().ChatNickColor.toString());
+                    append(String.format("%s: ",MainWindow.this.nickname),SettingTable.ins().ChatNickColor,SettingTable.ins().ChatNickFont);
+                    append(String.format("%s\r\n",message),SettingTable.ins().ChatTextColor,SettingTable.ins().ChatTextFont);
                 }
                 inputField.setText("");
                 

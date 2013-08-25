@@ -57,7 +57,7 @@ import javax.swing.plaf.FontUIResource;
 //
 
 public class NwFontChooserS extends JDialog {
-    String[] styleList = new String[] { "Plain", "Bold", "Italic" };
+    String[] styleList = new String[] { "Plain"};//, "Bold", "Italic" };
     String[] sizeList =
     new String[] {
         "3",
