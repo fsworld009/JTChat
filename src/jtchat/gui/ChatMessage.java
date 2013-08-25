@@ -16,9 +16,12 @@ public class ChatMessage {
     private String messages;    //save all current chat msgs
     private SimpleAttributeSet chatAttr;
     
+    
+    
     //regular expression
     private Pattern nickPattern;
     private Pattern sysPattern;
+    private int numOfLines = 0;
     
     public enum Type{
         Text, Nick, Sys
@@ -38,6 +41,7 @@ public class ChatMessage {
     
     public void add(String newMsg){
         messages += newMsg += "\n";
+        numOfLines++;
     }
     
     private void setAttribute(ChatMessage.Type type){
@@ -64,9 +68,18 @@ public class ChatMessage {
         chatAttr.addAttribute(StyleConstants.FontConstants.FontSize, font.getSize());
     }
     
-    public void setText(final JTextPane chatPane){
+    public void removeOldLines(){
         //remove old msgs
         
+        while(numOfLines>SettingTable.ins().ChatNumOfLines){
+            messages = messages.replaceFirst(".*\\n", "");
+            numOfLines--;
+            System.out.printf("%d\n",numOfLines);
+        }
+    }
+    
+    public void setText(final JTextPane chatPane){
+        removeOldLines();
         
         //
         SwingUtilities.invokeLater(new Runnable() {

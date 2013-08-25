@@ -18,8 +18,8 @@ public class SettingTable {
     public String IRCchannel="#world9918";
     
     //Chatroom
-    public int ChatWidth = 350;
-    public int ChatHeight = 550;
+    public int ChatWidth = 160;
+    public int ChatHeight = 330;
     public Color ChatBgColor = Color.decode("#000000");
     public int ChatNumOfLines = 20;
     public Color ChatTextColor = Color.decode("#FFFFFF");
