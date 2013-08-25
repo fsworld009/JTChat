@@ -28,6 +28,8 @@ public class SettingTable {
     public Font ChatNickFont = new Font("MS Gothic",Font.PLAIN,14);
     public boolean ChatAlwaysOnTop = false;
     public boolean ChatUseTiwtchColor = true;
+    public Color ChatSysColor = Color.decode("#FFCCCC");
+    public Font ChatSysFont = new Font("Arial",Font.PLAIN,14);
     
 
        

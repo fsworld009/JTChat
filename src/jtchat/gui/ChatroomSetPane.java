@@ -38,13 +38,20 @@ public class ChatroomSetPane extends JPanel{
     private JButton bNickColor;
     private JLabel lNickFont;
     private JButton bNickFont;
+    private JLabel lSysColor;
+    private JButton bSysColor;
+    private JLabel lSysFont;
+    private JButton bSysFont;
     private JButton bApply;
     
     private Color cBg;
     private Color cText;
     private Color cNick;
+    private Color cSys;
     private Font fText;
     private Font fNick;
+    private Font fSys;
+    
     
     private SetActionListener setActionListener = new SetActionListener();
     
@@ -179,10 +186,38 @@ public class ChatroomSetPane extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(bNickFont,gbc);
         
-        chAlwaysOnTop = new JCheckBox("Always on Top");
+        lSysColor = new JLabel("System Color: ");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 7;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        this.add(lSysColor,gbc);
+        
+        bSysColor = new JButton();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 7;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        this.add(bSysColor,gbc);
+        
+        lSysFont = new JLabel("System Font: ");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 8;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        this.add(lSysFont,gbc);
+        
+        bSysFont = new JButton();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 8;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        this.add(bSysFont,gbc);
+        
+        chAlwaysOnTop = new JCheckBox("Always on Top");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 9;
         gbc.gridwidth = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(chAlwaysOnTop,gbc);
@@ -190,7 +225,7 @@ public class ChatroomSetPane extends JPanel{
         chUseTwitchColor = new JCheckBox("Use Jtv/Tiwtch Nickname Color");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 8;
+        gbc.gridy = 10;
         gbc.gridwidth = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(chUseTwitchColor,gbc);
@@ -198,7 +233,7 @@ public class ChatroomSetPane extends JPanel{
         bApply = new JButton("Apply");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 9;
+        gbc.gridy = 11;
         gbc.gridwidth = 2;
         
         //gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -210,7 +245,10 @@ public class ChatroomSetPane extends JPanel{
         bTextFont.addActionListener(setActionListener);
         bNickColor.addActionListener(setActionListener);
         bNickFont.addActionListener(setActionListener);
+        bSysColor.addActionListener(setActionListener);
+        bSysFont.addActionListener(setActionListener);
         bApply.addActionListener(setActionListener);
+        
         
     }
     
@@ -223,6 +261,8 @@ public class ChatroomSetPane extends JPanel{
         SettingTable.ins().ChatTextFont = fText;
         SettingTable.ins().ChatNickColor = cNick;
         SettingTable.ins().ChatNickFont = fNick;
+        SettingTable.ins().ChatSysColor = cSys;
+        SettingTable.ins().ChatSysFont = fSys;
         SettingTable.ins().ChatUseTiwtchColor = this.chUseTwitchColor.isSelected();
         SettingTable.ins().ChatAlwaysOnTop = this.chAlwaysOnTop.isSelected();
 
@@ -247,6 +287,12 @@ public class ChatroomSetPane extends JPanel{
         this.bNickColor.setText(this.colorToHexString(cNick));
         this.fNick = SettingTable.ins().ChatNickFont;
         this.bNickFont.setText(this.fontToString(fNick));
+        
+        this.cSys = SettingTable.ins().ChatSysColor;
+        this.bSysColor.setText(this.colorToHexString(cSys));
+        this.fSys = SettingTable.ins().ChatSysFont;
+        this.bSysFont.setText(this.fontToString(fSys));
+        
         
         this.chUseTwitchColor.setSelected(SettingTable.ins().ChatUseTiwtchColor);
         this.chAlwaysOnTop.setSelected(SettingTable.ins().ChatAlwaysOnTop);
@@ -283,6 +329,18 @@ public class ChatroomSetPane extends JPanel{
                 if(choose != null){
                     fNick = choose;
                     bNickFont.setText(fontToString(fNick));
+                }
+            }else if(e.getSource() == bSysColor){
+                Color choose = JColorChooser.showDialog(ChatroomSetPane.this, "Choose Color", cSys);
+                if(choose != null){
+                    cSys = choose;
+                    bSysColor.setText(colorToHexString(choose));
+                }
+            }else if(e.getSource() == bSysFont){
+                Font choose = NwFontChooserS.showDialog(null, "Choose Font", fSys);
+                if(choose != null){
+                    fSys = choose;
+                    bSysFont.setText(fontToString(fSys));
                 }
             }else if(e.getSource() == bApply){
                 save();
