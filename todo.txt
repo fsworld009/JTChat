@@ -6,3 +6,4 @@ save/load settings
 action/jtv commands display
 emulate twitch chat ui functions
 delicate connect to another thread (and so merge reconnect thread)
+msg queue compatetor

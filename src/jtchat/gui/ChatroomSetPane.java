@@ -1,6 +1,7 @@
 
 package jtchat.gui;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -37,6 +38,10 @@ public class ChatroomSetPane extends JPanel{
         init();
     }
     
+    private String colorToHexString(Color color){
+        return String.format("#%06x",color.getRGB() & 0x00FFFFFF).toUpperCase();
+    }
+    
     private void init(){
         setLayout(new GridBagLayout());
         GridBagConstraints gbc;
@@ -48,8 +53,8 @@ public class ChatroomSetPane extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(lWindowSize,gbc);
         
-        tWindowWidth = new JTextField(4);
-        tWindowHeight = new JTextField(4);
+        tWindowWidth = new JTextField(String.format("%d",SettingTable.ins().ChatWidth),4);
+        tWindowHeight = new JTextField(String.format("%d",SettingTable.ins().ChatHeight),4);
         
         JPanel windowSizePanel = new JPanel();
         windowSizePanel.setLayout(new FlowLayout());
@@ -71,7 +76,7 @@ public class ChatroomSetPane extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(lBgColor,gbc);
         
-        bBgColor = new JButton("#FF0000");
+        bBgColor = new JButton(colorToHexString(SettingTable.ins().ChatBgColor));
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 1;
@@ -92,13 +97,7 @@ public class ChatroomSetPane extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(tNumOfLines,gbc);
         
-        bTextColor = new JButton("#FF0000");
-        gbc = new GridBagConstraints();
-        gbc.gridx = 1;
-        gbc.gridy = 3;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        this.add(bTextColor,gbc);
-        
+       
         lTextColor = new JLabel("Text Color: ");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -106,7 +105,7 @@ public class ChatroomSetPane extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(lTextColor,gbc);
         
-        bTextColor = new JButton("#FF0000");
+        bTextColor = new JButton(colorToHexString(SettingTable.ins().ChatTextColor));
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 3;
@@ -134,7 +133,7 @@ public class ChatroomSetPane extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(lNickColor,gbc);
         
-        bNickColor = new JButton("#FF0000");
+        bNickColor = new JButton(colorToHexString(SettingTable.ins().ChatNickColor));
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 5;

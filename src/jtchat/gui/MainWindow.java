@@ -2,6 +2,7 @@
 package jtchat.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Insets;
@@ -113,16 +114,18 @@ public class MainWindow extends JFrame implements ChatMsgListener{
         setButton.addActionListener(chatActionListener);
         connectButton.addActionListener(chatActionListener);
         inputField.addActionListener(chatActionListener);
+
         
         this.add(textBoxPanel,BorderLayout.SOUTH);
         
         
         //text area that displays chat
         chatMsgs = new JTextPane();
+
         
         chatMsgs.setEditable(false);
         chatMsgs.setFont(new Font("Serif",Font.PLAIN,14));
-        chatMsgs.setOpaque(false);
+
         //try {
             //chatMsgs.setText("asdasdadadsadsa");
             //chatMsgs.getDocument().insertString(chatMsgs.getDocument().getLength(), "abc\n", null);
