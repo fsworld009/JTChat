@@ -177,8 +177,7 @@ public class MainWindow extends JFrame implements ChatMsgListener{
 
             //}
         //}
-        append(String.format("%s: ",sender),SettingTable.ins().ChatNickColor,SettingTable.ins().ChatNickFont);
-        append(String.format("%s\r\n",message),SettingTable.ins().ChatTextColor,SettingTable.ins().ChatTextFont);
+        appendChatMsg(sender,message);
     }
     public void onChatAction(String channel, String sender, String action){
         
@@ -188,7 +187,7 @@ public class MainWindow extends JFrame implements ChatMsgListener{
     }
     
     public void onSysMsg(String message){
-        append(String.format("[SYS] %s\r\n",message),SettingTable.ins().ChatTextColor,SettingTable.ins().ChatTextFont);
+        appendSysMsg(message);
 
     }
     
@@ -198,6 +197,16 @@ public class MainWindow extends JFrame implements ChatMsgListener{
     
     public void onLoginFailed(){
         connectButton.setText("Connect");
+    }
+    
+    
+    private void appendChatMsg(String nickname, String message){
+        append(String.format("%s: ",nickname),SettingTable.ins().ChatNickColor,SettingTable.ins().ChatNickFont);
+        append(String.format("%s\r\n",message),SettingTable.ins().ChatTextColor,SettingTable.ins().ChatTextFont);
+    }
+    
+    private void appendSysMsg(String message){
+        append(String.format("[SYS] %s\r\n",message),SettingTable.ins().ChatTextColor,SettingTable.ins().ChatTextFont);
     }
     
     
@@ -281,10 +290,9 @@ public class MainWindow extends JFrame implements ChatMsgListener{
             }else if(e.getSource() == sendButton || e.getSource() == inputField){
                 String message = MainWindow.this.inputField.getText();
                 if(ircbot != null && ircbot.isConnected()){
-                    //ircbot.chat(MainWindow.this.channel, message);
+                    ircbot.chat(MainWindow.this.channel, message);
                     System.out.println(SettingTable.ins().ChatNickColor.toString());
-                    append(String.format("%s: ",MainWindow.this.nickname),SettingTable.ins().ChatNickColor,SettingTable.ins().ChatNickFont);
-                    append(String.format("%s\r\n",message),SettingTable.ins().ChatTextColor,SettingTable.ins().ChatTextFont);
+                    appendChatMsg(MainWindow.this.nickname,message);
                 }
                 inputField.setText("");
                 

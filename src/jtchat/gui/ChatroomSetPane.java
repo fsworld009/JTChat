@@ -279,7 +279,7 @@ public class ChatroomSetPane extends JPanel{
                     bNickColor.setText(colorToHexString(choose));
                 }
             }else if(e.getSource() == bNickFont){
-                Font choose = NwFontChooserS.showDialog(null, "Choose Font", fText);
+                Font choose = NwFontChooserS.showDialog(null, "Choose Font", fNick);
                 if(choose != null){
                     fNick = choose;
                     bNickFont.setText(fontToString(fNick));
