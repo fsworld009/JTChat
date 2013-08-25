@@ -23,9 +23,9 @@ public class SettingTable {
     public Color ChatBgColor = Color.decode("#000000");
     public int ChatNumOfLines = 20;
     public Color ChatTextColor = Color.decode("#FFFFFF");
-    public Font ChatTextFont = new Font("Arial Unicode MS",Font.PLAIN,12);
+    public Font ChatTextFont = new Font("Arial Unicode MS",Font.PLAIN,14);
     public Color ChatNickColor = Color.decode("#FFFF00");
-    public Font ChatNickFont = new Font("MS Gothic",Font.PLAIN,12);
+    public Font ChatNickFont = new Font("MS Gothic",Font.PLAIN,14);
     public boolean ChatAlwaysOnTop = false;
     public boolean ChatUseTiwtchColor = true;
     

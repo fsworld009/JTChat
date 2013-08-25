@@ -5,6 +5,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,8 +35,8 @@ public class MainWindow extends JFrame implements ChatMsgListener{
     private JButton sendButton;
     private JButton connectButton;
     private JTextPane chatMsgs;
-    private JPanel textBoxPanel;
-    private JScrollPane chatScrollPane;
+    //private JPanel textBoxPanel;
+    //private JScrollPane chatScrollPane;
     private SettingWindow settingWindow = new SettingWindow(this); //need improved
     private ChatActionListener chatActionListener = new ChatActionListener();
     
@@ -92,12 +95,12 @@ public class MainWindow extends JFrame implements ChatMsgListener{
         
         
         //chat input and send button
-        textBoxPanel = new JPanel();
-        textBoxPanel.setLayout(new FlowLayout());
+        
+        
         
 
         
-        inputField = new JTextField(14);
+        inputField = new JTextField();
         inputField.setFont(new Font("Arial Unicode MS",Font.PLAIN,12));
         sendButton = new JButton("Chat");
         sendButton.setMargin(new Insets(0,0,0,0));
@@ -107,13 +110,42 @@ public class MainWindow extends JFrame implements ChatMsgListener{
         connectButton.setMargin(new Insets(0,0,0,0));
         
         //
+        JPanel textBoxPanel = new JPanel();
+        textBoxPanel.setLayout(new GridBagLayout());
+
+        GridBagConstraints gbc;
         
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        textBoxPanel.add(inputField,gbc);
         
+        /*gbc = new GridBagConstraints();
+        gbc.gridx = 3;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 0.0;
+        textBoxPanel.add(sendButton,gbc);*/
         
-        textBoxPanel.add(inputField);
-        textBoxPanel.add(sendButton);
-        textBoxPanel.add(setButton);
-        textBoxPanel.add(connectButton);        
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        //gbc.gridwidth = 4;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        textBoxPanel.add(setButton,gbc);
+        
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        //gbc.gridwidth = 2;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        textBoxPanel.add(connectButton,gbc);        
+        
 
         
         sendButton.addActionListener(chatActionListener);
@@ -123,6 +155,7 @@ public class MainWindow extends JFrame implements ChatMsgListener{
 
         
         this.add(textBoxPanel,BorderLayout.SOUTH);
+
         
         
         //text area that displays chat
@@ -137,10 +170,12 @@ public class MainWindow extends JFrame implements ChatMsgListener{
             //chatMsgs.getDocument().insertString(chatMsgs.getDocument().getLength(), "abc\n", null);
             //chatMsgs.getDocument().insertString(chatMsgs.getDocument().getLength(), "efg\n", null);
         //} 
-        chatScrollPane = new JScrollPane(chatMsgs,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane chatScrollPane = new JScrollPane(chatMsgs,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         
         
         //make components transparent
+        //textBoxP1.setOpaque(false);
+        //textBoxP2.setOpaque(false);
         textBoxPanel.setOpaque(false);
         chatMsgs.setOpaque(false);
 

@@ -115,7 +115,7 @@ public class IRCBot {
                 
                 // Log on to the server, must sent before creating thread
                 writer.write("PASS " + password + "\r\n");
-                log("PASS " + password,IRCBot.LogType.SEND);
+                log("PASS " + "******",IRCBot.LogType.SEND);
                 writer.write("NICK " + nickname + "\r\n");
                 log("NICK " + nickname,IRCBot.LogType.SEND);
                 writer.write("USER " + login + "\r\n");
@@ -140,7 +140,7 @@ public class IRCBot {
                 pingTask.scheduleAtFixedRate(new PingTask(), 30000,30000);
                 
                 loginCheckTask= new Timer();
-                loginCheckTask.schedule(new LoginCheckTask(), 10000);
+                loginCheckTask.schedule(new LoginCheckTask(), 6000);
  
                 loginSuccessful = false;
                 return true;
@@ -344,7 +344,7 @@ public class IRCBot {
                             }
 
                         }else{
-                            System.out.printf("null\r\n");
+                            //System.out.printf("null\r\n");
                         }
                     }catch(IOException e){
                         //threw by reader
