@@ -1,6 +1,7 @@
 
 package jtchat.gui;
 
+import jtchat.gui.include.NwFontChooserS;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -14,6 +15,9 @@ import javax.swing.JColorChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+
+
 
 
 public class ChatroomSetPane extends JPanel{
@@ -188,16 +192,24 @@ public class ChatroomSetPane extends JPanel{
         
         //action listener
         bBgColor.addActionListener(setActionListener);
+        bTextColor.addActionListener(setActionListener);
+        bTextFont.addActionListener(setActionListener);
+        bNickColor.addActionListener(setActionListener);
+        bNickFont.addActionListener(setActionListener);
+        bSave.addActionListener(setActionListener);
         
     }
     
     public void save(){
         SettingTable.ins().ChatWidth = Integer.parseInt(tWindowWidth.getText());
         SettingTable.ins().ChatHeight = Integer.parseInt(tWindowHeight.getText());
-        SettingTable.ins().ChatBgColor = Color.decode(bBgColor.getText());
+        SettingTable.ins().ChatBgColor = cBg;
         SettingTable.ins().ChatNumOfLines = Integer.parseInt(tNumOfLines.getText());
-        //SettingTable.ins().ChatTextColor = Color.decode(bTextColor.getText());
-        //SettingTable.ins().ChatTextFont = Font.decode(bTextFont.getText());
+        SettingTable.ins().ChatTextColor = cText;
+        SettingTable.ins().ChatTextFont = fText;
+        SettingTable.ins().ChatNickColor = cNick;
+        SettingTable.ins().ChatNickFont = fNick;
+        SettingTable.ins().ChatUseTiwtchColor = this.chUseTwitchColor.isSelected();
 
     }
     
@@ -227,10 +239,37 @@ public class ChatroomSetPane extends JPanel{
     private class SetActionListener implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             if(e.getSource() == bBgColor){
-                Color choose = JColorChooser.showDialog(ChatroomSetPane.this, "Choose Color", Color.yellow);
+                Color choose = JColorChooser.showDialog(ChatroomSetPane.this, "Choose Color", cBg);
                 if(choose != null){
                     cBg = choose;
+                    bBgColor.setText(colorToHexString(choose));
                 }
+            }else if(e.getSource() == bTextColor){
+                Color choose = JColorChooser.showDialog(ChatroomSetPane.this, "Choose Color", cText);
+                if(choose != null){
+                    cText = choose;
+                    bTextColor.setText(colorToHexString(choose));
+                }
+            }else if(e.getSource() == bTextFont){
+                Font choose = NwFontChooserS.showDialog(null, "Choose Font", fText);
+                if(choose != null){
+                    fText = choose;
+                    bTextFont.setText(fontToString(fText));
+                }
+            }else if(e.getSource() == bNickColor){
+                Color choose = JColorChooser.showDialog(ChatroomSetPane.this, "Choose Color", cNick);
+                if(choose != null){
+                    cNick = choose;
+                    bNickColor.setText(colorToHexString(choose));
+                }
+            }else if(e.getSource() == bNickFont){
+                Font choose = NwFontChooserS.showDialog(null, "Choose Font", fText);
+                if(choose != null){
+                    fNick = choose;
+                    bNickFont.setText(fontToString(fNick));
+                }
+            }else if(e.getSource() == bSave){
+                save();
             }
         }
         
