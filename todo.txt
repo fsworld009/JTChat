@@ -7,3 +7,4 @@ action/jtv commands display
 emulate twitch chat ui functions
 delicate connect to another thread (and so merge reconnect thread)
 msg queue compatetor
+need an architecture to let lower UIs communicate with higher UIs (corrently I just pass the reference of higher class, may not be a good approach)

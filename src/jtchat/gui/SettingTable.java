@@ -18,15 +18,17 @@ public class SettingTable {
     public String IRCchannel="#smallag";
     
     //Chatroom
-    public int ChatWidth = 300;
+    public int ChatWidth = 350;
     public int ChatHeight = 550;
     public Color ChatBgColor = Color.decode("#000000");
     public int ChatNumOfLines = 20;
     public Color ChatTextColor = Color.decode("#FFFFFF");
     public Font ChatTextFont = new Font("Arial Unicode MS",Font.PLAIN,9);
     public Color ChatNickColor = Color.decode("#FFFF00");
-    public Font ChatNickFont = new Font("MS Gothic",Font.BOLD,9);
+    public Font ChatNickFont = new Font("MS Gothic",Font.PLAIN,9);
+    public boolean ChatAlwaysOnTop = false;
     public boolean ChatUseTiwtchColor = true;
+    
 
        
     public static SettingTable ins(){

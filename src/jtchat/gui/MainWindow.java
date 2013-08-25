@@ -2,7 +2,6 @@
 package jtchat.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Insets;
@@ -31,7 +30,9 @@ public class MainWindow extends JFrame implements ChatMsgListener{
     private JButton sendButton;
     private JButton connectButton;
     private JTextPane chatMsgs;
-    private SettingWindow settingWindow = new SettingWindow();;
+    private JPanel textBoxPanel;
+    private JScrollPane chatScrollPane;
+    private SettingWindow settingWindow = new SettingWindow(this); //need improved
     private ChatActionListener chatActionListener = new ChatActionListener();
     
     //for chat
@@ -45,10 +46,10 @@ public class MainWindow extends JFrame implements ChatMsgListener{
 
         
         init();
-        
+        applyChange();
         
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(350,500);
+        //this.setSize(350,500);
         this.setResizable(false);
         
         //stop ircbot on close
@@ -79,6 +80,7 @@ public class MainWindow extends JFrame implements ChatMsgListener{
         ircbot.close();
     }
     
+   
     //initialize UI components
     private void init(){
     
@@ -88,7 +90,7 @@ public class MainWindow extends JFrame implements ChatMsgListener{
         
         
         //chat input and send button
-        JPanel textBoxPanel = new JPanel();
+        textBoxPanel = new JPanel();
         textBoxPanel.setLayout(new FlowLayout());
         
         inputField = new JTextField(14);
@@ -131,7 +133,8 @@ public class MainWindow extends JFrame implements ChatMsgListener{
             //chatMsgs.getDocument().insertString(chatMsgs.getDocument().getLength(), "abc\n", null);
             //chatMsgs.getDocument().insertString(chatMsgs.getDocument().getLength(), "efg\n", null);
         //} 
-        this.add(new JScrollPane(chatMsgs,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER),BorderLayout.CENTER);
+        chatScrollPane = new JScrollPane(chatMsgs,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        this.add(chatScrollPane,BorderLayout.CENTER);
       }
     
     private class closeEventWindowListener extends WindowAdapter{
@@ -191,6 +194,40 @@ public class MainWindow extends JFrame implements ChatMsgListener{
                     //need improved
                     System.err.println("BadLocationException");
                 }
+            }
+        });
+    }
+    
+    //called by ChatroomSetPane and MainWindow constructor
+    public void applyChange(){
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                //background
+                chatMsgs.setBackground(SettingTable.ins().ChatBgColor);
+                textBoxPanel.setBackground(SettingTable.ins().ChatBgColor);
+                inputField.setBackground(SettingTable.ins().ChatBgColor);
+                chatScrollPane.getVerticalScrollBar().setBackground(SettingTable.ins().ChatBgColor);
+                
+                //text color
+                inputField.setForeground(SettingTable.ins().ChatTextColor);
+                
+                //buttons
+                sendButton.setForeground(SettingTable.ins().ChatTextColor);
+                setButton.setForeground(SettingTable.ins().ChatTextColor);
+                connectButton.setForeground(SettingTable.ins().ChatTextColor);
+                
+                sendButton.setBackground(SettingTable.ins().ChatBgColor);
+                setButton.setBackground(SettingTable.ins().ChatBgColor);
+                connectButton.setBackground(SettingTable.ins().ChatBgColor);
+                
+                MainWindow.this.setSize(SettingTable.ins().ChatWidth,SettingTable.ins().ChatHeight);
+                
+                //font
+                inputField.setFont(new Font(SettingTable.ins().ChatTextFont.getFontName(),Font.PLAIN,12));
+                
+                //alwaysontop
+                MainWindow.this.setAlwaysOnTop(SettingTable.ins().ChatAlwaysOnTop);
+                
             }
         });
     }
