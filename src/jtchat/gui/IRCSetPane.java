@@ -33,7 +33,7 @@ public class IRCSetPane extends JPanel{
     private JTextField tIrcNick;
     private JLabel lIrcChannel;
     private JTextField tIrcChannel;
-    private JButton bSave;
+    private JButton bApply;
     private SetActionListener setActionListener = new SetActionListener();
     public IRCSetPane(){
         init();
@@ -126,15 +126,15 @@ public class IRCSetPane extends JPanel{
         
         //Connect
         
-        bSave = new JButton("Save");
+        bApply = new JButton("Apply");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 5;
         gbc.gridwidth = 2;
         
         //gbc.fill = GridBagConstraints.HORIZONTAL;
-        this.add(bSave,gbc);
-        bSave.addActionListener(setActionListener);
+        this.add(bApply,gbc);
+        bApply.addActionListener(setActionListener);
 
     }
     
@@ -159,7 +159,7 @@ public class IRCSetPane extends JPanel{
     
     private class SetActionListener implements ActionListener{
         public void actionPerformed(ActionEvent e) {
-            if(e.getSource() == bSave){
+            if(e.getSource() == bApply){
                 save();
             }
         }

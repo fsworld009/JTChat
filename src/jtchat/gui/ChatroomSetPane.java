@@ -38,7 +38,7 @@ public class ChatroomSetPane extends JPanel{
     private JButton bNickColor;
     private JLabel lNickFont;
     private JButton bNickFont;
-    private JButton bSave;
+    private JButton bApply;
     
     private Color cBg;
     private Color cText;
@@ -71,7 +71,7 @@ public class ChatroomSetPane extends JPanel{
         setLayout(new GridBagLayout());
         GridBagConstraints gbc;
         
-        lWindowSize = new JLabel("Window Size: ");
+        lWindowSize = new JLabel("Chatroom Size: ");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -195,14 +195,14 @@ public class ChatroomSetPane extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(chUseTwitchColor,gbc);
         
-        bSave = new JButton("Save");
+        bApply = new JButton("Apply");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 9;
         gbc.gridwidth = 2;
         
         //gbc.fill = GridBagConstraints.HORIZONTAL;
-        this.add(bSave,gbc);
+        this.add(bApply,gbc);
         
         //action listener
         bBgColor.addActionListener(setActionListener);
@@ -210,7 +210,7 @@ public class ChatroomSetPane extends JPanel{
         bTextFont.addActionListener(setActionListener);
         bNickColor.addActionListener(setActionListener);
         bNickFont.addActionListener(setActionListener);
-        bSave.addActionListener(setActionListener);
+        bApply.addActionListener(setActionListener);
         
     }
     
@@ -284,7 +284,7 @@ public class ChatroomSetPane extends JPanel{
                     fNick = choose;
                     bNickFont.setText(fontToString(fNick));
                 }
-            }else if(e.getSource() == bSave){
+            }else if(e.getSource() == bApply){
                 save();
                 mainWinRef.applyChange();
             }

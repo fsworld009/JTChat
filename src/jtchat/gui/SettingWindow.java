@@ -39,8 +39,8 @@ public class SettingWindow extends JFrame{
 
     private class closeEventWindowListener extends WindowAdapter{
         public void windowClosing(WindowEvent e) {
-            //save setting
-            ircSetPane.save();
+            //apply setting
+            //ircSetPane.save();
         }
     }
     

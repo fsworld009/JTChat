@@ -3,6 +3,7 @@ package jtchat.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -290,7 +291,9 @@ public class MainWindow extends JFrame implements ChatMsgListener{
                 setButton.setBackground(SettingTable.ins().ChatBgColor);
                 connectButton.setBackground(SettingTable.ins().ChatBgColor);
                 
-                MainWindow.this.setSize(SettingTable.ins().ChatWidth,SettingTable.ins().ChatHeight);
+                //set inner window size
+                MainWindow.this.getContentPane().setPreferredSize(new Dimension(SettingTable.ins().ChatWidth+17,SettingTable.ins().ChatHeight+43));
+                MainWindow.this.pack();
                 
                 //font
                 inputField.setFont(new Font(SettingTable.ins().ChatTextFont.getFontName(),Font.PLAIN,12));
