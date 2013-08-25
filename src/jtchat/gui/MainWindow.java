@@ -93,6 +93,8 @@ public class MainWindow extends JFrame implements ChatMsgListener{
         textBoxPanel = new JPanel();
         textBoxPanel.setLayout(new FlowLayout());
         
+
+        
         inputField = new JTextField(14);
         inputField.setFont(new Font("Arial Unicode MS",Font.PLAIN,12));
         sendButton = new JButton("Chat");
@@ -134,7 +136,21 @@ public class MainWindow extends JFrame implements ChatMsgListener{
             //chatMsgs.getDocument().insertString(chatMsgs.getDocument().getLength(), "efg\n", null);
         //} 
         chatScrollPane = new JScrollPane(chatMsgs,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        
+        
+        //make components transparent
+        textBoxPanel.setOpaque(false);
+        chatMsgs.setOpaque(false);
+
+        chatScrollPane.getViewport().setOpaque(false);
+        chatScrollPane.setOpaque(false);
+
+        chatScrollPane.setBorder(null);
+        
         this.add(chatScrollPane,BorderLayout.CENTER);
+        
+
+        
       }
     
     private class closeEventWindowListener extends WindowAdapter{
@@ -203,12 +219,18 @@ public class MainWindow extends JFrame implements ChatMsgListener{
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 //background
-                chatMsgs.setBackground(SettingTable.ins().ChatBgColor);
-                textBoxPanel.setBackground(SettingTable.ins().ChatBgColor);
-                inputField.setBackground(SettingTable.ins().ChatBgColor);
-                chatScrollPane.getVerticalScrollBar().setBackground(SettingTable.ins().ChatBgColor);
+                //chatMsgs.setBackground(SettingTable.ins().ChatBgColor);
+                //textBoxPanel.setBackground(SettingTable.ins().ChatBgColor);
                 
-                //text color
+                //chatScrollPane.getVerticalScrollBar().setBackground(SettingTable.ins().ChatBgColor);
+                
+
+
+                
+                MainWindow.this.getContentPane().setBackground(SettingTable.ins().ChatBgColor);
+                
+                //input field
+                inputField.setBackground(SettingTable.ins().ChatBgColor);
                 inputField.setForeground(SettingTable.ins().ChatTextColor);
                 
                 //buttons
