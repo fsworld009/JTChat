@@ -226,7 +226,7 @@ public class MainWindow extends JFrame implements ChatMsgListener{
     public void onChatAction(String channel, String nickname, String action){
         
     }
-    public void onPrivateMsg(String sender, String message){
+    public void onPrivateMsg(String nickname, String message){
         
     }
     
@@ -309,6 +309,8 @@ public class MainWindow extends JFrame implements ChatMsgListener{
                 
                 //alwaysontop
                 MainWindow.this.setAlwaysOnTop(SettingTable.ins().ChatAlwaysOnTop);
+                
+                chatMsgs.setText(chatMsgsPane);
                 
             }
         });

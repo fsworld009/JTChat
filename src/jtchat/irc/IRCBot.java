@@ -263,7 +263,7 @@ public class IRCBot {
     public void onChatAction(String channel, String nickname, String action){
         
     }
-    public void onPrivateMsg(String sender, String message){
+    public void onPrivateMsg(String nickname, String message){
         
     }
     

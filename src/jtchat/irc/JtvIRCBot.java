@@ -4,6 +4,7 @@ package jtchat.irc;
 import java.util.Vector;
 
 
+
 public class JtvIRCBot extends IRCBot{
     Vector<ChatLogListener> logListeners;
     Vector<ChatMsgListener> msgListeners;
@@ -59,10 +60,17 @@ public class JtvIRCBot extends IRCBot{
         }
     }
     
-    public void onPrivateMsg(String sender, String message){
+    public void onPrivateMsg(String nickname, String message){
         //sender = getTwitchId(sender);
+        if(nickname.equals("jtv")){
+            if(message.matches("USERCOLOR .*")){
+                String[] parse = message.split(" ",3);
+                UserColorMapper.ins().setColor(parse[1], parse[2]);
+            }
+        }
+        
         for(int i=0;i<msgListeners.size();i++){
-            msgListeners.get(i).onPrivateMsg(sender, message);
+            msgListeners.get(i).onPrivateMsg(nickname, message);
         }
     }
     

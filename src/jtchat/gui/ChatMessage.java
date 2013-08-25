@@ -11,6 +11,7 @@ import javax.swing.text.Document;
 import javax.swing.text.Element;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
+import jtchat.irc.UserColorMapper;
 
 public class ChatMessage {
     private String messages;    //save all current chat msgs
@@ -24,7 +25,7 @@ public class ChatMessage {
     private int numOfLines = 0;
     
     public enum Type{
-        Text, Nick, Sys
+        Text, Nick, Sys, TwitchId
     }
     
     
@@ -44,7 +45,7 @@ public class ChatMessage {
         numOfLines++;
     }
     
-    private void setAttribute(ChatMessage.Type type){
+    private void setAttribute(ChatMessage.Type type, String nickname){
         Color color=null;
         Font font=null;
         switch(type){
@@ -54,6 +55,13 @@ public class ChatMessage {
                 break;
             case Nick:
                 color = SettingTable.ins().ChatNickColor;
+                font = SettingTable.ins().ChatNickFont;
+                break; 
+            case TwitchId:
+                color = UserColorMapper.ins().getColor(nickname);
+                if(color==null){
+                    color = SettingTable.ins().ChatNickColor;
+                }
                 font = SettingTable.ins().ChatNickFont;
                 break; 
             case Sys:
@@ -86,22 +94,28 @@ public class ChatMessage {
             public void run(){
                 try{
                     //layout all text with chat text first
-                    ChatMessage.this.setAttribute(Type.Text);
+                    ChatMessage.this.setAttribute(Type.Text,"");
                     Document doc = chatPane.getDocument();
                     doc.remove(0, doc.getLength());
                     doc.insertString(0, ChatMessage.this.messages, chatAttr);
                     
                     //layout nicknames
                     Matcher mx = nickPattern.matcher(messages);
-                    ChatMessage.this.setAttribute(Type.Nick);
+                    if(!SettingTable.ins().ChatUseTiwtchColor){
+                        ChatMessage.this.setAttribute(Type.Nick,"");
+                    }
                     while(mx.find()){
+                        String nickname = mx.group().replace("\n", "").replace(":", "");
+                        if(SettingTable.ins().ChatUseTiwtchColor){
+                            ChatMessage.this.setAttribute(Type.TwitchId,nickname);
+                        }
                         doc.remove(mx.start(), mx.end()-mx.start());
                         doc.insertString(mx.start(), mx.group(), chatAttr);
                     }
                     
                     //layout sys msgs
                     mx = sysPattern.matcher(messages);
-                    ChatMessage.this.setAttribute(Type.Sys);
+                    ChatMessage.this.setAttribute(Type.Sys,"");
                     while(mx.find()){
                         doc.remove(mx.start(), mx.end()-mx.start());
                         doc.insertString(mx.start(), mx.group(), chatAttr);

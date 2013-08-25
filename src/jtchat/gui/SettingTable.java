@@ -23,13 +23,13 @@ public class SettingTable {
     public Color ChatBgColor = Color.decode("#000000");
     public int ChatNumOfLines = 20;
     public Color ChatTextColor = Color.decode("#FFFFFF");
-    public Font ChatTextFont = new Font("Arial Unicode MS",Font.PLAIN,14);
+    public Font ChatTextFont = new Font("Arial Unicode MS",Font.PLAIN,12);
     public Color ChatNickColor = Color.decode("#FFFF00");
-    public Font ChatNickFont = new Font("MS Gothic",Font.PLAIN,14);
+    public Font ChatNickFont = new Font("Arial",Font.PLAIN,12);
     public boolean ChatAlwaysOnTop = false;
     public boolean ChatUseTiwtchColor = true;
-    public Color ChatSysColor = Color.decode("#FFCCCC");
-    public Font ChatSysFont = new Font("Arial",Font.PLAIN,14);
+    public Color ChatSysColor = Color.decode("#FF9999");
+    public Font ChatSysFont = new Font("Arial",Font.PLAIN,12);
     
 
        
