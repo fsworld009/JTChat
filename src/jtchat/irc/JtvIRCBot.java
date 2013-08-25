@@ -46,16 +46,16 @@ public class JtvIRCBot extends IRCBot{
         }
     }*/
     
-    public void onChatMsg(String channel, String sender, String message){
+    public void onChatMsg(String channel, String nickname, boolean isOp, String message){
         //sender = getTwitchId(sender);
         for(int i=0;i<msgListeners.size();i++){
-            msgListeners.get(i).onChatMsg(channel, sender, message);
+            msgListeners.get(i).onChatMsg(channel, nickname, false, message);
         }
     }
     
-    public void onChatAction(String channel, String sender, String action){
+    public void onChatAction(String channel, String nickname, String action){
         for(int i=0;i<msgListeners.size();i++){
-            msgListeners.get(i).onChatAction(channel, sender, action);
+            msgListeners.get(i).onChatAction(channel, nickname, action);
         }
     }
     

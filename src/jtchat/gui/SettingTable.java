@@ -15,7 +15,7 @@ public class SettingTable {
     public int IRCport = 443;
     public String IRCnickname = "world9918";
     public String IRCservpass="";
-    public String IRCchannel="#smallag";
+    public String IRCchannel="#world9918";
     
     //Chatroom
     public int ChatWidth = 350;

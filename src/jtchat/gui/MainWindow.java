@@ -35,7 +35,8 @@ public class MainWindow extends JFrame implements ChatMsgListener{
     private JButton setButton;
     private JButton sendButton;
     private JButton connectButton;
-    private JTextPane chatMsgs;
+    private JTextPane chatMsgsPane;
+    
     //private JPanel textBoxPanel;
     //private JScrollPane chatScrollPane;
     private SettingWindow settingWindow = new SettingWindow(this); //need improved
@@ -45,10 +46,12 @@ public class MainWindow extends JFrame implements ChatMsgListener{
     private String channel = "";
     private String nickname = "";
     private SimpleAttributeSet chatAttr;
+    
+    private ChatMessage chatMsgs;
     public MainWindow(){
         super("JTChat");
         chatAttr = new SimpleAttributeSet();
-        
+        chatMsgs = new ChatMessage();
 
         
         init();
@@ -160,25 +163,25 @@ public class MainWindow extends JFrame implements ChatMsgListener{
         
         
         //text area that displays chat
-        chatMsgs = new JTextPane();
+        chatMsgsPane = new JTextPane();
 
         
-        chatMsgs.setEditable(false);
-        chatMsgs.setFont(new Font("Serif",Font.PLAIN,14));
+        chatMsgsPane.setEditable(false);
+        chatMsgsPane.setFont(new Font("Serif",Font.PLAIN,14));
 
         //try {
             //chatMsgs.setText("asdasdadadsadsa");
             //chatMsgs.getDocument().insertString(chatMsgs.getDocument().getLength(), "abc\n", null);
             //chatMsgs.getDocument().insertString(chatMsgs.getDocument().getLength(), "efg\n", null);
         //} 
-        JScrollPane chatScrollPane = new JScrollPane(chatMsgs,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane chatScrollPane = new JScrollPane(chatMsgsPane,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         
         
         //make components transparent
         //textBoxP1.setOpaque(false);
         //textBoxP2.setOpaque(false);
         textBoxPanel.setOpaque(false);
-        chatMsgs.setOpaque(false);
+        chatMsgsPane.setOpaque(false);
 
         chatScrollPane.getViewport().setOpaque(false);
         chatScrollPane.setOpaque(false);
@@ -207,15 +210,20 @@ public class MainWindow extends JFrame implements ChatMsgListener{
         }
     }
     
-    public void onChatMsg(String channel, String sender, String message){
+    public void onChatMsg(String channel, String nickname, boolean isOp, String message){
         //SwingUtilities.invokeLater(new Runnable() {
         //    public void run() {
 
             //}
         //}
-        appendChatMsg(sender,message);
+        //appendChatMsg(sender,message);
+        if(channel.equals(this.channel)){
+            chatMsgs.add(String.format("%s: %s",nickname, message));
+            chatMsgs.setText(chatMsgsPane);
+        }
+        
     }
-    public void onChatAction(String channel, String sender, String action){
+    public void onChatAction(String channel, String nickname, String action){
         
     }
     public void onPrivateMsg(String sender, String message){
@@ -223,7 +231,8 @@ public class MainWindow extends JFrame implements ChatMsgListener{
     }
     
     public void onSysMsg(String message){
-        appendSysMsg(message);
+        chatMsgs.add(String.format("[SYS] %s", message));
+        chatMsgs.setText(chatMsgsPane);
 
     }
     
@@ -236,13 +245,13 @@ public class MainWindow extends JFrame implements ChatMsgListener{
     }
     
     
-    private void appendChatMsg(String nickname, String message){
-        append(String.format("%s: ",nickname),SettingTable.ins().ChatNickColor,SettingTable.ins().ChatNickFont);
-        append(String.format("%s\r\n",message),SettingTable.ins().ChatTextColor,SettingTable.ins().ChatTextFont);
+    /*private void appendChatMsg(String nickname, String message){
+        //append(String.format("%s: ",nickname),SettingTable.ins().ChatNickColor,SettingTable.ins().ChatNickFont);
+        //append(String.format("%s\r\n",message),SettingTable.ins().ChatTextColor,SettingTable.ins().ChatTextFont);
     }
     
     private void appendSysMsg(String message){
-        append(String.format("[SYS] %s\r\n",message),SettingTable.ins().ChatTextColor,SettingTable.ins().ChatTextFont);
+        //append(String.format("[SYS] %s\r\n",message),SettingTable.ins().ChatTextColor,SettingTable.ins().ChatTextFont);
     }
     
     
@@ -254,14 +263,14 @@ public class MainWindow extends JFrame implements ChatMsgListener{
                     chatAttr.addAttribute(StyleConstants.CharacterConstants.Foreground, color);
                     chatAttr.addAttribute(StyleConstants.FontConstants.FontFamily, font.getFamily());
                     chatAttr.addAttribute(StyleConstants.FontConstants.FontSize, font.getSize());
-                    chatMsgs.getDocument().insertString(chatMsgs.getDocument().getLength(), message, chatAttr);
+                    chatMsgsPane.getDocument().insertString(chatMsgsPane.getDocument().getLength(), message, chatAttr);
                 } catch (BadLocationException ex) {
                     //need improved
                     System.err.println("BadLocationException");
                 }
             }
         });
-    }
+    }*/
     
     //called by ChatroomSetPane and MainWindow constructor
     public void applyChange(){
@@ -329,8 +338,7 @@ public class MainWindow extends JFrame implements ChatMsgListener{
                 String message = MainWindow.this.inputField.getText();
                 if(ircbot != null && ircbot.isConnected()){
                     ircbot.chat(MainWindow.this.channel, message);
-                    System.out.println(SettingTable.ins().ChatNickColor.toString());
-                    appendChatMsg(MainWindow.this.nickname,message);
+                    onChatMsg(MainWindow.this.channel,MainWindow.this.nickname,false,message);
                 }
                 inputField.setText("");
                 

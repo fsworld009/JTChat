@@ -233,7 +233,7 @@ public class IRCBot {
              * parse[3].subString(1): message
              */
             if(parse[2].charAt(0)=='#'){
-                onChatMsg(parse[2],getUsername(parse[0].substring(1)),parse[3].substring(1));
+                onChatMsg(parse[2],getUsername(parse[0].substring(1)), false, parse[3].substring(1));
             }else{
                 onPrivateMsg(getUsername(parse[0].substring(1)), parse[3].substring(1));
             }
@@ -257,10 +257,10 @@ public class IRCBot {
     public void onLog(String log){
         
     }
-    public void onChatMsg(String channel, String sender, String message){
+    public void onChatMsg(String channel, String nickname, boolean isOp, String message){
         
     }
-    public void onChatAction(String channel, String sender, String action){
+    public void onChatAction(String channel, String nickname, String action){
         
     }
     public void onPrivateMsg(String sender, String message){
