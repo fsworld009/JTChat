@@ -37,6 +37,7 @@ public class IRCSetPane extends JPanel{
     private SetActionListener setActionListener = new SetActionListener();
     public IRCSetPane(){
         init();
+        load();
     }
     
     private void init(){
@@ -67,7 +68,7 @@ public class IRCSetPane extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(lIrcPort,gbc);
         
-        tIrcPort = new JTextField(String.format("%d",SettingTable.ins().IRCport));
+        tIrcPort = new JTextField();
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 1;
@@ -92,14 +93,14 @@ public class IRCSetPane extends JPanel{
         this.add(tIrcServerPass,gbc);
         
         //Nick
-        lIrcNick = new JLabel("Nick: ");
+        lIrcNick = new JLabel("Nickname: ");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(lIrcNick,gbc);
 
-        tIrcNick = new JTextField(SettingTable.ins().IRCnickname);
+        tIrcNick = new JTextField();
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 3;
@@ -115,7 +116,7 @@ public class IRCSetPane extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(lIrcChannel,gbc);
 
-        tIrcChannel = new JTextField(SettingTable.ins().IRCchannel);
+        tIrcChannel = new JTextField();
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 4;
@@ -144,6 +145,16 @@ public class IRCSetPane extends JPanel{
         SettingTable.ins().IRCservpass = new String(tIrcServerPass.getPassword());
         SettingTable.ins().IRCchannel = tIrcChannel.getText();
         
+    }
+    
+    public void load(){
+        //load settings from SettingTable
+        tIrcServer.setText(SettingTable.ins().IRCserver);
+        tIrcPort.setText(String.format("%d",SettingTable.ins().IRCport));
+        tIrcNick.setText(SettingTable.ins().IRCnickname);
+        //profiles do not save password, so just clear it
+        tIrcServerPass.setText("");
+        tIrcChannel.setText(SettingTable.ins().IRCchannel);
     }
     
     private class SetActionListener implements ActionListener{
