@@ -11,11 +11,11 @@ public class SettingTable {
     //private HashMap<String,String> settingMap;
     
     //IRC
-    public String IRCserver = "";
+    public String IRCserver = "irc.twitch.tv";
     public int IRCport = 443;
-    public String IRCnickname = "";
+    public String IRCnickname = "world9918";
     public String IRCservpass="";
-    public String IRCchannel="";
+    public String IRCchannel="#smallag";
     
     //Chatroom
     public int ChatWidth = 300;

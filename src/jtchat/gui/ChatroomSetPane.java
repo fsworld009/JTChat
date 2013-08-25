@@ -3,6 +3,7 @@ package jtchat.gui;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.JButton;
@@ -20,7 +21,6 @@ public class ChatroomSetPane extends JPanel{
     private JTextField tWindowHeight;
     private JLabel lNumOfLines;
     private JTextField tNumOfLines;
-    private JLabel lUseTwitchColor;
     private JCheckBox cUseTwitchColor;
     private JLabel lTextColor;
     private JButton bTextColor;
@@ -40,6 +40,10 @@ public class ChatroomSetPane extends JPanel{
     
     private String colorToHexString(Color color){
         return String.format("#%06x",color.getRGB() & 0x00FFFFFF).toUpperCase();
+    }
+    
+    private String fontToString(Font font){
+        return font.getName()+"/"+String.format("%d",font.getSize());
     }
     
     private void init(){
@@ -119,7 +123,7 @@ public class ChatroomSetPane extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(lTextFont,gbc);
         
-        bTextFont = new JButton("Font");
+        bTextFont = new JButton(fontToString(SettingTable.ins().ChatTextFont));
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 4;
@@ -147,14 +151,14 @@ public class ChatroomSetPane extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(lNickFont,gbc);
         
-        bNickFont = new JButton("Font");
+        bNickFont = new JButton(fontToString(SettingTable.ins().ChatNickFont));
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 6;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(bNickFont,gbc);
         
-        cUseTwitchColor = new JCheckBox("Use Jtv/Tiwtch Nickname Color");
+        cUseTwitchColor = new JCheckBox("Use Jtv/Tiwtch Nickname Color",SettingTable.ins().ChatUseTiwtchColor);
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 7;
