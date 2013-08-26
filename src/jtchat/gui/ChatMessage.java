@@ -120,6 +120,10 @@ public class ChatMessage {
                         doc.remove(mx.start(), mx.end()-mx.start());
                         doc.insertString(mx.start(), mx.group(), chatAttr);
                     }
+                    //remove the last line break
+                    doc.remove(doc.getLength()-1,1);
+                    
+                    
                     
                     
                 } catch (BadLocationException ex) {
