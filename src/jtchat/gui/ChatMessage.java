@@ -122,7 +122,6 @@ public class ChatMessage {
                     int i=0;
                     while(mx.find()){
                         String[] parse = mx.group().split(" ",2);
-                        System.out.println(mx.group());
                         i++;
                         if(SettingTable.ins().ChatUseTiwtchColor){
                             ChatMessage.this.setAttribute(Type.TwitchId,parse[0].replace("\n", ""));
