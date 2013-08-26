@@ -244,7 +244,12 @@ public class IRCBot {
              * parse[3].subString(1): message
              */
             if(parse[2].charAt(0)=='#'){
-                onChatMsg(parse[2],getUsername(parse[0].substring(1)), false, parse[3].substring(1));
+                String content = parse[3].substring(1);
+                if(content.matches("^ACTION .*")){
+                    onChatAction(parse[2], getUsername(parse[0].substring(1)), content.replaceFirst("^ACTION", "").replaceFirst("", ""));
+                }else{
+                    onChatMsg(parse[2],getUsername(parse[0].substring(1)), false, parse[3].substring(1));
+                }
             }else{
                 onPrivateMsg(getUsername(parse[0].substring(1)), parse[3].substring(1));
             }

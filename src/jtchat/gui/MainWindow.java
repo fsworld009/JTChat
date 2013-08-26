@@ -231,7 +231,10 @@ public class MainWindow extends JFrame implements ChatMsgListener{
         
     }
     public void onChatAction(String channel, String nickname, String action){
-        
+        if(channel.equals(this.channel)){
+            chatMsgs.add(String.format("%s %s",nickname, action));
+            chatMsgs.setText(chatMsgsPane);
+        }
     }
     public void onPrivateMsg(String nickname, String message){
         

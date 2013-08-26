@@ -22,6 +22,7 @@ public class ChatMessage {
     //regular expression
     private Pattern nickPattern;
     private Pattern sysPattern;
+    private Pattern actionPattern;
     private int numOfLines = 0;
     
     public enum Type{
@@ -34,6 +35,7 @@ public class ChatMessage {
         chatAttr = new SimpleAttributeSet();
         
         nickPattern = Pattern.compile("(^|\\n)(\\[OP\\] )?(\\[(.)*\\] )?\\w+:");
+        actionPattern = Pattern.compile("(^|\\n)[^:^\\[^\\]]* [^\\n]*");
         sysPattern = Pattern.compile("(^|\\n)\\[SYS\\] [^\\n]*");
     }
 
@@ -108,6 +110,21 @@ public class ChatMessage {
                         String nickname = mx.group().replace("\n", "").replace(":", "");
                         if(SettingTable.ins().ChatUseTiwtchColor){
                             ChatMessage.this.setAttribute(Type.TwitchId,nickname);
+                        }
+                        doc.remove(mx.start(), mx.end()-mx.start());
+                        doc.insertString(mx.start(), mx.group(), chatAttr);
+                    }
+                    
+                    //layout actions
+                    mx = actionPattern.matcher(messages);
+                    if(!SettingTable.ins().ChatUseTiwtchColor){
+                        ChatMessage.this.setAttribute(Type.Nick,"");
+                    }
+                    while(mx.find()){
+                        
+                        
+                        if(SettingTable.ins().ChatUseTiwtchColor){
+                            ChatMessage.this.setAttribute(Type.TwitchId,mx.group().substring(0, mx.group().indexOf(" ")).replace("\n", ""));
                         }
                         doc.remove(mx.start(), mx.end()-mx.start());
                         doc.insertString(mx.start(), mx.group(), chatAttr);
