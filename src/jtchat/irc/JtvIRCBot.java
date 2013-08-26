@@ -91,6 +91,12 @@ public class JtvIRCBot extends IRCBot{
         }
     }
     
+    public void onLoginSuccess(){
+        for(int i=0;i<msgListeners.size();i++){
+            msgListeners.get(i).onLoginSuccess();
+        }
+    }
+    
     public void onLoginFailed(){
         for(int i=0;i<msgListeners.size();i++){
             msgListeners.get(i).onLoginFailed();

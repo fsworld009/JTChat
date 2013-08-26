@@ -8,5 +8,6 @@ public interface ChatMsgListener {
     public void onSysMsg(String message);
     //probably makes more sense if this moves to another listener
     public void onConnectSuccess();
+    public void onLoginSuccess();
     public void onLoginFailed();
 }

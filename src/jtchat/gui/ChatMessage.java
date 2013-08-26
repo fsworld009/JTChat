@@ -101,6 +101,7 @@ public class ChatMessage {
                     doc.insertString(0, ChatMessage.this.messages, chatAttr);
                     
                     //layout nicknames
+                    
                     Matcher mx = nickPattern.matcher(messages);
                     if(!SettingTable.ins().ChatUseTiwtchColor){
                         ChatMessage.this.setAttribute(Type.Nick,"");
@@ -115,6 +116,7 @@ public class ChatMessage {
                     }
                     
                     //layout actions
+                    
                     mx = actionPattern.matcher(messages);
                     if(!SettingTable.ins().ChatUseTiwtchColor){
                         ChatMessage.this.setAttribute(Type.Nick,"");
@@ -129,7 +131,9 @@ public class ChatMessage {
                         doc.remove(mx.start(), mx.end()-mx.start());
                         doc.insertString(mx.start(), mx.group(), chatAttr);
                     }
+                    
                     //layout sys msgs
+                    
                     mx = sysPattern.matcher(messages);
                     ChatMessage.this.setAttribute(Type.Sys,"");
                     while(mx.find()){
@@ -137,7 +141,8 @@ public class ChatMessage {
                         doc.insertString(mx.start(), mx.group(), chatAttr);
                     }
                     //remove the last line break
-                    if(messages.length()>1){
+                    
+                    if(messages.length()>0 && messages.charAt(messages.length()-1) == '\n'){
                         doc.remove(doc.getLength()-1,1);
                     }
                     

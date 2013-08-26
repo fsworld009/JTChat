@@ -266,6 +266,7 @@ public class IRCBot {
         }else if(firstParse[1].equals("001")){
             //login successful
             loginSuccessful = true;
+            onLoginSuccess();
         }
     }
     
@@ -288,6 +289,10 @@ public class IRCBot {
     }
     
     public void onLoginFailed(){
+        
+    }
+    
+    public void onLoginSuccess(){
         
     }
     

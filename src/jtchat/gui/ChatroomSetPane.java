@@ -1,7 +1,7 @@
 
 package jtchat.gui;
 
-import jtchat.gui.include.NwFontChooserS;
+import jtchat.gui.util.NwFontChooserS;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;

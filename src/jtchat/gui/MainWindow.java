@@ -247,12 +247,16 @@ public class MainWindow extends JFrame implements ChatMsgListener{
     }
     
     public void onConnectSuccess(){
-        ircbot.join(SettingTable.ins().IRCchannel);
-        ircbot.sendRaw("JTVCLIENT");
+
     }
     
     public void onLoginFailed(){
         connectButton.setText("Connect");
+    }
+    
+    public void onLoginSuccess(){
+        ircbot.join(SettingTable.ins().IRCchannel);
+        ircbot.sendRaw("JTVCLIENT");
     }
     
     

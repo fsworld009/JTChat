@@ -26,7 +26,7 @@ This file is part of BORG.
 
 Copyright 2003 by Mike Berger
  */
-package jtchat.gui.include;
+package jtchat.gui.util;
 
 import java.awt.Color;
 import java.awt.Font;
