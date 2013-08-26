@@ -121,7 +121,9 @@ public class ChatMessage {
                         doc.insertString(mx.start(), mx.group(), chatAttr);
                     }
                     //remove the last line break
-                    doc.remove(doc.getLength()-1,1);
+                    if(messages.length()>1){
+                        doc.remove(doc.getLength()-1,1);
+                    }
                     
                     
                     

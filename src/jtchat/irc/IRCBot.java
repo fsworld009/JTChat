@@ -74,13 +74,13 @@ public class IRCBot {
     }
     
     public void reconnect(){
-        if(connect(lastIRCServer,lastIRCPort,lastIRCNickname,lastIRCLogin,lastIRCServerPass)){
+        if(connectTask(lastIRCServer,lastIRCPort,lastIRCNickname,lastIRCLogin,lastIRCServerPass)){
             //delete reconnectTask
             if(reconnectTask != null){
                 reconnectTask.cancel();
                 reconnectTask = null;
             }
-            onReconnectSuccess();
+            onConnectSuccess();
         }else{
             //establish reconnect task
             if(reconnectTask == null){
@@ -90,13 +90,18 @@ public class IRCBot {
         }
     }
     
-    public boolean connect(String server, int port, String nickname, String login, String password){
+    
+    public void connect(String server, int port, String nickname, String login, String password){
         lastIRCServer = server;
         lastIRCPort = port;
         lastIRCServerPass = password;
         lastIRCNickname = nickname;
         lastIRCLogin = login;
-        
+        reconnect();
+    }
+    
+
+    private boolean connectTask(String server, int port, String nickname, String login, String password){
         // Connect to the IRC server.
 
         try{
@@ -114,12 +119,18 @@ public class IRCBot {
                 sendMsgQueue = new PriorityQueue<String>(10,new MsgComparator());
                 
                 // Log on to the server, must sent before creating thread
-                writer.write("PASS " + password + "\r\n");
-                log("PASS " + "******",IRCBot.LogType.SEND);
-                writer.write("NICK " + nickname + "\r\n");
-                log("NICK " + nickname,IRCBot.LogType.SEND);
-                writer.write("USER " + login + "\r\n");
-                log("USER " + "JTChat",IRCBot.LogType.SEND);
+                if(!password.equals("")){
+                    writer.write("PASS " + password + "\r\n");
+                    log("PASS " + "******",IRCBot.LogType.SEND);
+                }
+                if(!nickname.equals("")){
+                    writer.write("NICK " + nickname + "\r\n");
+                    log("NICK " + nickname,IRCBot.LogType.SEND);
+                }
+                if(!login.equals("")){
+                    writer.write("USER " + login + "\r\n");
+                    log("USER " + "JTChat",IRCBot.LogType.SEND);
+                }
                 writer.flush();
                 
                 //setup input and output thread
@@ -281,7 +292,7 @@ public class IRCBot {
         
     }
     
-    public void onReconnectSuccess(){
+    public void onConnectSuccess(){
         
     }
     

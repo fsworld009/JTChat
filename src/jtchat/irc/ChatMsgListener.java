@@ -7,6 +7,6 @@ public interface ChatMsgListener {
     public void onPrivateMsg(String nickname, String message);
     public void onSysMsg(String message);
     //probably makes more sense if this moves to another listener
-    public void onReconnectSuccess();
+    public void onConnectSuccess();
     public void onLoginFailed();
 }

@@ -76,12 +76,10 @@ public class MainWindow extends JFrame implements ChatMsgListener{
             ircbot.registerMsgListener(this);
         
         }
-        if(ircbot.connect(SettingTable.ins().IRCserver,SettingTable.ins().IRCport,SettingTable.ins().IRCnickname,"JTChat",SettingTable.ins().IRCservpass)){
-            ircbot.join(SettingTable.ins().IRCchannel);
-            ircbot.sendRaw("JTVCLIENT");
-            this.channel = SettingTable.ins().IRCchannel;
-            this.nickname = SettingTable.ins().IRCnickname;
-        }
+        ircbot.connect(SettingTable.ins().IRCserver,SettingTable.ins().IRCport,SettingTable.ins().IRCnickname,"JTChat",SettingTable.ins().IRCservpass);
+        this.channel = SettingTable.ins().IRCchannel;
+        this.nickname = SettingTable.ins().IRCnickname;
+
         
     }
     
@@ -236,8 +234,9 @@ public class MainWindow extends JFrame implements ChatMsgListener{
 
     }
     
-    public void onReconnectSuccess(){
-        ircbot.join(this.channel);
+    public void onConnectSuccess(){
+        ircbot.join(SettingTable.ins().IRCchannel);
+        ircbot.sendRaw("JTVCLIENT");
     }
     
     public void onLoginFailed(){

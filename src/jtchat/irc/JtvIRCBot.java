@@ -85,9 +85,9 @@ public class JtvIRCBot extends IRCBot{
         }
     }
     
-    public void onReconnectSuccess(){
+    public void onConnectSuccess(){
         for(int i=0;i<msgListeners.size();i++){
-            msgListeners.get(i).onReconnectSuccess();
+            msgListeners.get(i).onConnectSuccess();
         }
     }
     
