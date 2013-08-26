@@ -35,8 +35,8 @@ public class ChatMessage {
         chatAttr = new SimpleAttributeSet();
         
         nickPattern = Pattern.compile("(^|\\n)(\\[OP\\] )?(\\[(.)*\\] )?\\w+:");
-        actionPattern = Pattern.compile("(^|\\n)[^:^\\[^\\]]* [^\\n]*");
-        sysPattern = Pattern.compile("(^|\\n)\\[SYS\\] [^\\n]*");
+        actionPattern = Pattern.compile("(^|\\n)\\w+ [^\\n]+");
+        sysPattern = Pattern.compile("(^|\\n)\\[SYS\\] [^\\n]+");
     }
 
     
@@ -84,7 +84,6 @@ public class ChatMessage {
         while(numOfLines>SettingTable.ins().ChatNumOfLines){
             messages = messages.replaceFirst(".*\\n", "");
             numOfLines--;
-            System.out.printf("%d\n",numOfLines);
         }
     }
     
@@ -120,16 +119,17 @@ public class ChatMessage {
                     if(!SettingTable.ins().ChatUseTiwtchColor){
                         ChatMessage.this.setAttribute(Type.Nick,"");
                     }
+                    int i=0;
                     while(mx.find()){
-                        
-                        
+                        String[] parse = mx.group().split(" ",2);
+                        System.out.println(mx.group());
+                        i++;
                         if(SettingTable.ins().ChatUseTiwtchColor){
-                            ChatMessage.this.setAttribute(Type.TwitchId,mx.group().substring(0, mx.group().indexOf(" ")).replace("\n", ""));
+                            ChatMessage.this.setAttribute(Type.TwitchId,parse[0].replace("\n", ""));
                         }
                         doc.remove(mx.start(), mx.end()-mx.start());
                         doc.insertString(mx.start(), mx.group(), chatAttr);
                     }
-                    
                     //layout sys msgs
                     mx = sysPattern.matcher(messages);
                     ChatMessage.this.setAttribute(Type.Sys,"");
