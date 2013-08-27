@@ -1,6 +1,7 @@
 
 package jtchat.gui;
 
+import jtchat.profile.Profile;
 import jtchat.gui.util.NwFontChooserS;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -253,49 +254,49 @@ public class ChatroomSetPane extends JPanel{
     }
     
     public void save(){
-        SettingTable.ins().ChatWidth = Integer.parseInt(tWindowWidth.getText());
-        SettingTable.ins().ChatHeight = Integer.parseInt(tWindowHeight.getText());
-        SettingTable.ins().ChatBgColor = cBg;
-        SettingTable.ins().ChatNumOfLines = Integer.parseInt(tNumOfLines.getText());
-        SettingTable.ins().ChatTextColor = cText;
-        SettingTable.ins().ChatTextFont = fText;
-        SettingTable.ins().ChatNickColor = cNick;
-        SettingTable.ins().ChatNickFont = fNick;
-        SettingTable.ins().ChatSysColor = cSys;
-        SettingTable.ins().ChatSysFont = fSys;
-        SettingTable.ins().ChatUseTiwtchColor = this.chUseTwitchColor.isSelected();
-        SettingTable.ins().ChatAlwaysOnTop = this.chAlwaysOnTop.isSelected();
+        Profile.ins().ChatWidth = Integer.parseInt(tWindowWidth.getText());
+        Profile.ins().ChatHeight = Integer.parseInt(tWindowHeight.getText());
+        Profile.ins().ChatBgColor = cBg;
+        Profile.ins().ChatNumOfLines = Integer.parseInt(tNumOfLines.getText());
+        Profile.ins().ChatTextColor = cText;
+        Profile.ins().ChatTextFont = fText;
+        Profile.ins().ChatNickColor = cNick;
+        Profile.ins().ChatNickFont = fNick;
+        Profile.ins().ChatSysColor = cSys;
+        Profile.ins().ChatSysFont = fSys;
+        Profile.ins().ChatUseTiwtchColor = this.chUseTwitchColor.isSelected();
+        Profile.ins().ChatAlwaysOnTop = this.chAlwaysOnTop.isSelected();
 
     }
     
     public void load(){
         //window
-        this.tWindowWidth.setText(String.format("%d",SettingTable.ins().ChatWidth));
-        this.tWindowHeight.setText(String.format("%d",SettingTable.ins().ChatHeight));
+        this.tWindowWidth.setText(String.format("%d",Profile.ins().ChatWidth));
+        this.tWindowHeight.setText(String.format("%d",Profile.ins().ChatHeight));
         
-        this.tNumOfLines.setText(String.format("%d",SettingTable.ins().ChatNumOfLines));
+        this.tNumOfLines.setText(String.format("%d",Profile.ins().ChatNumOfLines));
         
-        this.cBg = SettingTable.ins().ChatBgColor;
+        this.cBg = Profile.ins().ChatBgColor;
         this.bBgColor.setText(this.colorToHexString(cBg));
         
-        this.cText = SettingTable.ins().ChatTextColor;
+        this.cText = Profile.ins().ChatTextColor;
         this.bTextColor.setText(this.colorToHexString(cText));
-        this.fText = SettingTable.ins().ChatTextFont;
+        this.fText = Profile.ins().ChatTextFont;
         this.bTextFont.setText(this.fontToString(fText));
         
-        this.cNick = SettingTable.ins().ChatNickColor;
+        this.cNick = Profile.ins().ChatNickColor;
         this.bNickColor.setText(this.colorToHexString(cNick));
-        this.fNick = SettingTable.ins().ChatNickFont;
+        this.fNick = Profile.ins().ChatNickFont;
         this.bNickFont.setText(this.fontToString(fNick));
         
-        this.cSys = SettingTable.ins().ChatSysColor;
+        this.cSys = Profile.ins().ChatSysColor;
         this.bSysColor.setText(this.colorToHexString(cSys));
-        this.fSys = SettingTable.ins().ChatSysFont;
+        this.fSys = Profile.ins().ChatSysFont;
         this.bSysFont.setText(this.fontToString(fSys));
         
         
-        this.chUseTwitchColor.setSelected(SettingTable.ins().ChatUseTiwtchColor);
-        this.chAlwaysOnTop.setSelected(SettingTable.ins().ChatAlwaysOnTop);
+        this.chUseTwitchColor.setSelected(Profile.ins().ChatUseTiwtchColor);
+        this.chAlwaysOnTop.setSelected(Profile.ins().ChatAlwaysOnTop);
     }
     
     private class SetActionListener implements ActionListener{

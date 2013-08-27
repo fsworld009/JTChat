@@ -4,6 +4,7 @@
  */
 package jtchat.gui;
 
+import jtchat.profile.Profile;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -52,7 +53,7 @@ public class IRCSetPane extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(lIrcServer,gbc);
 
-        tIrcServer = new JTextField(SettingTable.ins().IRCserver);
+        tIrcServer = new JTextField(Profile.ins().IRCserver);
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -139,22 +140,22 @@ public class IRCSetPane extends JPanel{
     }
     
     public void save(){
-        SettingTable.ins().IRCserver = tIrcServer.getText();
-        SettingTable.ins().IRCport = Integer.parseInt(tIrcPort.getText());
-        SettingTable.ins().IRCnickname = tIrcNick.getText();
-        SettingTable.ins().IRCservpass = new String(tIrcServerPass.getPassword());
-        SettingTable.ins().IRCchannel = tIrcChannel.getText();
+        Profile.ins().IRCserver = tIrcServer.getText();
+        Profile.ins().IRCport = Integer.parseInt(tIrcPort.getText());
+        Profile.ins().IRCnickname = tIrcNick.getText();
+        Profile.ins().IRCservpass = new String(tIrcServerPass.getPassword());
+        Profile.ins().IRCchannel = tIrcChannel.getText();
         
     }
     
     public void load(){
         //load settings from SettingTable
-        tIrcServer.setText(SettingTable.ins().IRCserver);
-        tIrcPort.setText(String.format("%d",SettingTable.ins().IRCport));
-        tIrcNick.setText(SettingTable.ins().IRCnickname);
+        tIrcServer.setText(Profile.ins().IRCserver);
+        tIrcPort.setText(String.format("%d",Profile.ins().IRCport));
+        tIrcNick.setText(Profile.ins().IRCnickname);
         //profiles do not save password, so just clear it
         tIrcServerPass.setText("");
-        tIrcChannel.setText(SettingTable.ins().IRCchannel);
+        tIrcChannel.setText(Profile.ins().IRCchannel);
     }
     
     private class SetActionListener implements ActionListener{

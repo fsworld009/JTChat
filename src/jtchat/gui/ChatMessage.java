@@ -1,5 +1,6 @@
 package jtchat.gui;
 
+import jtchat.profile.Profile;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.regex.Matcher;
@@ -52,23 +53,23 @@ public class ChatMessage {
         Font font=null;
         switch(type){
             case Text:
-                color = SettingTable.ins().ChatTextColor;
-                font = SettingTable.ins().ChatTextFont;
+                color = Profile.ins().ChatTextColor;
+                font = Profile.ins().ChatTextFont;
                 break;
             case Nick:
-                color = SettingTable.ins().ChatNickColor;
-                font = SettingTable.ins().ChatNickFont;
+                color = Profile.ins().ChatNickColor;
+                font = Profile.ins().ChatNickFont;
                 break; 
             case TwitchId:
                 color = UserColorMapper.ins().getColor(nickname);
                 if(color==null){
-                    color = SettingTable.ins().ChatNickColor;
+                    color = Profile.ins().ChatNickColor;
                 }
-                font = SettingTable.ins().ChatNickFont;
+                font = Profile.ins().ChatNickFont;
                 break; 
             case Sys:
-                color = SettingTable.ins().ChatSysColor;
-                font = SettingTable.ins().ChatSysFont;
+                color = Profile.ins().ChatSysColor;
+                font = Profile.ins().ChatSysFont;
                 break;
         }
         
@@ -81,7 +82,7 @@ public class ChatMessage {
     public void removeOldLines(){
         //remove old msgs
         
-        while(numOfLines>SettingTable.ins().ChatNumOfLines){
+        while(numOfLines>Profile.ins().ChatNumOfLines){
             messages = messages.replaceFirst(".*\\n", "");
             numOfLines--;
         }
@@ -103,12 +104,12 @@ public class ChatMessage {
                     //layout nicknames
                     
                     Matcher mx = nickPattern.matcher(messages);
-                    if(!SettingTable.ins().ChatUseTiwtchColor){
+                    if(!Profile.ins().ChatUseTiwtchColor){
                         ChatMessage.this.setAttribute(Type.Nick,"");
                     }
                     while(mx.find()){
                         String nickname = mx.group().replace("\n", "").replace(":", "");
-                        if(SettingTable.ins().ChatUseTiwtchColor){
+                        if(Profile.ins().ChatUseTiwtchColor){
                             ChatMessage.this.setAttribute(Type.TwitchId,nickname);
                         }
                         doc.remove(mx.start(), mx.end()-mx.start());
@@ -118,14 +119,14 @@ public class ChatMessage {
                     //layout actions
                     
                     mx = actionPattern.matcher(messages);
-                    if(!SettingTable.ins().ChatUseTiwtchColor){
+                    if(!Profile.ins().ChatUseTiwtchColor){
                         ChatMessage.this.setAttribute(Type.Nick,"");
                     }
                     int i=0;
                     while(mx.find()){
                         String[] parse = mx.group().split(" ",2);
                         i++;
-                        if(SettingTable.ins().ChatUseTiwtchColor){
+                        if(Profile.ins().ChatUseTiwtchColor){
                             ChatMessage.this.setAttribute(Type.TwitchId,parse[0].replace("\n", ""));
                         }
                         doc.remove(mx.start(), mx.end()-mx.start());

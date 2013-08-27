@@ -1,13 +1,14 @@
 
-package jtchat.gui;
+package jtchat.profile;
 
 //singleton data structure
 
 import java.awt.Color;
 import java.awt.Font;
+import java.io.File;
 
-public class SettingTable {
-    private static SettingTable ins = null;
+public class Profile {
+    private static Profile ins = null;
     //private HashMap<String,String> settingMap;
     
     //IRC
@@ -33,13 +34,22 @@ public class SettingTable {
     
 
        
-    public static SettingTable ins(){
+    public static Profile ins(){
         if(ins == null){
-            ins = new SettingTable();
+            ins = new Profile();
         }
         return ins;
     }
+    
+    
 
+    private static boolean loadProfile(File profile){
+        return true;
+    }
+    
+    private static void saveProfile(File profile){
+        
+    }
 
     
 }

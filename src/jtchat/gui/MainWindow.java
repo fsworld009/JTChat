@@ -1,6 +1,7 @@
 
 package jtchat.gui;
 
+import jtchat.profile.Profile;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -82,9 +83,9 @@ public class MainWindow extends JFrame implements ChatMsgListener{
             ircbot.registerMsgListener(this);
         
         }
-        ircbot.connect(SettingTable.ins().IRCserver,SettingTable.ins().IRCport,SettingTable.ins().IRCnickname,"JTChat",SettingTable.ins().IRCservpass);
-        this.channel = SettingTable.ins().IRCchannel;
-        this.nickname = SettingTable.ins().IRCnickname;
+        ircbot.connect(Profile.ins().IRCserver,Profile.ins().IRCport,Profile.ins().IRCnickname,"JTChat",Profile.ins().IRCservpass);
+        this.channel = Profile.ins().IRCchannel;
+        this.nickname = Profile.ins().IRCnickname;
 
         
     }
@@ -255,7 +256,7 @@ public class MainWindow extends JFrame implements ChatMsgListener{
     }
     
     public void onLoginSuccess(){
-        ircbot.join(SettingTable.ins().IRCchannel);
+        ircbot.join(Profile.ins().IRCchannel);
         ircbot.sendRaw("JTVCLIENT");
     }
     
@@ -300,30 +301,30 @@ public class MainWindow extends JFrame implements ChatMsgListener{
 
 
                 
-                MainWindow.this.getContentPane().setBackground(SettingTable.ins().ChatBgColor);
+                MainWindow.this.getContentPane().setBackground(Profile.ins().ChatBgColor);
                 
                 //input field
-                inputField.setBackground(SettingTable.ins().ChatBgColor);
-                inputField.setForeground(SettingTable.ins().ChatTextColor);
+                inputField.setBackground(Profile.ins().ChatBgColor);
+                inputField.setForeground(Profile.ins().ChatTextColor);
                 
                 //buttons
-                sendButton.setForeground(SettingTable.ins().ChatTextColor);
-                setButton.setForeground(SettingTable.ins().ChatTextColor);
-                connectButton.setForeground(SettingTable.ins().ChatTextColor);
+                sendButton.setForeground(Profile.ins().ChatTextColor);
+                setButton.setForeground(Profile.ins().ChatTextColor);
+                connectButton.setForeground(Profile.ins().ChatTextColor);
                 
-                sendButton.setBackground(SettingTable.ins().ChatBgColor);
-                setButton.setBackground(SettingTable.ins().ChatBgColor);
-                connectButton.setBackground(SettingTable.ins().ChatBgColor);
+                sendButton.setBackground(Profile.ins().ChatBgColor);
+                setButton.setBackground(Profile.ins().ChatBgColor);
+                connectButton.setBackground(Profile.ins().ChatBgColor);
                 
                 //set inner window size
-                MainWindow.this.getContentPane().setPreferredSize(new Dimension(SettingTable.ins().ChatWidth+17,SettingTable.ins().ChatHeight+43));
+                MainWindow.this.getContentPane().setPreferredSize(new Dimension(Profile.ins().ChatWidth+17,Profile.ins().ChatHeight+43));
                 MainWindow.this.pack();
                 
                 //font
-                inputField.setFont(new Font(SettingTable.ins().ChatTextFont.getFontName(),Font.PLAIN,12));
+                inputField.setFont(new Font(Profile.ins().ChatTextFont.getFontName(),Font.PLAIN,12));
                 
                 //alwaysontop
-                MainWindow.this.setAlwaysOnTop(SettingTable.ins().ChatAlwaysOnTop);
+                MainWindow.this.setAlwaysOnTop(Profile.ins().ChatAlwaysOnTop);
                 
                 chatMsgs.setText(chatMsgsPane);
                 
