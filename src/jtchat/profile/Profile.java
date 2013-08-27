@@ -7,8 +7,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Profile {
     private static Profile ins = null;
@@ -47,6 +50,23 @@ public class Profile {
     
 
     public static boolean loadProfile(File profile){
+        Scanner sc=null;
+        try{
+            sc = new Scanner(profile);
+        }catch(FileNotFoundException e){
+            System.err.printf("file not found\n");
+            return false;
+        }
+        String line;
+
+        while(sc.hasNext()){
+            line = sc.nextLine();
+            String[] split = line.split("=",2);
+            if(split[0].equals("IRCport")){
+                Profile.ins().IRCport = Integer.parseInt(split[1]);
+            }
+        }
+        sc.close();
         return true;
     }
     
@@ -58,15 +78,17 @@ public class Profile {
         return font.getFontName() + "|" + String.format("%d",font.getSize());
     }
     
-    public static void saveProfile(File profile){
+    public static boolean saveProfile(File profile){
         FileWriter fstream = null;
         try{
             fstream = new FileWriter(profile);
         }catch(java.io.FileNotFoundException e){
             //cannot create file or don't have permission to write
             System.err.println("Error: cannot create output file or don't have permission to write");
+            return false;
         } catch (IOException ex) {
             System.err.println("Error: IO error");
+            return false;
         }
         
         BufferedWriter fout = new BufferedWriter(fstream);
@@ -88,7 +110,9 @@ public class Profile {
             fout.close();
         } catch (IOException ex) {
             System.err.println("Error: IO error");
+            return false;
         }
+        return true;
     }
 
     

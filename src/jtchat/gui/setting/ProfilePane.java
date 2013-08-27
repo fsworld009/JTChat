@@ -1,4 +1,4 @@
-package jtchat.gui;
+package jtchat.gui.setting;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -34,6 +34,7 @@ public class ProfilePane extends JPanel{
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
+        
         this.add(bSave,gbc);
         
         bLoad = new JButton("Load");
@@ -46,6 +47,14 @@ public class ProfilePane extends JPanel{
         
         bSave.addActionListener(setActionListener);
         bLoad.addActionListener(setActionListener);
+        
+        
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth=2;
+        
+        this.add(new JLabel("Password won't be saved or loaded"),gbc);
         
         /*
         lProfileName = new JLabel("Profile: ");

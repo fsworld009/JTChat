@@ -1,6 +1,7 @@
 
 package jtchat.gui;
 
+import jtchat.gui.setting.SettingWindow;
 import jtchat.profile.Profile;
 import java.awt.BorderLayout;
 import java.awt.Dimension;

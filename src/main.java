@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 import jtchat.irc.IRCBot;
 import jtchat.gui.MainWindow;
-import jtchat.gui.SettingWindow;
+import jtchat.gui.setting.SettingWindow;
 
 
 public class main {

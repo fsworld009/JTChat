@@ -1,4 +1,4 @@
-package jtchat.gui;
+package jtchat.gui.setting;
 
 import jtchat.gui.util.JConfirmedFileChooser;
 import java.awt.BorderLayout;

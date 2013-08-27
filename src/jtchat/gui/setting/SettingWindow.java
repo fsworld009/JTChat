@@ -1,10 +1,11 @@
 
-package jtchat.gui;
+package jtchat.gui.setting;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
+import jtchat.gui.MainWindow;
 
 
 public class SettingWindow extends JFrame{

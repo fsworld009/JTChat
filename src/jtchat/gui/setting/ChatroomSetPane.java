@@ -1,5 +1,5 @@
 
-package jtchat.gui;
+package jtchat.gui.setting;
 
 import jtchat.profile.Profile;
 import jtchat.gui.util.NwFontChooserS;
@@ -16,6 +16,7 @@ import javax.swing.JColorChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import jtchat.gui.MainWindow;
 
 
 
