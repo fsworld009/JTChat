@@ -19,8 +19,10 @@ public class ProfilePane extends JPanel{
     private JButton bSave;
     private JButton bLoad;
     private SetActionListener setActionListener = new SetActionListener();
+    private SettingWindow setWinRef;
     
-    public ProfilePane(){
+    public ProfilePane(SettingWindow setWinRef){
+        this.setWinRef = setWinRef;
         init();
     }
     
@@ -87,7 +89,7 @@ public class ProfilePane extends JPanel{
                     int returnVal = fChooser.showOpenDialog(ProfilePane.this);
                     if (returnVal == JFileChooser.APPROVE_OPTION) {
                        Profile.loadProfile(fChooser.getSelectedFile());
-                       
+                       setWinRef.load();
                     }
             }
         }

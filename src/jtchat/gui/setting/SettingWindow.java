@@ -32,7 +32,7 @@ public class SettingWindow extends JFrame{
         logPane = new LogPane();
         ircSetPane = new IRCSetPane();
         chatSetPane = new ChatroomSetPane(mainWinRef);
-        profilePane = new ProfilePane();
+        profilePane = new ProfilePane(this);
         tabPane.addTab("IRC Set", ircSetPane);
         tabPane.addTab("Chat Set", chatSetPane);
         tabPane.addTab("Profile", profilePane);
@@ -51,6 +51,11 @@ public class SettingWindow extends JFrame{
     //temp method
     public LogPane logPaneRef(){
         return logPane;
+    }
+    
+    public void load(){
+        ircSetPane.load();
+        chatSetPane.load();
     }
     
 

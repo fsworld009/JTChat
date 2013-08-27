@@ -62,8 +62,41 @@ public class Profile {
         while(sc.hasNext()){
             line = sc.nextLine();
             String[] split = line.split("=",2);
-            if(split[0].equals("IRCport")){
+            if(split[0].equals("IRCserver")){
+                Profile.ins().IRCserver = split[1];
+            }else if(split[0].equals("IRCport")){
                 Profile.ins().IRCport = Integer.parseInt(split[1]);
+            }else if(split[0].equals("IRCnickname")){
+                Profile.ins().IRCnickname = split[1];
+            }else if(split[0].equals("IRCchannel")){
+                Profile.ins().IRCchannel = split[1];
+            }else if(split[0].equals("ChatWidth")){
+                Profile.ins().ChatWidth = Integer.parseInt(split[1]);
+            }else if(split[0].equals("ChatHeight")){
+                Profile.ins().ChatHeight = Integer.parseInt(split[1]);
+            }else if(split[0].equals("ChatNumOfLines")){
+                Profile.ins().ChatNumOfLines = Integer.parseInt(split[1]);
+            }else if(split[0].equals("ChatBgColor")){
+                Profile.ins().ChatBgColor = Color.decode(split[1]);
+            }else if(split[0].equals("ChatTextColor")){
+                Profile.ins().ChatTextColor = Color.decode(split[1]);
+            }else if(split[0].equals("ChatTextFont")){
+                String[] fontInfo = split[1].split("\\|",2);
+                Profile.ins().ChatTextFont = Font.decode(fontInfo[0]+" PLAIN "+fontInfo[1]);
+            }else if(split[0].equals("ChatNickColor")){
+                Profile.ins().ChatNickColor = Color.decode(split[1]);
+            }else if(split[0].equals("ChatNickFont")){
+                String[] fontInfo = split[1].split("\\|",2);
+                Profile.ins().ChatNickFont = Font.decode(fontInfo[0]+" PLAIN "+fontInfo[1]);
+            }else if(split[0].equals("ChatSysColor")){
+                Profile.ins().ChatSysColor = Color.decode(split[1]);
+            }else if(split[0].equals("ChatSysFont")){
+                String[] fontInfo = split[1].split("\\|",2);
+                Profile.ins().ChatSysFont = Font.decode(fontInfo[0]+" PLAIN "+fontInfo[1]);
+            }else if(split[0].equals("ChatAlwaysOnTop")){
+                Profile.ins().ChatAlwaysOnTop = Boolean.parseBoolean(split[1]);
+            }else if(split[0].equals("ChatUseTiwtchColor")){
+                Profile.ins().ChatUseTiwtchColor = Boolean.parseBoolean(split[1]);
             }
         }
         sc.close();
@@ -107,6 +140,8 @@ public class Profile {
             fout.write("ChatNickFont="+fontToString(Profile.ins().ChatNickFont)+"\r\n");
             fout.write("ChatSysColor="+colorToHexString(Profile.ins().ChatSysColor)+"\r\n");
             fout.write("ChatSysFont="+fontToString(Profile.ins().ChatSysFont)+"\r\n");
+            fout.write("ChatAlwaysOnTop="+Profile.ins().ChatAlwaysOnTop+"\r\n");
+            fout.write("ChatUseTiwtchColor="+Profile.ins().ChatUseTiwtchColor+"\r\n");
             fout.close();
         } catch (IOException ex) {
             System.err.println("Error: IO error");
