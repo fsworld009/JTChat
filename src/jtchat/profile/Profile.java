@@ -18,15 +18,15 @@ public class Profile {
     //private HashMap<String,String> settingMap;
     
     //IRC
-    public String IRCserver = "irc.twitch.tv";
+    public String IRCserver = "";
     public int IRCport = 443;
-    public String IRCnickname = "world9918";
+    public String IRCnickname = "";
     public String IRCservpass="";
-    public String IRCchannel="#world9918";
+    public String IRCchannel="#";
     
     //Chatroom
-    public int ChatWidth = 160;
-    public int ChatHeight = 330;
+    public int ChatWidth = 240;
+    public int ChatHeight = 360;
     public Color ChatBgColor = Color.decode("#000000");
     public int ChatNumOfLines = 20;
     public Color ChatTextColor = Color.decode("#FFFFFF");
@@ -126,7 +126,7 @@ public class Profile {
         
         BufferedWriter fout = new BufferedWriter(fstream);
         try {
-            fout.write("IRCServer="+Profile.ins().IRCserver+"\r\n");
+            fout.write("IRCserver="+Profile.ins().IRCserver+"\r\n");
             fout.write("IRCport="+Profile.ins().IRCport+"\r\n");
             fout.write("IRCnickname="+Profile.ins().IRCnickname+"\r\n");
             fout.write("IRCchannel="+Profile.ins().IRCchannel+"\r\n");

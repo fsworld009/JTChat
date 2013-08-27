@@ -4,6 +4,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -79,6 +80,7 @@ public class ProfilePane extends JPanel{
         public void actionPerformed(ActionEvent e) {
             if(e.getSource() == bSave){
                     JFileChooser fChooser = new JConfirmedFileChooser();
+                    fChooser.setCurrentDirectory(new File("."));
                     int returnVal = fChooser.showSaveDialog(ProfilePane.this);
                     if (returnVal == JFileChooser.APPROVE_OPTION) {
                        Profile.saveProfile(fChooser.getSelectedFile());
@@ -86,6 +88,7 @@ public class ProfilePane extends JPanel{
                     }
             }else if(e.getSource() == bLoad){
                     JFileChooser fChooser = new JConfirmedFileChooser();
+                    fChooser.setCurrentDirectory(new File("."));
                     int returnVal = fChooser.showOpenDialog(ProfilePane.this);
                     if (returnVal == JFileChooser.APPROVE_OPTION) {
                        Profile.loadProfile(fChooser.getSelectedFile());

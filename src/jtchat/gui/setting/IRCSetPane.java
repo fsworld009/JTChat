@@ -150,6 +150,7 @@ public class IRCSetPane extends JPanel{
     
     public void load(){
         //load settings from SettingTable
+        System.out.println("called "+Profile.ins().IRCserver);
         tIrcServer.setText(Profile.ins().IRCserver);
         tIrcPort.setText(String.format("%d",Profile.ins().IRCport));
         tIrcNick.setText(Profile.ins().IRCnickname);

@@ -99,6 +99,7 @@ public class LogPane extends JPanel implements ChatLogListener{
                 log.setText("");
             }else if(e.getSource() == bSave){
                     JFileChooser fChooser = new JConfirmedFileChooser();
+                    fChooser.setCurrentDirectory(new File("."));
                     int returnVal = fChooser.showSaveDialog(LogPane.this);
                     if (returnVal == JFileChooser.APPROVE_OPTION) {
                        writeLog(fChooser.getSelectedFile());
