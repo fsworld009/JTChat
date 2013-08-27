@@ -58,12 +58,12 @@ public class ChatroomSetPane extends JPanel{
     private SetActionListener setActionListener = new SetActionListener();
     
     //need improved
-    private MainWindow mainWinRef;
+    private SettingWindow setWinRef;
 
 
 
-    public ChatroomSetPane(MainWindow mainWinRef){
-        this.mainWinRef = mainWinRef;
+    public ChatroomSetPane(SettingWindow setWinRef){
+        this.setWinRef = setWinRef;
         init();
         load();
     }
@@ -340,7 +340,7 @@ public class ChatroomSetPane extends JPanel{
                 }
             }else if(e.getSource() == bApply){
                 save();
-                mainWinRef.applyChange();
+                setWinRef.applyChangeToChatroom();
             }
         }
         

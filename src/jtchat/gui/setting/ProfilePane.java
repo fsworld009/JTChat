@@ -90,6 +90,7 @@ public class ProfilePane extends JPanel{
                     if (returnVal == JFileChooser.APPROVE_OPTION) {
                        Profile.loadProfile(fChooser.getSelectedFile());
                        setWinRef.load();
+                       setWinRef.applyChangeToChatroom();
                     }
             }
         }

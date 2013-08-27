@@ -14,9 +14,11 @@ public class SettingWindow extends JFrame{
     ChatroomSetPane chatSetPane;
     IRCSetPane ircSetPane;
     ProfilePane profilePane;
+    private MainWindow mainWinRef;
     //MainWindow chatroomWindow;
     public SettingWindow(MainWindow mainWinRef){
         super("JTChat Setting");
+        this.mainWinRef = mainWinRef;
         init(mainWinRef);
         //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(300,500);
@@ -31,7 +33,7 @@ public class SettingWindow extends JFrame{
         this.add(tabPane);
         logPane = new LogPane();
         ircSetPane = new IRCSetPane();
-        chatSetPane = new ChatroomSetPane(mainWinRef);
+        chatSetPane = new ChatroomSetPane(this);
         profilePane = new ProfilePane(this);
         tabPane.addTab("IRC Set", ircSetPane);
         tabPane.addTab("Chat Set", chatSetPane);
@@ -56,6 +58,11 @@ public class SettingWindow extends JFrame{
     public void load(){
         ircSetPane.load();
         chatSetPane.load();
+        
+    }
+    
+    public void applyChangeToChatroom(){
+        mainWinRef.applyChange();
     }
     
 
