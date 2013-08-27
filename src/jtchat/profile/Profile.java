@@ -5,7 +5,10 @@ package jtchat.profile;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Profile {
     private static Profile ins = null;
@@ -43,12 +46,49 @@ public class Profile {
     
     
 
-    private static boolean loadProfile(File profile){
+    public static boolean loadProfile(File profile){
         return true;
     }
     
-    private static void saveProfile(File profile){
+    public static String colorToHexString(Color color){
+        return String.format("#%06x",color.getRGB() & 0x00FFFFFF).toUpperCase();
+    }
+    
+    public static String fontToString(Font font){
+        return font.getFontName() + "|" + String.format("%d",font.getSize());
+    }
+    
+    public static void saveProfile(File profile){
+        FileWriter fstream = null;
+        try{
+            fstream = new FileWriter(profile);
+        }catch(java.io.FileNotFoundException e){
+            //cannot create file or don't have permission to write
+            System.err.println("Error: cannot create output file or don't have permission to write");
+        } catch (IOException ex) {
+            System.err.println("Error: IO error");
+        }
         
+        BufferedWriter fout = new BufferedWriter(fstream);
+        try {
+            fout.write("IRCServer="+Profile.ins().IRCserver+"\r\n");
+            fout.write("IRCport="+Profile.ins().IRCport+"\r\n");
+            fout.write("IRCnickname="+Profile.ins().IRCnickname+"\r\n");
+            fout.write("IRCchannel="+Profile.ins().IRCchannel+"\r\n");
+            fout.write("ChatWidth="+Profile.ins().ChatWidth+"\r\n");
+            fout.write("ChatHeight="+Profile.ins().ChatHeight+"\r\n");
+            fout.write("ChatBgColor="+colorToHexString(Profile.ins().ChatBgColor)+"\r\n");
+            fout.write("ChatNumOfLines="+Profile.ins().ChatNumOfLines+"\r\n");
+            fout.write("ChatTextColor="+colorToHexString(Profile.ins().ChatTextColor)+"\r\n");
+            fout.write("ChatTextFont="+fontToString(Profile.ins().ChatTextFont)+"\r\n");
+            fout.write("ChatNickColor="+colorToHexString(Profile.ins().ChatNickColor)+"\r\n");
+            fout.write("ChatNickFont="+fontToString(Profile.ins().ChatNickFont)+"\r\n");
+            fout.write("ChatSysColor="+colorToHexString(Profile.ins().ChatSysColor)+"\r\n");
+            fout.write("ChatSysFont="+fontToString(Profile.ins().ChatSysFont)+"\r\n");
+            fout.close();
+        } catch (IOException ex) {
+            System.err.println("Error: IO error");
+        }
     }
 
     

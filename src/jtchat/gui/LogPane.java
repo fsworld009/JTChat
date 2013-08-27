@@ -106,8 +106,6 @@ public class LogPane extends JPanel implements ChatLogListener{
                     }
             }
         }
-        
-        //ircbot.sendRaw(inputField.getText());
     }
     
 

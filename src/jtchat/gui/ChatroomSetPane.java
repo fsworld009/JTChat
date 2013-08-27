@@ -67,13 +67,7 @@ public class ChatroomSetPane extends JPanel{
         load();
     }
     
-    private String colorToHexString(Color color){
-        return String.format("#%06x",color.getRGB() & 0x00FFFFFF).toUpperCase();
-    }
-    
-    private String fontToString(Font font){
-        return font.getFontName() + " " + String.format("%d",font.getSize());
-    }
+
     
     private void init(){
         setLayout(new GridBagLayout());
@@ -277,22 +271,22 @@ public class ChatroomSetPane extends JPanel{
         this.tNumOfLines.setText(String.format("%d",Profile.ins().ChatNumOfLines));
         
         this.cBg = Profile.ins().ChatBgColor;
-        this.bBgColor.setText(this.colorToHexString(cBg));
+        this.bBgColor.setText(Profile.colorToHexString(cBg));
         
         this.cText = Profile.ins().ChatTextColor;
-        this.bTextColor.setText(this.colorToHexString(cText));
+        this.bTextColor.setText(Profile.colorToHexString(cText));
         this.fText = Profile.ins().ChatTextFont;
-        this.bTextFont.setText(this.fontToString(fText));
+        this.bTextFont.setText(Profile.fontToString(fText));
         
         this.cNick = Profile.ins().ChatNickColor;
-        this.bNickColor.setText(this.colorToHexString(cNick));
+        this.bNickColor.setText(Profile.colorToHexString(cNick));
         this.fNick = Profile.ins().ChatNickFont;
-        this.bNickFont.setText(this.fontToString(fNick));
+        this.bNickFont.setText(Profile.fontToString(fNick));
         
         this.cSys = Profile.ins().ChatSysColor;
-        this.bSysColor.setText(this.colorToHexString(cSys));
+        this.bSysColor.setText(Profile.colorToHexString(cSys));
         this.fSys = Profile.ins().ChatSysFont;
-        this.bSysFont.setText(this.fontToString(fSys));
+        this.bSysFont.setText(Profile.fontToString(fSys));
         
         
         this.chUseTwitchColor.setSelected(Profile.ins().ChatUseTiwtchColor);
@@ -305,43 +299,43 @@ public class ChatroomSetPane extends JPanel{
                 Color choose = JColorChooser.showDialog(ChatroomSetPane.this, "Choose Color", cBg);
                 if(choose != null){
                     cBg = choose;
-                    bBgColor.setText(colorToHexString(choose));
+                    bBgColor.setText(Profile.colorToHexString(choose));
                 }
             }else if(e.getSource() == bTextColor){
                 Color choose = JColorChooser.showDialog(ChatroomSetPane.this, "Choose Color", cText);
                 if(choose != null){
                     cText = choose;
-                    bTextColor.setText(colorToHexString(choose));
+                    bTextColor.setText(Profile.colorToHexString(choose));
                 }
             }else if(e.getSource() == bTextFont){
                 Font choose = NwFontChooserS.showDialog(null, "Choose Font", fText);
                 if(choose != null){
                     fText = choose;
-                    bTextFont.setText(fontToString(fText));
+                    bTextFont.setText(Profile.fontToString(fText));
                 }
             }else if(e.getSource() == bNickColor){
                 Color choose = JColorChooser.showDialog(ChatroomSetPane.this, "Choose Color", cNick);
                 if(choose != null){
                     cNick = choose;
-                    bNickColor.setText(colorToHexString(choose));
+                    bNickColor.setText(Profile.colorToHexString(choose));
                 }
             }else if(e.getSource() == bNickFont){
                 Font choose = NwFontChooserS.showDialog(null, "Choose Font", fNick);
                 if(choose != null){
                     fNick = choose;
-                    bNickFont.setText(fontToString(fNick));
+                    bNickFont.setText(Profile.fontToString(fNick));
                 }
             }else if(e.getSource() == bSysColor){
                 Color choose = JColorChooser.showDialog(ChatroomSetPane.this, "Choose Color", cSys);
                 if(choose != null){
                     cSys = choose;
-                    bSysColor.setText(colorToHexString(choose));
+                    bSysColor.setText(Profile.colorToHexString(choose));
                 }
             }else if(e.getSource() == bSysFont){
                 Font choose = NwFontChooserS.showDialog(null, "Choose Font", fSys);
                 if(choose != null){
                     fSys = choose;
-                    bSysFont.setText(fontToString(fSys));
+                    bSysFont.setText(Profile.fontToString(fSys));
                 }
             }else if(e.getSource() == bApply){
                 save();

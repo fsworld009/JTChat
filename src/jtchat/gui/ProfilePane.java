@@ -2,10 +2,15 @@ package jtchat.gui;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import jtchat.gui.util.JConfirmedFileChooser;
+import jtchat.profile.Profile;
 
 
 public class ProfilePane extends JPanel{
@@ -13,6 +18,7 @@ public class ProfilePane extends JPanel{
     //private JComboBox cbProfileList;
     private JButton bSave;
     private JButton bLoad;
+    private SetActionListener setActionListener = new SetActionListener();
     
     public ProfilePane(){
         init();
@@ -38,6 +44,9 @@ public class ProfilePane extends JPanel{
         gbc.gridy = 0;
         this.add(bLoad,gbc);
         
+        bSave.addActionListener(setActionListener);
+        bLoad.addActionListener(setActionListener);
+        
         /*
         lProfileName = new JLabel("Profile: ");
         gbc = new GridBagConstraints();
@@ -53,5 +62,25 @@ public class ProfilePane extends JPanel{
         gbc.gridy = 0;
         this.add(cbProfileList,gbc);*/
         
+    }
+    
+    private class SetActionListener implements ActionListener{
+        public void actionPerformed(ActionEvent e) {
+            if(e.getSource() == bSave){
+                    JFileChooser fChooser = new JConfirmedFileChooser();
+                    int returnVal = fChooser.showSaveDialog(ProfilePane.this);
+                    if (returnVal == JFileChooser.APPROVE_OPTION) {
+                       Profile.saveProfile(fChooser.getSelectedFile());
+                       
+                    }
+            }else if(e.getSource() == bLoad){
+                    JFileChooser fChooser = new JConfirmedFileChooser();
+                    int returnVal = fChooser.showOpenDialog(ProfilePane.this);
+                    if (returnVal == JFileChooser.APPROVE_OPTION) {
+                       Profile.loadProfile(fChooser.getSelectedFile());
+                       
+                    }
+            }
+        }
     }
 }
