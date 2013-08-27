@@ -112,8 +112,8 @@ public class IRCBot {
                 //save connection info
 
                 
-                writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-                reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"));
+                reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
                 
                 //setup message queqe
                 sendMsgQueue = new PriorityQueue<String>(10,new MsgComparator());
