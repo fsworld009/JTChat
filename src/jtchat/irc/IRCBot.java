@@ -13,6 +13,8 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.TimerTask;
 import java.util.Timer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class IRCBot {
@@ -328,6 +330,11 @@ public class IRCBot {
                         }
                     }
                 }
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException ex) {
+                    //Logger.getLogger(IRCBot.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             System.out.println("SendThread closed");
         }
@@ -372,7 +379,12 @@ public class IRCBot {
                         //log("Receive thread I/O error",IRCBot.LogType.SYS);
                         break;
                     }
-                 }
+                }
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException ex) {
+                    //Logger.getLogger(IRCBot.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             System.out.println("ReceiveThread closed");
             

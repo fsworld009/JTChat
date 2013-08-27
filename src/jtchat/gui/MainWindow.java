@@ -355,16 +355,18 @@ public class MainWindow extends JFrame implements ChatMsgListener{
                 
             }else if(e.getSource() == sendButton || e.getSource() == inputField){
                 String message = MainWindow.this.inputField.getText();
-                if(ircbot != null && ircbot.isConnected()){
-                    ircbot.chat(MainWindow.this.channel, message);
-                    if(message.matches("^/me.*")){
-                        onChatAction(MainWindow.this.channel,MainWindow.this.nickname,message.replaceFirst("/me", ""));
-                    }else{
-                        onChatMsg(MainWindow.this.channel,MainWindow.this.nickname,false,message);
+                if(!message.equals("")){
+                    if(ircbot != null && ircbot.isConnected()){
+                        ircbot.chat(MainWindow.this.channel, message);
+                        if(message.matches("^/me.*")){
+                            onChatAction(MainWindow.this.channel,MainWindow.this.nickname,message.replaceFirst("/me", ""));
+                        }else{
+                            onChatMsg(MainWindow.this.channel,MainWindow.this.nickname,false,message);
+                        }
+
                     }
-                    
+                    inputField.setText("");
                 }
-                inputField.setText("");
                 
             }
             
