@@ -66,6 +66,9 @@ public class JtvIRCBot extends IRCBot{
             if(message.matches("USERCOLOR .*")){
                 String[] parse = message.split(" ",3);
                 UserColorMapper.ins().setColor(parse[1], parse[2]);
+            }else if(message.matches("CLEARCHAT .*")){
+                String[] parse = message.split(" ",2);
+                this.log(String.format("%s has been banned / timeoutted",parse[1]),IRCBot.LogType.SYS);
             }
         }
         

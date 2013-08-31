@@ -42,11 +42,11 @@ public class IRCBot {
     private Timer pingTask;
     private Timer loginCheckTask;
     
-    private enum LogType{
+    protected enum LogType{
         SEND, RECEIVE, SYS
     }
     
-    private void log(String log, IRCBot.LogType type ){
+    protected void log(String log, IRCBot.LogType type ){
         String result="";
         if(type == IRCBot.LogType.SEND){
             result+=">>> ";
