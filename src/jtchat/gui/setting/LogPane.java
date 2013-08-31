@@ -20,11 +20,11 @@ import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.text.BadLocationException;
-import jtchat.irc.ChatLogListener;
+import jtchat.irc.IRCLogListener;
 
 
 
-public class LogPane extends JPanel implements ChatLogListener{
+public class LogPane extends JPanel implements IRCLogListener{
     private JTextPane log;
     private JButton bSave;
     private JButton bClear;

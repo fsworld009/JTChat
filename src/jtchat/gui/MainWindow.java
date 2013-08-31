@@ -18,12 +18,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import jtchat.irc.ChatMsgListener;
+import jtchat.irc.IRCEventListener;
+import jtchat.irc.IRCMsgListener;
 import jtchat.irc.JtvIRCBot;
 
 
 
-public class MainWindow extends JFrame implements ChatMsgListener{
+public class MainWindow extends JFrame implements IRCMsgListener, IRCEventListener{
     private JtvIRCBot ircbot;
     private JTextField inputField;
     private JButton setButton;
@@ -66,6 +67,7 @@ public class MainWindow extends JFrame implements ChatMsgListener{
             ircbot = new JtvIRCBot();
             ircbot.registerLogListener(settingWindow.logPaneRef());
             ircbot.registerMsgListener(this);
+            ircbot.registerEventListener(this);
         
         }
         ircbot.connect(Profile.ins().IRCserver,Profile.ins().IRCport,Profile.ins().IRCnickname,"JTChat",Profile.ins().IRCservpass);

@@ -6,29 +6,39 @@ import java.util.Vector;
 
 
 public class JtvIRCBot extends IRCBot{
-    Vector<ChatLogListener> logListeners;
-    Vector<ChatMsgListener> msgListeners;
+    Vector<IRCLogListener> logListeners;
+    Vector<IRCMsgListener> msgListeners;
+    Vector<IRCEventListener> eventListeners;
     
     public JtvIRCBot(){
         super();
-        logListeners = new Vector<ChatLogListener>();
-        msgListeners = new Vector<ChatMsgListener>();
+        logListeners = new Vector<IRCLogListener>();
+        msgListeners = new Vector<IRCMsgListener>();
+        eventListeners = new Vector<IRCEventListener>();
     }
     
-    public void registerLogListener(ChatLogListener listener){
+    public void registerLogListener(IRCLogListener listener){
         logListeners.add(listener);
     }
     
-    public void removeLogListener(ChatLogListener listener){
+    public void removeLogListener(IRCLogListener listener){
         logListeners.remove(listener);
     }
     
-    public void registerMsgListener(ChatMsgListener listener){
+    public void registerMsgListener(IRCMsgListener listener){
         msgListeners.add(listener);
     }
     
-    public void removeMsgListener(ChatMsgListener listener){
+    public void removeMsgListener(IRCMsgListener listener){
         msgListeners.remove(listener);
+    }
+    
+    public void registerEventListener(IRCEventListener listener){
+        eventListeners.add(listener);
+    }
+    
+    public void removeEventListener(IRCEventListener listener){
+        eventListeners.remove(listener);
     }
     
     public void onLog(String log){
@@ -89,20 +99,20 @@ public class JtvIRCBot extends IRCBot{
     }
     
     public void onConnectSuccess(){
-        for(int i=0;i<msgListeners.size();i++){
-            msgListeners.get(i).onConnectSuccess();
+        for(int i=0;i<eventListeners.size();i++){
+            eventListeners.get(i).onConnectSuccess();
         }
     }
     
     public void onLoginSuccess(){
-        for(int i=0;i<msgListeners.size();i++){
-            msgListeners.get(i).onLoginSuccess();
+        for(int i=0;i<eventListeners.size();i++){
+            eventListeners.get(i).onLoginSuccess();
         }
     }
     
     public void onLoginFailed(){
-        for(int i=0;i<msgListeners.size();i++){
-            msgListeners.get(i).onLoginFailed();
+        for(int i=0;i<eventListeners.size();i++){
+            eventListeners.get(i).onLoginFailed();
         }
     }
 }
