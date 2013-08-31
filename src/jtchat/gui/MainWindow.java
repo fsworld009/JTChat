@@ -43,7 +43,7 @@ public class MainWindow extends JFrame implements ChatMsgListener{
     private JButton setButton;
     private JButton sendButton;
     private JButton connectButton;
-    private JTextPane chatMsgsPane;
+    private ChatroomPanel chatPane;
     
     //private JPanel textBoxPanel;
     //private JScrollPane chatScrollPane;
@@ -53,15 +53,13 @@ public class MainWindow extends JFrame implements ChatMsgListener{
     //for chat
     private String channel = "";
     private String nickname = "";
-    private SimpleAttributeSet chatAttr;
     
-    private ChatMessage chatMsgs;
+    
+    
     public MainWindow(){
         super("JTChat");
-        chatAttr = new SimpleAttributeSet();
-        chatMsgs = new ChatMessage();
-
         
+
         init();
         applyChange();
         
@@ -169,35 +167,8 @@ public class MainWindow extends JFrame implements ChatMsgListener{
         
         
         //text area that displays chat
-        chatMsgsPane = new JTextPane();
-
-        
-        chatMsgsPane.setEditable(false);
-        chatMsgsPane.setFont(new Font("Serif",Font.PLAIN,14));
-
-        //try {
-            //chatMsgs.setText("asdasdadadsadsa");
-            //chatMsgs.getDocument().insertString(chatMsgs.getDocument().getLength(), "abc\n", null);
-            //chatMsgs.getDocument().insertString(chatMsgs.getDocument().getLength(), "efg\n", null);
-        //} 
-        JScrollPane chatScrollPane = new JScrollPane(chatMsgsPane,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        
-        
-        //make components transparent
-        //textBoxP1.setOpaque(false);
-        //textBoxP2.setOpaque(false);
-        textBoxPanel.setOpaque(false);
-        chatMsgsPane.setOpaque(false);
-        chatMsgsPane.setEditorKit(new WrapEditorKit());
-
-        chatScrollPane.getViewport().setOpaque(false);
-        chatScrollPane.setOpaque(false);
-
-        chatMsgsPane.setBorder(null);
-        chatScrollPane.setBorder(null);
-        
-        
-        this.add(chatScrollPane,BorderLayout.CENTER);
+        chatPane = new ChatroomPanel();
+        this.add(chatPane,BorderLayout.CENTER);
         
 
         
@@ -227,15 +198,13 @@ public class MainWindow extends JFrame implements ChatMsgListener{
         //}
         //appendChatMsg(sender,message);
         if(channel.equals(this.channel)){
-            chatMsgs.add(String.format("%s: %s",nickname, message));
-            chatMsgs.setText(chatMsgsPane);
+            chatPane.addMessage(String.format("%s: %s",nickname, message));
         }
         
     }
     public void onChatAction(String channel, String nickname, String action){
         if(channel.equals(this.channel)){
-            chatMsgs.add(String.format("%s %s",nickname, action));
-            chatMsgs.setText(chatMsgsPane);
+            chatPane.addMessage(String.format("%s %s",nickname, action));
         }
     }
     public void onPrivateMsg(String nickname, String message){
@@ -243,8 +212,7 @@ public class MainWindow extends JFrame implements ChatMsgListener{
     }
     
     public void onSysMsg(String message){
-        chatMsgs.add(String.format("[SYS] %s", message));
-        chatMsgs.setText(chatMsgsPane);
+        chatPane.addMessage(String.format("[SYS] %s", message));
 
     }
     
@@ -318,7 +286,7 @@ public class MainWindow extends JFrame implements ChatMsgListener{
                 connectButton.setBackground(Profile.ins().ChatBgColor);
                 
                 //set inner window size
-                MainWindow.this.getContentPane().setPreferredSize(new Dimension(Profile.ins().ChatWidth+17,Profile.ins().ChatHeight+43));
+                MainWindow.this.getContentPane().setPreferredSize(new Dimension(Profile.ins().ChatWidth+17,Profile.ins().ChatHeight+45));
                 MainWindow.this.pack();
                 
                 //font
@@ -327,7 +295,7 @@ public class MainWindow extends JFrame implements ChatMsgListener{
                 //alwaysontop
                 MainWindow.this.setAlwaysOnTop(Profile.ins().ChatAlwaysOnTop);
                 
-                chatMsgs.setText(chatMsgsPane);
+                chatPane.applyChange();
                 
             }
         });
@@ -374,54 +342,7 @@ public class MainWindow extends JFrame implements ChatMsgListener{
         
     }
     
-    //http://java-sl.com/tip_letter_wrap_java7.html
-    class WrapEditorKit extends StyledEditorKit {
-        ViewFactory defaultFactory=new WrapColumnFactory();
-        public ViewFactory getViewFactory() {
-            return defaultFactory;
-        }
- 
-    }
- 
-    class WrapColumnFactory implements ViewFactory {
-        public View create(Element elem) {
-            String kind = elem.getName();
-            if (kind != null) {
-                if (kind.equals(AbstractDocument.ContentElementName)) {
-                    return new WrapLabelView(elem);
-                } else if (kind.equals(AbstractDocument.ParagraphElementName)) {
-                    return new ParagraphView(elem);
-                } else if (kind.equals(AbstractDocument.SectionElementName)) {
-                    return new BoxView(elem, View.Y_AXIS);
-                } else if (kind.equals(StyleConstants.ComponentElementName)) {
-                    return new ComponentView(elem);
-                } else if (kind.equals(StyleConstants.IconElementName)) {
-                    return new IconView(elem);
-                }
-            }
- 
-            // default to text display
-            return new LabelView(elem);
-        }
-    }
- 
-    class WrapLabelView extends LabelView {
-        public WrapLabelView(Element elem) {
-            super(elem);
-        }
- 
-        public float getMinimumSpan(int axis) {
-            switch (axis) {
-                case View.X_AXIS:
-                    return 0;
-                case View.Y_AXIS:
-                    return super.getMinimumSpan(axis);
-                default:
-                    throw new IllegalArgumentException("Invalid axis: " + axis);
-            }
-        }
- 
-    }
+
     
     
 }

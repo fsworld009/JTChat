@@ -43,7 +43,7 @@ public class ChatMessage {
     
     
     
-    public void add(String newMsg){
+    public void addMessage(String newMsg){
         messages += newMsg += "\n";
         numOfLines++;
     }
