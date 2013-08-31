@@ -2,6 +2,8 @@
 package jtchat.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
@@ -16,6 +18,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledEditorKit;
 import javax.swing.text.View;
 import javax.swing.text.ViewFactory;
+import jtchat.profile.Profile;
 
 
 public class ChatroomPanel extends JPanel{
@@ -41,7 +44,7 @@ public class ChatroomPanel extends JPanel{
         chatScrollPane.getViewport().setOpaque(false);
         chatScrollPane.setOpaque(false);
 
-        chatMsgsPane.setBorder(null);
+        chatMsgsPane.setBorder(BorderFactory.createLineBorder(Profile.ins().ChatBgColor,Profile.ins().ChatBorderThickness));
         chatScrollPane.setBorder(null);
         
         this.add(chatScrollPane,BorderLayout.CENTER);
@@ -58,6 +61,7 @@ public class ChatroomPanel extends JPanel{
     
     public void applyChange(){
         chatMsgs.setText(chatMsgsPane);
+        chatMsgsPane.setBorder(BorderFactory.createLineBorder(Profile.ins().ChatBgColor,Profile.ins().ChatBorderThickness));
     }
     
     

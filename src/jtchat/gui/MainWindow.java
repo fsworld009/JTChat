@@ -185,14 +185,21 @@ public class MainWindow extends JFrame implements IRCMsgListener, IRCEventListen
             //}
         //}
         //appendChatMsg(sender,message);
+        
+        //force capitalize nickname
+        String capNickname = nickname.substring(0,1).toUpperCase() + nickname.substring(1);
+        
         if(channel.equals(this.channel)){
-            chatPane.addMessage(String.format("%s: %s",nickname, message));
+            chatPane.addMessage(String.format("%s: %s",capNickname, message));
         }
         
     }
     public void onChatAction(String channel, String nickname, String action){
+        //force capitalize nickname
+        String capNickname = nickname.substring(0,1).toUpperCase() + nickname.substring(1);
+        
         if(channel.equals(this.channel)){
-            chatPane.addMessage(String.format("%s %s",nickname, action));
+            chatPane.addMessage(String.format("%s %s",capNickname, action));
         }
     }
     public void onPrivateMsg(String nickname, String message){
@@ -274,7 +281,7 @@ public class MainWindow extends JFrame implements IRCMsgListener, IRCEventListen
                 connectButton.setBackground(Profile.ins().ChatBgColor);
                 
                 //set inner window size
-                MainWindow.this.getContentPane().setPreferredSize(new Dimension(Profile.ins().ChatWidth+17,Profile.ins().ChatHeight+45));
+                MainWindow.this.getContentPane().setPreferredSize(new Dimension(Profile.ins().ChatWidth+(2*Profile.ins().ChatBorderThickness)+17,Profile.ins().ChatHeight+(2*Profile.ins().ChatBorderThickness)+45));
                 MainWindow.this.pack();
                 
                 //font

@@ -27,6 +27,8 @@ public class ChatroomSetPane extends JPanel{
     private JTextField tWindowWidth;
     private JLabel lBgColor;
     private JButton bBgColor;
+    private JLabel lBorder;
+    private JTextField tBorder;
     private JTextField tWindowHeight;
     private JLabel lNumOfLines;
     private JTextField tNumOfLines;
@@ -96,32 +98,46 @@ public class ChatroomSetPane extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(windowSizePanel,gbc);
         
+        lBorder = new JLabel("Border thickness: ");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        this.add(lBorder,gbc);
+        
+        tBorder = new JTextField();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        this.add(tBorder,gbc);
+        
         
         lBgColor = new JLabel("Bg Color: ");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(lBgColor,gbc);
         
         bBgColor = new JButton();
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(bBgColor,gbc);
         
         lNumOfLines = new JLabel("Max number of lines: ");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(lNumOfLines,gbc);
         
         tNumOfLines = new JTextField();
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(tNumOfLines,gbc);
         
@@ -129,91 +145,91 @@ public class ChatroomSetPane extends JPanel{
         lTextColor = new JLabel("Text Color: ");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(lTextColor,gbc);
         
         bTextColor = new JButton();
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(bTextColor,gbc);
         
         lTextFont = new JLabel("Text Font: ");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(lTextFont,gbc);
         
         bTextFont = new JButton();
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(bTextFont,gbc);
         
         lNickColor = new JLabel("Nickname Color: ");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 5;
+        gbc.gridy = 6;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(lNickColor,gbc);
         
         bNickColor = new JButton();
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
-        gbc.gridy = 5;
+        gbc.gridy = 6;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(bNickColor,gbc);
         
         lNickFont = new JLabel("Nickname Font: ");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 6;
+        gbc.gridy = 7;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(lNickFont,gbc);
         
         bNickFont = new JButton();
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
-        gbc.gridy = 6;
+        gbc.gridy = 7;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(bNickFont,gbc);
         
         lSysColor = new JLabel("System Color: ");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 7;
+        gbc.gridy = 8;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(lSysColor,gbc);
         
         bSysColor = new JButton();
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
-        gbc.gridy = 7;
+        gbc.gridy = 8;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(bSysColor,gbc);
         
         lSysFont = new JLabel("System Font: ");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 8;
+        gbc.gridy = 9;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(lSysFont,gbc);
         
         bSysFont = new JButton();
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
-        gbc.gridy = 8;
+        gbc.gridy = 9;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(bSysFont,gbc);
         
         chAlwaysOnTop = new JCheckBox("Always on Top");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 9;
+        gbc.gridy = 10;
         gbc.gridwidth = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(chAlwaysOnTop,gbc);
@@ -221,7 +237,7 @@ public class ChatroomSetPane extends JPanel{
         chUseTwitchColor = new JCheckBox("Use Jtv/Tiwtch Nickname Color");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 10;
+        gbc.gridy = 11;
         gbc.gridwidth = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(chUseTwitchColor,gbc);
@@ -229,7 +245,7 @@ public class ChatroomSetPane extends JPanel{
         bApply = new JButton("Apply");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 11;
+        gbc.gridy = 12;
         gbc.gridwidth = 2;
         
         //gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -251,6 +267,7 @@ public class ChatroomSetPane extends JPanel{
     public void save(){
         Profile.ins().ChatWidth = Integer.parseInt(tWindowWidth.getText());
         Profile.ins().ChatHeight = Integer.parseInt(tWindowHeight.getText());
+        Profile.ins().ChatBorderThickness = Integer.parseInt(tBorder.getText());
         Profile.ins().ChatBgColor = cBg;
         Profile.ins().ChatNumOfLines = Integer.parseInt(tNumOfLines.getText());
         Profile.ins().ChatTextColor = cText;
@@ -270,6 +287,8 @@ public class ChatroomSetPane extends JPanel{
         this.tWindowHeight.setText(String.format("%d",Profile.ins().ChatHeight));
         
         this.tNumOfLines.setText(String.format("%d",Profile.ins().ChatNumOfLines));
+        
+        this.tBorder.setText(String.format("%d",Profile.ins().ChatBorderThickness));
         
         this.cBg = Profile.ins().ChatBgColor;
         this.bBgColor.setText(Profile.colorToHexString(cBg));
