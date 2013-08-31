@@ -11,6 +11,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JButton;
@@ -52,10 +54,11 @@ public class MainWindow extends JFrame implements IRCMsgListener, IRCEventListen
         
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //this.setSize(350,500);
-        this.setResizable(false);
+        this.setResizable(true);
         
         //stop ircbot on close
         this.addWindowListener(new closeEventWindowListener());
+        this.addComponentListener(new ChatComponentAdapter());
         
         
     }
@@ -157,6 +160,7 @@ public class MainWindow extends JFrame implements IRCMsgListener, IRCEventListen
         //text area that displays chat
         chatPane = new ChatroomPanel();
         this.add(chatPane,BorderLayout.CENTER);
+        
         
 
         
@@ -337,7 +341,15 @@ public class MainWindow extends JFrame implements IRCMsgListener, IRCEventListen
         
     }
     
-
-    
+    private class ChatComponentAdapter extends ComponentAdapter{
+        public void componentResized(ComponentEvent e)
+        {
+                Dimension dx = MainWindow.this.getContentPane().getSize();
+                //System.out.printf("%d %d\n",d.width,d.height);
+                Profile.ins().ChatWidth = dx.width-17-(2*Profile.ins().ChatBorderThickness);
+                Profile.ins().ChatHeight = dx.height-45-(2*Profile.ins().ChatBorderThickness);
+                MainWindow.this.settingWindow.onMainWindowResize();
+        }
+    }
     
 }

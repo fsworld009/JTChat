@@ -68,5 +68,9 @@ public class SettingWindow extends JFrame{
         mainWinRef.applyChange();
     }
     
+    public void onMainWindowResize(){
+        chatSetPane.onMainWindowResize();
+    }
+    
 
 }

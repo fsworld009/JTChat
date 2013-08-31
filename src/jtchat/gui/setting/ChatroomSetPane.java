@@ -365,4 +365,10 @@ public class ChatroomSetPane extends JPanel{
         
         //ircbot.sendRaw(inputField.getText());
     }
+    
+    public void onMainWindowResize(){
+        this.tWindowWidth.setText(String.format("%d",Profile.ins().ChatWidth));
+        this.tWindowHeight.setText(String.format("%d",Profile.ins().ChatHeight));
+    }
+    
 }
