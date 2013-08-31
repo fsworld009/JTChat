@@ -43,7 +43,7 @@ public class MainWindow extends JFrame implements IRCMsgListener, IRCEventListen
     private String channel = "";
     private String nickname = "";
     
-    
+    private boolean hitConnectButton = false;
     
     public MainWindow(){
         super("JTChat");
@@ -311,14 +311,15 @@ public class MainWindow extends JFrame implements IRCMsgListener, IRCEventListen
                            });
                 }
             }else if(e.getSource() == MainWindow.this.connectButton){
-                if(ircbot == null || !ircbot.isConnected()){
+                if(!hitConnectButton){
                     //connect
                     MainWindow.this.connect();
                     connectButton.setText("Disconnect");
-                }else if(ircbot != null && ircbot.isConnected()){
+                }else{
                     MainWindow.this.disconnect();
                     connectButton.setText("Connect");
                 }
+                hitConnectButton = !hitConnectButton;
                 
             }else if(e.getSource() == sendButton || e.getSource() == inputField){
                 String message = MainWindow.this.inputField.getText();
