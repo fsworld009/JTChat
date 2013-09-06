@@ -79,6 +79,8 @@ public class JtvIRCBot extends IRCBot{
             }else if(message.matches("CLEARCHAT .*")){
                 String[] parse = message.split(" ",2);
                 this.log(String.format("%s has been banned or timeoutted",parse[1]),IRCBot.LogType.SYS);
+            }else if(message.matches("CLEARCHAT")){
+                this.log(String.format("chat has been cleared"),IRCBot.LogType.SYS);
             }
         }
         
