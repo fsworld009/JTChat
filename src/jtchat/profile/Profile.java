@@ -38,6 +38,8 @@ public class Profile {
     public Font ChatNickFont = new Font("Arial",Font.PLAIN,12);
     public boolean ChatAlwaysOnTop = false;
     public boolean ChatUseTiwtchColor = true;
+    public boolean ChatClear = false;
+    public boolean ChatClearBannedMsg = true;
     public Color ChatSysColor = Color.decode("#FF9999");
     public Font ChatSysFont = new Font("Arial",Font.PLAIN,12);
     
@@ -112,6 +114,10 @@ public class Profile {
                 this.ChatAlwaysOnTop = Boolean.parseBoolean(split[1]);
             }else if(split[0].equals("ChatUseTiwtchColor")){
                 this.ChatUseTiwtchColor = Boolean.parseBoolean(split[1]);
+            }else if(split[0].equals("ChatClear")){
+                this.ChatClear = Boolean.parseBoolean(split[1]);
+            }else if(split[0].equals("ChatClearBannedMsg")){
+                this.ChatClearBannedMsg = Boolean.parseBoolean(split[1]);
             }
         }
         sc.close();
@@ -154,6 +160,8 @@ public class Profile {
             fout.write("ChatSysFont="+fontToString(this.ChatSysFont)+"\r\n");
             fout.write("ChatAlwaysOnTop="+this.ChatAlwaysOnTop+"\r\n");
             fout.write("ChatUseTiwtchColor="+this.ChatUseTiwtchColor+"\r\n");
+            fout.write("ChatClear="+this.ChatClear+"\r\n");
+            fout.write("ChatClearBannedMsg="+this.ChatClearBannedMsg+"\r\n");
             fout.close();
         } catch (IOException ex) {
             System.err.println("Error: IO error");

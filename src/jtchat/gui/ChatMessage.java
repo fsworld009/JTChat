@@ -12,9 +12,11 @@ import javax.swing.text.Document;
 import javax.swing.text.Element;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
+import jtchat.irc.IRCJtvCommandListener;
+import jtchat.irc.IRCMsgListener;
 import jtchat.irc.UserColorMapper;
 
-public class ChatMessage {
+public class ChatMessage implements IRCJtvCommandListener{
     private String messages;    //save all current chat msgs
     private SimpleAttributeSet chatAttr;
     
@@ -25,7 +27,17 @@ public class ChatMessage {
     private Pattern sysPattern;
     private Pattern actionPattern;
     private int numOfLines = 0;
+
     
+    public void clearChat() {
+        System.out.printf("get clearchat");
+    }
+
+    
+    public void clearMsgsFromBannedUser(String username) {
+        System.out.printf("get clear ban");
+    }
+   
     public enum Type{
         Text, Nick, Sys, TwitchId
     }

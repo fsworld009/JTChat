@@ -61,6 +61,8 @@ public class ChatroomSetPane extends JPanel{
     private Font fNick;
     private Font fSys;
     
+    private JCheckBox chClear;
+    private JCheckBox chClearBannedMsg;
     
     private SetActionListener setActionListener = new SetActionListener();
     
@@ -115,9 +117,9 @@ public class ChatroomSetPane extends JPanel{
         
         JPanel windowPosPanel = new JPanel();
         windowPosPanel.setLayout(new FlowLayout());
-        windowPosPanel.add(new JLabel("X"));
+        windowPosPanel.add(new JLabel("X:"));
         windowPosPanel.add(tWindowPosX);
-        windowPosPanel.add(new JLabel(" Y"));
+        windowPosPanel.add(new JLabel("Y:"));
         windowPosPanel.add(tWindowPosY);
         
         gbc = new GridBagConstraints();
@@ -270,10 +272,26 @@ public class ChatroomSetPane extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(chUseTwitchColor,gbc);
         
-        bApply = new JButton("Apply");
+        chClear = new JCheckBox("Clear chat when '/clear' is performed");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 13;
+        gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        this.add(chClear,gbc);
+        
+        chClearBannedMsg = new JCheckBox("Clear messages from banned users");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 14;
+        gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        this.add(chClearBannedMsg,gbc);
+        
+        bApply = new JButton("Apply");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 15;
         gbc.gridwidth = 2;
         
         //gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -308,6 +326,8 @@ public class ChatroomSetPane extends JPanel{
         Profile.ins().ChatSysFont = fSys;
         Profile.ins().ChatUseTiwtchColor = this.chUseTwitchColor.isSelected();
         Profile.ins().ChatAlwaysOnTop = this.chAlwaysOnTop.isSelected();
+        Profile.ins().ChatClear = this.chClear.isSelected();
+        Profile.ins().ChatClearBannedMsg = this.chClearBannedMsg.isSelected();
 
     }
     
@@ -344,6 +364,8 @@ public class ChatroomSetPane extends JPanel{
         
         this.chUseTwitchColor.setSelected(Profile.ins().ChatUseTiwtchColor);
         this.chAlwaysOnTop.setSelected(Profile.ins().ChatAlwaysOnTop);
+        this.chClear.setSelected(Profile.ins().ChatClear);
+        this.chClearBannedMsg.setSelected(Profile.ins().ChatClearBannedMsg);
     }
     
     private class SetActionListener implements ActionListener{

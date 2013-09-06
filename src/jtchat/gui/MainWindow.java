@@ -71,6 +71,7 @@ public class MainWindow extends JFrame implements IRCMsgListener, IRCEventListen
             //initialize ircbot
             ircbot = new JtvIRCBot();
             ircbot.registerLogListener(settingWindow.logPaneRef());
+            ircbot.registerCommandListener(chatPane.getCommandListener());
             ircbot.registerMsgListener(this);
             ircbot.registerEventListener(this);
         

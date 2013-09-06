@@ -18,6 +18,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledEditorKit;
 import javax.swing.text.View;
 import javax.swing.text.ViewFactory;
+import jtchat.irc.IRCJtvCommandListener;
 import jtchat.profile.Profile;
 
 
@@ -49,6 +50,10 @@ public class ChatroomPanel extends JPanel{
         
         this.add(chatScrollPane,BorderLayout.CENTER);
     }
+    
+    public IRCJtvCommandListener getCommandListener(){
+        return chatMsgs;
+    }
 
     
     
@@ -56,7 +61,7 @@ public class ChatroomPanel extends JPanel{
     public void addMessage(String msg){
         //do
         chatMsgs.addMessage(msg);
-        this.applyChange();
+        chatMsgs.setText(chatMsgsPane);
     }
     
     public void applyChange(){
