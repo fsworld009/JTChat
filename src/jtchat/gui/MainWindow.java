@@ -180,7 +180,7 @@ public class MainWindow extends JFrame implements IRCMsgListener, IRCEventListen
             if(MainWindow.this.ircbot != null){
                 MainWindow.this.ircbot.close();
             }
-            Profile.saveProfile(new File("JTChat.ini"));
+            Profile.ins().saveProfile(new File("JTChat.ini"));
         }
     }
     

@@ -83,7 +83,7 @@ public class ProfilePane extends JPanel{
                     fChooser.setCurrentDirectory(new File("."));
                     int returnVal = fChooser.showSaveDialog(ProfilePane.this);
                     if (returnVal == JFileChooser.APPROVE_OPTION) {
-                       Profile.saveProfile(fChooser.getSelectedFile());
+                       Profile.ins().saveProfile(fChooser.getSelectedFile());
                        
                     }
             }else if(e.getSource() == bLoad){
@@ -91,7 +91,7 @@ public class ProfilePane extends JPanel{
                     fChooser.setCurrentDirectory(new File("."));
                     int returnVal = fChooser.showOpenDialog(ProfilePane.this);
                     if (returnVal == JFileChooser.APPROVE_OPTION) {
-                       Profile.loadProfile(fChooser.getSelectedFile());
+                       Profile.ins().loadProfile(fChooser.getSelectedFile());
                        setWinRef.load();
                        setWinRef.applyChangeToChatroom();
                     }

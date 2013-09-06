@@ -28,9 +28,9 @@ public class main {
         System.out.println("END");*/
         File defaultProfile = new File("JTChat.ini");
         if(!defaultProfile.exists()){
-            Profile.saveProfile(defaultProfile);
+            Profile.ins().saveProfile(defaultProfile);
         }else{
-            Profile.loadProfile(defaultProfile);
+            Profile.ins().loadProfile(defaultProfile);
         }
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
