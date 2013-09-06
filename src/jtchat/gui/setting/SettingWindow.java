@@ -1,6 +1,7 @@
 
 package jtchat.gui.setting;
 
+import java.awt.Point;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
@@ -23,6 +24,8 @@ public class SettingWindow extends JFrame{
         init(mainWinRef);
         //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(300,500);
+        Point px = mainWinRef.getLocation();
+        this.setLocation(px.x+50, px.y+50);
         this.setResizable(false);
         this.addWindowListener(new closeEventWindowListener());
     }

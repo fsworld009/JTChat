@@ -27,6 +27,8 @@ public class Profile {
     //Chatroom
     public int ChatWidth = 240;
     public int ChatHeight = 360;
+    public int ChatPosX = 10;
+    public int ChatPosY = 10;
     public int ChatBorderThickness = 5;
     public Color ChatBgColor = Color.decode("#000000");
     public int ChatNumOfLines = 20;
@@ -75,6 +77,10 @@ public class Profile {
                 Profile.ins().ChatWidth = Integer.parseInt(split[1]);
             }else if(split[0].equals("ChatHeight")){
                 Profile.ins().ChatHeight = Integer.parseInt(split[1]);
+            }else if(split[0].equals("ChatPosX")){
+                Profile.ins().ChatPosX = Integer.parseInt(split[1]);
+            }else if(split[0].equals("ChatPosY")){
+                Profile.ins().ChatPosY = Integer.parseInt(split[1]);
             }else if(split[0].equals("ChatBorderThickness")){
                 Profile.ins().ChatBorderThickness = Integer.parseInt(split[1]);
             }else if(split[0].equals("ChatNumOfLines")){
@@ -135,6 +141,8 @@ public class Profile {
             fout.write("IRCchannel="+Profile.ins().IRCchannel+"\r\n");
             fout.write("ChatWidth="+Profile.ins().ChatWidth+"\r\n");
             fout.write("ChatHeight="+Profile.ins().ChatHeight+"\r\n");
+            fout.write("ChatPosX="+Profile.ins().ChatPosX+"\r\n");
+            fout.write("ChatPosY="+Profile.ins().ChatPosY+"\r\n");
             fout.write("ChatBorderThickness="+Profile.ins().ChatBorderThickness+"\r\n");
             fout.write("ChatBgColor="+colorToHexString(Profile.ins().ChatBgColor)+"\r\n");
             fout.write("ChatNumOfLines="+Profile.ins().ChatNumOfLines+"\r\n");

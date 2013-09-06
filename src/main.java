@@ -1,4 +1,5 @@
 
+import java.io.File;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -6,6 +7,7 @@ import javax.swing.SwingUtilities;
 import jtchat.irc.IRCBot;
 import jtchat.gui.MainWindow;
 import jtchat.gui.setting.SettingWindow;
+import jtchat.profile.Profile;
 
 
 public class main {
@@ -24,15 +26,17 @@ public class main {
         });
         
         System.out.println("END");*/
+        File defaultProfile = new File("JTChat.ini");
+        if(!defaultProfile.exists()){
+            Profile.saveProfile(defaultProfile);
+        }else{
+            Profile.loadProfile(defaultProfile);
+        }
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 MainWindow mainWindow = new MainWindow();
                 mainWindow.setVisible(true);
-                
-                
-
             }
         });
-        
     }
 }

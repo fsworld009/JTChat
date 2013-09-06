@@ -15,6 +15,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -179,6 +180,7 @@ public class MainWindow extends JFrame implements IRCMsgListener, IRCEventListen
             if(MainWindow.this.ircbot != null){
                 MainWindow.this.ircbot.close();
             }
+            Profile.saveProfile(new File("JTChat.ini"));
         }
     }
     
@@ -287,6 +289,8 @@ public class MainWindow extends JFrame implements IRCMsgListener, IRCEventListen
                 //set inner window size
                 MainWindow.this.getContentPane().setPreferredSize(new Dimension(Profile.ins().ChatWidth+(2*Profile.ins().ChatBorderThickness)+17,Profile.ins().ChatHeight+(2*Profile.ins().ChatBorderThickness)+45));
                 MainWindow.this.pack();
+                
+                MainWindow.this.setLocation(Profile.ins().ChatPosX, Profile.ins().ChatPosY);
                 
                 //font
                 inputField.setFont(new Font(Profile.ins().ChatTextFont.getFontName(),Font.PLAIN,12));
