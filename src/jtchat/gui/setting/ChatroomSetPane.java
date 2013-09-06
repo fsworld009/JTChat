@@ -402,6 +402,8 @@ public class ChatroomSetPane extends JPanel{
     public void onMainWindowResize(){
         this.tWindowWidth.setText(String.format("%d",Profile.ins().ChatWidth));
         this.tWindowHeight.setText(String.format("%d",Profile.ins().ChatHeight));
+        this.tWindowPosX.setText(String.format("%d",Profile.ins().ChatPosX));
+        this.tWindowPosY.setText(String.format("%d",Profile.ins().ChatPosY));
     }
     
 }

@@ -9,6 +9,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -45,7 +46,7 @@ public class MainWindow extends JFrame implements IRCMsgListener, IRCEventListen
     private String nickname = "";
     
     private boolean hitConnectButton = false;
-    
+    private boolean firstPopSetWindow = true;
     public MainWindow(){
         super("JTChat");
         
@@ -310,6 +311,10 @@ public class MainWindow extends JFrame implements IRCMsgListener, IRCEventListen
                 if(!settingWindow.isVisible()){
                     SwingUtilities.invokeLater(new Runnable() {
                                public void run() {
+                                   if(firstPopSetWindow){
+                                        settingWindow.setLocation(Profile.ins().ChatPosX+50, Profile.ins().ChatPosY+50);
+                                        firstPopSetWindow = false;
+                                   }
                                    settingWindow.setVisible(true);
                                }
                            });
@@ -347,14 +352,21 @@ public class MainWindow extends JFrame implements IRCMsgListener, IRCEventListen
     }
     
     private class ChatComponentAdapter extends ComponentAdapter{
-        public void componentResized(ComponentEvent e)
-        {
+        public void componentResized(ComponentEvent e){
                 Dimension dx = MainWindow.this.getContentPane().getSize();
                 //System.out.printf("%d %d\n",d.width,d.height);
                 Profile.ins().ChatWidth = dx.width-17-(2*Profile.ins().ChatBorderThickness);
                 Profile.ins().ChatHeight = dx.height-45-(2*Profile.ins().ChatBorderThickness);
                 MainWindow.this.settingWindow.onMainWindowResize();
         }
+        
+        public void componentMoved(ComponentEvent e){
+            Point px = MainWindow.this.getLocation();
+            Profile.ins().ChatPosX = px.x;
+            Profile.ins().ChatPosY = px.y;
+            MainWindow.this.settingWindow.onMainWindowResize();
+        }
+        
     }
     
 }
