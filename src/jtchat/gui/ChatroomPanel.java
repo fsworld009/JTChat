@@ -56,10 +56,11 @@ public class ChatroomPanel extends JPanel implements IRCJtvCommandListener{
     }*/
 
     public void clearChat() {
+        System.out.println("called");
         if(Profile.ins().ChatClear){
             chatMsgs.clearChat();
         }
-        chatMsgs.addMessage("[SYS] Chat has been cleared",ChatMessage.MsgType.Sys);
+        addMessage("[SYS] Chat has been cleared",ChatMessage.MsgType.Sys);
     }
 
     
@@ -67,6 +68,7 @@ public class ChatroomPanel extends JPanel implements IRCJtvCommandListener{
         if(Profile.ins().ChatClearBannedMsg){
             chatMsgs.clearMsgsFromBannedUser(username);
         }
+        addMessage("[SYS] "+username+" has been banned/timeoutted",ChatMessage.MsgType.Sys);
     }
     
     

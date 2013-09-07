@@ -86,17 +86,19 @@ public class JtvIRCBot extends IRCBot{
             if(message.matches("USERCOLOR .*")){
                 String[] parse = message.split(" ",3);
                 UserColorMapper.ins().setColor(parse[1], parse[2]);
-            }else if(message.matches("CLEARCHAT .*")){
+            }else if(message.matches("^CLEARCHAT .*")){
                 String[] parse = message.split(" ",2);
                 //this.log(String.format("%s has been banned or timeoutted",parse[1]),IRCBot.LogType.SYS);
                 for(int i=0;i<commandListeners.size();i++){
                     commandListeners.get(i).clearMsgsFromBannedUser(parse[1]);
                 }
-            }else if(message.matches("CLEARCHAT")){
+            }else if(message.matches("^CLEARCHAT")){
                 //this.log(String.format("chat has been cleared"),IRCBot.LogType.SYS);
                 for(int i=0;i<commandListeners.size();i++){
                     commandListeners.get(i).clearChat();
                 }
+            }else if(message.matches("^You are banned from talking in .*")){
+                
             }
         }
         
