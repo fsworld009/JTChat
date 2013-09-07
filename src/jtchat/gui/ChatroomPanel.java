@@ -56,16 +56,17 @@ public class ChatroomPanel extends JPanel implements IRCJtvCommandListener{
     }*/
 
     public void clearChat() {
-        System.out.printf("get clearchat");
         if(Profile.ins().ChatClear){
             chatMsgs.clearChat();
         }
-        chatMsgs.addMessage("",ChatMessage.MsgType.Sys);
+        chatMsgs.addMessage("[SYS] Chat has been cleared",ChatMessage.MsgType.Sys);
     }
 
     
     public void clearMsgsFromBannedUser(String username) {
-        System.out.printf("get clear ban");
+        if(Profile.ins().ChatClearBannedMsg){
+            chatMsgs.clearMsgsFromBannedUser(username);
+        }
     }
     
     

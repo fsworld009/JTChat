@@ -21,6 +21,8 @@ import jtchat.irc.UserColorMapper;
 
 public class ChatMessage{
     private SimpleAttributeSet chatAttr;
+
+
     
 
     public enum MsgType{
@@ -54,6 +56,28 @@ public class ChatMessage{
         messagesType.removeAllElements();
     }
     
+    public void clearMsgsFromBannedUser(String username) {
+        String split[];
+        for(int ix=0;ix<messages.size();ix++){
+            switch(messagesType.get(ix)){
+                case Text:
+                    split = messages.get(ix).split(":",2);
+                    if(split[0].toLowerCase().equals(username)){
+                        messages.remove(ix);
+                        messages.add(ix, split[0]+": <deleted>");
+                    }
+                case Action:
+                    split = messages.get(ix).split(" ",2);
+                    if(split[0].toLowerCase().equals(username)){
+                        messages.remove(ix);
+                        messages.add(ix, split[0]+"  <deleted>");
+                    }
+                default:
+                    break;
+            }
+        }
+    }
+    
     public void removeOldLines(){
         //remove old msgs
         
@@ -72,7 +96,6 @@ public class ChatMessage{
     public void setText(final JTextPane chatPane){
         SwingUtilities.invokeLater(new Runnable() {
             public void run(){
-                System.out.printf("called\n");
                 removeOldLines();
                 //raw();
                 Document doc = chatPane.getDocument();
