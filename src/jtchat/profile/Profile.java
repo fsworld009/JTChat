@@ -18,7 +18,7 @@ public class Profile {
     //private HashMap<String,String> settingMap;
     
     //IRC
-    public String IRCserver = "";
+    public String IRCserver = "irc.twitch.tv";
     public int IRCport = 443;
     public String IRCnickname = "";
     public String IRCservpass="";

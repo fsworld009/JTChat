@@ -3,6 +3,9 @@ package jtchat.gui;
 import jtchat.profile.Profile;
 import java.awt.Color;
 import java.awt.Font;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JTextPane;
@@ -16,154 +19,116 @@ import jtchat.irc.IRCJtvCommandListener;
 import jtchat.irc.IRCMsgListener;
 import jtchat.irc.UserColorMapper;
 
-public class ChatMessage implements IRCJtvCommandListener{
-    private String messages;    //save all current chat msgs
+public class ChatMessage{
     private SimpleAttributeSet chatAttr;
     
-    
-    
-    //regular expression
-    private Pattern nickPattern;
-    private Pattern sysPattern;
-    private Pattern actionPattern;
-    private int numOfLines = 0;
 
-    
-    public void clearChat() {
-        System.out.printf("get clearchat");
-    }
-
-    
-    public void clearMsgsFromBannedUser(String username) {
-        System.out.printf("get clear ban");
-    }
-   
-    public enum Type{
-        Text, Nick, Sys, TwitchId
+    public enum MsgType{
+        Text, Action, Sys
     }
     
+    private Vector<String> messages;
+    private Vector<MsgType> messagesType;
     
     public ChatMessage(){
-        messages = "";
+        messages = new Vector<String>();
+        messagesType = new Vector<MsgType>();
         chatAttr = new SimpleAttributeSet();
-        
-        nickPattern = Pattern.compile("(^|\\n)(\\[OP\\] )?(\\[(.)*\\] )?\\w+:");
-        actionPattern = Pattern.compile("(^|\\n)\\w+ [^\\n]+");
-        sysPattern = Pattern.compile("(^|\\n)\\[SYS\\] [^\\n]+");
+
     }
 
-    
-    
-    
-    public void addMessage(String newMsg){
-        messages += newMsg += "\n";
-        numOfLines++;
+    private void raw(){
+        for(int ix=0;ix<messages.size();ix++){
+            System.out.println("RAW: "+messages.get(ix));
+        }
     }
     
-    private void setAttribute(ChatMessage.Type type, String nickname){
-        Color color=null;
-        Font font=null;
-        switch(type){
-            case Text:
-                color = Profile.ins().ChatTextColor;
-                font = Profile.ins().ChatTextFont;
-                break;
-            case Nick:
-                color = Profile.ins().ChatNickColor;
-                font = Profile.ins().ChatNickFont;
-                break; 
-            case TwitchId:
-                color = UserColorMapper.ins().getColor(nickname);
-                if(color==null){
-                    color = Profile.ins().ChatNickColor;
-                }
-                font = Profile.ins().ChatNickFont;
-                break; 
-            case Sys:
-                color = Profile.ins().ChatSysColor;
-                font = Profile.ins().ChatSysFont;
-                break;
-        }
-        
-        
-        chatAttr.addAttribute(StyleConstants.CharacterConstants.Foreground, color);
-        chatAttr.addAttribute(StyleConstants.FontConstants.FontFamily, font.getFamily());
-        chatAttr.addAttribute(StyleConstants.FontConstants.FontSize, font.getSize());
+    
+    public void addMessage(String newMsg, MsgType type){
+        messages.add(newMsg);
+        messagesType.add(type);
+    }
+    
+    public void clearChat(){
+        messages.removeAllElements();
+        messagesType.removeAllElements();
     }
     
     public void removeOldLines(){
         //remove old msgs
         
-        while(numOfLines>Profile.ins().ChatNumOfLines){
-            messages = messages.replaceFirst(".*\\n", "");
-            numOfLines--;
+        while(messages.size()>Profile.ins().ChatNumOfLines){
+            messages.remove(0);
+            messagesType.remove(0);
         }
     }
     
+    private void setTextAttribute(Font font, Color color){
+        chatAttr.addAttribute(StyleConstants.CharacterConstants.Foreground, color);
+        chatAttr.addAttribute(StyleConstants.FontConstants.FontFamily, font.getFamily());
+        chatAttr.addAttribute(StyleConstants.FontConstants.FontSize, font.getSize());
+    }
+    
     public void setText(final JTextPane chatPane){
-        removeOldLines();
-        
-        //
         SwingUtilities.invokeLater(new Runnable() {
             public void run(){
-                try{
-                    //layout all text with chat text first
-                    ChatMessage.this.setAttribute(Type.Text,"");
-                    Document doc = chatPane.getDocument();
+                System.out.printf("called\n");
+                removeOldLines();
+                //raw();
+                Document doc = chatPane.getDocument();
+                Color color=null;
+                Font font=null;
+                try {
                     doc.remove(0, doc.getLength());
-                    doc.insertString(0, ChatMessage.this.messages, chatAttr);
-                    
-                    //layout nicknames
-                    
-                    Matcher mx = nickPattern.matcher(messages);
-                    if(!Profile.ins().ChatUseTiwtchColor){
-                        ChatMessage.this.setAttribute(Type.Nick,"");
-                    }
-                    while(mx.find()){
-                        String nickname = mx.group().replace("\n", "").replace(":", "");
-                        if(Profile.ins().ChatUseTiwtchColor){
-                            ChatMessage.this.setAttribute(Type.TwitchId,nickname);
+                    String split[];
+                    for(int ix=0;ix<messages.size();ix++){
+                        switch(messagesType.get(ix)){
+                            case Text:
+                                split = messages.get(ix).split(":",2);
+
+                                //draw nick
+                                if(Profile.ins().ChatUseTiwtchColor){
+                                    color = UserColorMapper.ins().getColor(split[0]);
+                                    if(color==null){
+                                        color = Profile.ins().ChatNickColor;
+                                    }
+                                }else{
+                                    color = Profile.ins().ChatNickColor;
+                                }
+                                font = Profile.ins().ChatNickFont;
+                                setTextAttribute(font,color);
+                                doc.insertString(doc.getLength(), split[0], chatAttr);
+                                //draw text
+                                color = Profile.ins().ChatTextColor;
+                                font = Profile.ins().ChatTextFont;
+                                setTextAttribute(font,color);
+                                doc.insertString(doc.getLength(), ":"+split[1]+"\n", chatAttr);
+                                break;
+                            case Action:
+                                split = messages.get(ix).split(" ",2);
+                                if(Profile.ins().ChatUseTiwtchColor){
+                                    color = UserColorMapper.ins().getColor(split[0]);
+                                    if(color==null){
+                                        color = Profile.ins().ChatNickColor;
+                                    }
+                                }else{
+                                    color = Profile.ins().ChatNickColor;
+                                }
+                                font = Profile.ins().ChatNickFont;
+                                setTextAttribute(font,color);
+                                doc.insertString(doc.getLength(), messages.get(ix)+"\n", chatAttr);
+                                break;
+                            case Sys:
+                                color = Profile.ins().ChatSysColor;
+                                font = Profile.ins().ChatSysFont;
+                                setTextAttribute(font,color);
+                                doc.insertString(doc.getLength(), messages.get(ix)+"\n", chatAttr);
+                                break;
+                            default:
+                                break;
                         }
-                        doc.remove(mx.start(), mx.end()-mx.start());
-                        doc.insertString(mx.start(), mx.group(), chatAttr);
                     }
-                    
-                    //layout actions
-                    
-                    mx = actionPattern.matcher(messages);
-                    if(!Profile.ins().ChatUseTiwtchColor){
-                        ChatMessage.this.setAttribute(Type.Nick,"");
-                    }
-                    int i=0;
-                    while(mx.find()){
-                        String[] parse = mx.group().split(" ",2);
-                        i++;
-                        if(Profile.ins().ChatUseTiwtchColor){
-                            ChatMessage.this.setAttribute(Type.TwitchId,parse[0].replace("\n", ""));
-                        }
-                        doc.remove(mx.start(), mx.end()-mx.start());
-                        doc.insertString(mx.start(), mx.group(), chatAttr);
-                    }
-                    
-                    //layout sys msgs
-                    
-                    mx = sysPattern.matcher(messages);
-                    ChatMessage.this.setAttribute(Type.Sys,"");
-                    while(mx.find()){
-                        doc.remove(mx.start(), mx.end()-mx.start());
-                        doc.insertString(mx.start(), mx.group(), chatAttr);
-                    }
-                    //remove the last line break
-                    
-                    if(messages.length()>0 && messages.charAt(messages.length()-1) == '\n'){
-                        doc.remove(doc.getLength()-1,1);
-                    }
-                    
-                    
-                    
-                    
                 } catch (BadLocationException ex) {
-                    //need improved
                     System.err.printf("BadLocationException %d\n",ex.offsetRequested());
                 }
             }

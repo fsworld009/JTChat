@@ -71,7 +71,7 @@ public class MainWindow extends JFrame implements IRCMsgListener, IRCEventListen
             //initialize ircbot
             ircbot = new JtvIRCBot();
             ircbot.registerLogListener(settingWindow.logPaneRef());
-            ircbot.registerCommandListener(chatPane.getCommandListener());
+            ircbot.registerCommandListener(chatPane);
             ircbot.registerMsgListener(this);
             ircbot.registerEventListener(this);
         
@@ -198,7 +198,7 @@ public class MainWindow extends JFrame implements IRCMsgListener, IRCEventListen
         String capNickname = nickname.substring(0,1).toUpperCase() + nickname.substring(1);
         
         if(channel.equals(this.channel)){
-            chatPane.addMessage(String.format("%s: %s",capNickname, message));
+            chatPane.addMessage(String.format("%s: %s",capNickname, message),ChatMessage.MsgType.Text);
         }
         
     }
@@ -207,7 +207,7 @@ public class MainWindow extends JFrame implements IRCMsgListener, IRCEventListen
         String capNickname = nickname.substring(0,1).toUpperCase() + nickname.substring(1);
         
         if(channel.equals(this.channel)){
-            chatPane.addMessage(String.format("%s %s",capNickname, action));
+            chatPane.addMessage(String.format("%s %s",capNickname, action),ChatMessage.MsgType.Action);
         }
     }
     public void onPrivateMsg(String nickname, String message){
@@ -215,7 +215,7 @@ public class MainWindow extends JFrame implements IRCMsgListener, IRCEventListen
     }
     
     public void onSysMsg(String message){
-        chatPane.addMessage(String.format("[SYS] %s", message));
+        chatPane.addMessage(String.format("[SYS] %s", message),ChatMessage.MsgType.Sys);
 
     }
     

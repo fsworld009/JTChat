@@ -183,6 +183,9 @@ public class IRCBot {
        
     public void close(){
         try{
+            if(reconnectTask != null){
+                reconnectTask.cancel();
+            }
             //close connection only once
             if(threadRunning){
                 //cancel alive checking task

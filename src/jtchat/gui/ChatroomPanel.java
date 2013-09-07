@@ -22,7 +22,7 @@ import jtchat.irc.IRCJtvCommandListener;
 import jtchat.profile.Profile;
 
 
-public class ChatroomPanel extends JPanel{
+public class ChatroomPanel extends JPanel implements IRCJtvCommandListener{
     JTextPane chatMsgsPane;
     private ChatMessage chatMsgs;
     
@@ -51,16 +51,27 @@ public class ChatroomPanel extends JPanel{
         this.add(chatScrollPane,BorderLayout.CENTER);
     }
     
-    public IRCJtvCommandListener getCommandListener(){
+    /*public IRCJtvCommandListener getCommandListener(){
         return chatMsgs;
+    }*/
+
+    public void clearChat() {
+        System.out.printf("get clearchat");
+        if(Profile.ins().ChatClear){
+            chatMsgs.clearChat();
+        }
+        chatMsgs.addMessage("",ChatMessage.MsgType.Sys);
     }
 
     
+    public void clearMsgsFromBannedUser(String username) {
+        System.out.printf("get clear ban");
+    }
     
     
-    public void addMessage(String msg){
+    public void addMessage(String msg, ChatMessage.MsgType type){
         //do
-        chatMsgs.addMessage(msg);
+        chatMsgs.addMessage(msg,type);
         chatMsgs.setText(chatMsgsPane);
     }
     
