@@ -118,7 +118,7 @@ public class ChatMessage{
                                 color = Profile.ins().ChatTextColor;
                                 font = Profile.ins().ChatTextFont;
                                 setTextAttribute(font,color);
-                                doc.insertString(doc.getLength(), ":"+split[1]+"\n", chatAttr);
+                                doc.insertString(doc.getLength(), ":"+split[1], chatAttr);
                                 break;
                             case Action:
                                 split = messages.get(ix).split(" ",2);
@@ -132,16 +132,19 @@ public class ChatMessage{
                                 }
                                 font = Profile.ins().ChatNickFont;
                                 setTextAttribute(font,color);
-                                doc.insertString(doc.getLength(), messages.get(ix)+"\n", chatAttr);
+                                doc.insertString(doc.getLength(), messages.get(ix), chatAttr);
                                 break;
                             case Sys:
                                 color = Profile.ins().ChatSysColor;
                                 font = Profile.ins().ChatSysFont;
                                 setTextAttribute(font,color);
-                                doc.insertString(doc.getLength(), messages.get(ix)+"\n", chatAttr);
+                                doc.insertString(doc.getLength(), messages.get(ix), chatAttr);
                                 break;
                             default:
                                 break;
+                        }
+                        if(ix < messages.size()-1){
+                            doc.insertString(doc.getLength(), "\n", chatAttr);
                         }
                     }
                 } catch (BadLocationException ex) {

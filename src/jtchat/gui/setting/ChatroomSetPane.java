@@ -228,7 +228,7 @@ public class ChatroomSetPane extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(bNickFont,gbc);
         
-        lSysColor = new JLabel("System Color: ");
+        lSysColor = new JLabel("System Msg Color: ");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 9;
@@ -242,7 +242,7 @@ public class ChatroomSetPane extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(bSysColor,gbc);
         
-        lSysFont = new JLabel("System Font: ");
+        lSysFont = new JLabel("System Msg Font: ");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 10;
