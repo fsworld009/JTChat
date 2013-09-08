@@ -6,6 +6,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingUtilities;
 import jtchat.gui.MainWindow;
 import jtchat.profile.Language;
 import jtchat.profile.LanguageChangeListener;
@@ -21,7 +22,7 @@ public class SettingWindow extends JFrame implements LanguageChangeListener{
     private MainWindow mainWinRef;
     //MainWindow chatroomWindow;
     public SettingWindow(MainWindow mainWinRef){
-        super("JTChat Setting");
+        super();
         this.mainWinRef = mainWinRef;
         init(mainWinRef);
         //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -54,16 +55,25 @@ public class SettingWindow extends JFrame implements LanguageChangeListener{
         chatSetPane = new ChatroomSetPane(this);
         profilePane = new ProfilePane(this);
         aboutPane = new AboutPane();
-        tabPane.addTab("IRC Set", ircSetPane);
-        tabPane.addTab("Chat Set", chatSetPane);
-        tabPane.addTab("Profile", profilePane);
-        tabPane.addTab("Log", logPane);
-        tabPane.addTab("About", aboutPane);
+        tabPane.addTab("", ircSetPane);
+        tabPane.addTab("", chatSetPane);
+        tabPane.addTab("", profilePane);
+        tabPane.addTab("", logPane);
+        tabPane.addTab("", aboutPane);
     }
 
     
     public void languageChange() {
-        
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                SettingWindow.this.setTitle(Language.ins().get("SetWinTitle"));
+                tabPane.setTitleAt(0, Language.ins().get("IRCSetTabName"));
+                tabPane.setTitleAt(1, Language.ins().get("ChatSetTabName"));
+                tabPane.setTitleAt(2, Language.ins().get("ProfileSetTabName"));
+                tabPane.setTitleAt(3, Language.ins().get("LogSetTabName"));
+                tabPane.setTitleAt(4, Language.ins().get("AboutTabName"));
+            }
+        });
     }
     
 
