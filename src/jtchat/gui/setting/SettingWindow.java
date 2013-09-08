@@ -7,6 +7,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import jtchat.gui.MainWindow;
+import jtchat.profile.Language;
 import jtchat.profile.LanguageChangeListener;
 
 
@@ -27,6 +28,19 @@ public class SettingWindow extends JFrame implements LanguageChangeListener{
         this.setSize(300,500);
         this.setResizable(false);
         this.addWindowListener(new closeEventWindowListener());
+        
+        loadLanguage();
+    }
+    
+    private void loadLanguage(){
+        Language.ins().registerLogListener(mainWinRef);
+        Language.ins().registerLogListener(this);
+        Language.ins().registerLogListener(logPane);
+        Language.ins().registerLogListener(ircSetPane);
+        Language.ins().registerLogListener(chatSetPane);
+        Language.ins().registerLogListener(profilePane);
+        Language.ins().registerLogListener(aboutPane);
+        Language.ins().load("en-US");
     }
     
     

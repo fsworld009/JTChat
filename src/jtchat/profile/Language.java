@@ -1,7 +1,12 @@
 
 package jtchat.profile;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.Scanner;
 import java.util.Vector;
 
 /*   String Table:
@@ -51,6 +56,7 @@ public class Language {
     
     public Language(){
         translate = new HashMap<String,String>();
+        languageChangeListener = new Vector<LanguageChangeListener>();
     }
     
     public static Language ins(){
@@ -65,11 +71,28 @@ public class Language {
         return value==null?"":value;
     }
     
-    public void load(String langCode){
+    public boolean load(String langCode){
         //apply change
+        Scanner sc=null;
+        try{
+            sc = new Scanner(new File("./language/"+langCode+".ini"));
+        }catch(FileNotFoundException e){
+            System.err.printf("file not found\n");
+            return false;
+        }
+        String line;
+
+        while(sc.hasNext()){
+            line = sc.nextLine();
+            String[] split = line.split("=",2);
+            translate.put(split[0], split[1]);
+        }
+        sc.close();
+        
         for(int ix=0;ix<languageChangeListener.size();ix++){
             languageChangeListener.get(ix).languageChange();
         }
+        return true;
     }
     
     public void registerLogListener(LanguageChangeListener listener){
