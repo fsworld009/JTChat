@@ -9,45 +9,9 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Vector;
 
-/*   String Table:
- * MainButConnect
- * MainButDisconnect
- * MainButSetting
- * SetWinTitle
- * SetButApply
- * SetButSave
- * SetButLoad
- * IRCSetTabName
- * IRCSetServer
- * IRCSetPort
- * IRCSetPass
- * IRCSetNickname
- * IRCSetChannel
- * ChatSetTabName
- * ChatSetSize
- * ChatSetPos
- * ChatSetBorderThick
- * ChatSetBgColor
- * ChatSetMaxLine
- * ChatSetTextColor
- * ChatSetTextFont
- * ChatSetNickColor
- * ChatSetNickFont
- * ChatSetSysColor
- * ChatSetSysFont
- * ChatSetAlwaysOnTop
- * ChatSetUseJtvColor
- * ChatSetChatClear
- * ChatSetChatClearBannedUser
- * ProfileSetTabName
- * ProfileSetLanguage
- * ProfileSetNote
- * LogSetTabName
- * LogSetButClear
- * AboutTabName
- *   
+/*   String Table: 
+ *      reference language/en-US.ini
  */
-
 
 public class Language {
     private static Language ins=null;
@@ -75,7 +39,7 @@ public class Language {
         //apply change
         Scanner sc=null;
         try{
-            sc = new Scanner(new File("./language/"+langCode+".ini"));
+            sc = new Scanner(new File("./language/"+langCode+".ini"),"UTF-8");
         }catch(FileNotFoundException e){
             System.err.printf("file not found\n");
             return false;
@@ -84,6 +48,7 @@ public class Language {
 
         while(sc.hasNext()){
             line = sc.nextLine();
+            System.out.println(line);
             String[] split = line.split("=",2);
             translate.put(split[0], split[1]);
         }

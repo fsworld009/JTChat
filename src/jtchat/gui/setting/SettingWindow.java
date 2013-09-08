@@ -26,7 +26,7 @@ public class SettingWindow extends JFrame implements LanguageChangeListener{
         this.mainWinRef = mainWinRef;
         init(mainWinRef);
         //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(300,500);
+        this.setSize(320,500);
         this.setResizable(false);
         this.addWindowListener(new closeEventWindowListener());
         
