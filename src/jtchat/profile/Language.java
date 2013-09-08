@@ -68,7 +68,7 @@ public class Language {
     
     public String get(String entryName){
         String value = translate.get(entryName);
-        return value==null?"123":value;
+        return value==null?"(error)":value;
     }
     
     public boolean load(String langCode){

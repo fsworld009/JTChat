@@ -16,7 +16,9 @@ import javax.swing.JColorChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import jtchat.gui.MainWindow;
+import jtchat.profile.Language;
 import jtchat.profile.LanguageChangeListener;
 
 
@@ -84,7 +86,7 @@ public class ChatroomSetPane extends JPanel implements LanguageChangeListener{
         setLayout(new GridBagLayout());
         GridBagConstraints gbc;
         
-        lWindowSize = new JLabel("Chatroom Size: ");
+        lWindowSize = new JLabel();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -106,7 +108,7 @@ public class ChatroomSetPane extends JPanel implements LanguageChangeListener{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(windowSizePanel,gbc);
         
-        lWindowPos = new JLabel("Chatroom Position: ");
+        lWindowPos = new JLabel();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -129,7 +131,7 @@ public class ChatroomSetPane extends JPanel implements LanguageChangeListener{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(windowPosPanel,gbc);
         
-        lBorder = new JLabel("Border thickness: ");
+        lBorder = new JLabel();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 2;
@@ -144,7 +146,7 @@ public class ChatroomSetPane extends JPanel implements LanguageChangeListener{
         this.add(tBorder,gbc);
         
         
-        lBgColor = new JLabel("Bg Color: ");
+        lBgColor = new JLabel();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 3;
@@ -158,7 +160,7 @@ public class ChatroomSetPane extends JPanel implements LanguageChangeListener{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(bBgColor,gbc);
         
-        lNumOfLines = new JLabel("Max number of lines: ");
+        lNumOfLines = new JLabel();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 4;
@@ -173,7 +175,7 @@ public class ChatroomSetPane extends JPanel implements LanguageChangeListener{
         this.add(tNumOfLines,gbc);
         
        
-        lTextColor = new JLabel("Text Color: ");
+        lTextColor = new JLabel();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 5;
@@ -187,7 +189,7 @@ public class ChatroomSetPane extends JPanel implements LanguageChangeListener{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(bTextColor,gbc);
         
-        lTextFont = new JLabel("Text Font: ");
+        lTextFont = new JLabel();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 6;
@@ -201,7 +203,7 @@ public class ChatroomSetPane extends JPanel implements LanguageChangeListener{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(bTextFont,gbc);
         
-        lNickColor = new JLabel("Nickname Color: ");
+        lNickColor = new JLabel();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 7;
@@ -215,7 +217,7 @@ public class ChatroomSetPane extends JPanel implements LanguageChangeListener{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(bNickColor,gbc);
         
-        lNickFont = new JLabel("Nickname Font: ");
+        lNickFont = new JLabel();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 8;
@@ -229,7 +231,7 @@ public class ChatroomSetPane extends JPanel implements LanguageChangeListener{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(bNickFont,gbc);
         
-        lSysColor = new JLabel("System Msg Color: ");
+        lSysColor = new JLabel();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 9;
@@ -243,7 +245,7 @@ public class ChatroomSetPane extends JPanel implements LanguageChangeListener{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(bSysColor,gbc);
         
-        lSysFont = new JLabel("System Msg Font: ");
+        lSysFont = new JLabel();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 10;
@@ -257,7 +259,7 @@ public class ChatroomSetPane extends JPanel implements LanguageChangeListener{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(bSysFont,gbc);
         
-        chAlwaysOnTop = new JCheckBox("Always on Top");
+        chAlwaysOnTop = new JCheckBox();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 11;
@@ -265,7 +267,7 @@ public class ChatroomSetPane extends JPanel implements LanguageChangeListener{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(chAlwaysOnTop,gbc);
         
-        chUseTwitchColor = new JCheckBox("Use Jtv/Tiwtch Nickname Color");
+        chUseTwitchColor = new JCheckBox();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 12;
@@ -273,7 +275,7 @@ public class ChatroomSetPane extends JPanel implements LanguageChangeListener{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(chUseTwitchColor,gbc);
         
-        chClear = new JCheckBox("Clear chat when '/clear' is performed");
+        chClear = new JCheckBox();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 13;
@@ -281,7 +283,7 @@ public class ChatroomSetPane extends JPanel implements LanguageChangeListener{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(chClear,gbc);
         
-        chClearBannedMsg = new JCheckBox("Clear messages from banned users");
+        chClearBannedMsg = new JCheckBox();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 14;
@@ -289,7 +291,7 @@ public class ChatroomSetPane extends JPanel implements LanguageChangeListener{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(chClearBannedMsg,gbc);
         
-        bApply = new JButton("Apply");
+        bApply = new JButton();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 15;
@@ -371,7 +373,26 @@ public class ChatroomSetPane extends JPanel implements LanguageChangeListener{
 
 
     public void languageChange() {
-        
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                lWindowSize.setText(Language.ins().get("ChatSetSize"));
+                lWindowPos.setText(Language.ins().get("ChatSetPos"));
+                lBorder.setText(Language.ins().get("ChatSetBorderThick"));
+                lBgColor.setText(Language.ins().get("ChatSetBgColor"));
+                lNumOfLines.setText(Language.ins().get("ChatSetMaxLine"));
+                lTextColor.setText(Language.ins().get("ChatSetTextColor"));
+                lTextFont.setText(Language.ins().get("ChatSetTextFont"));
+                lNickColor.setText(Language.ins().get("ChatSetNickColor"));
+                lNickFont.setText(Language.ins().get("ChatSetNickFont"));
+                lSysColor.setText(Language.ins().get("ChatSetSysColor"));
+                lSysFont.setText(Language.ins().get("ChatSetSysFont"));
+                chAlwaysOnTop.setText(Language.ins().get("ChatSetAlwaysOnTop"));
+                chUseTwitchColor.setText(Language.ins().get("ChatSetUseJtvColor"));
+                chClear.setText(Language.ins().get("ChatSetChatClear"));
+                chClearBannedMsg.setText(Language.ins().get("ChatSetChatClearBannedMsg"));
+                bApply.setText(Language.ins().get("SetButApply"));
+            }
+        });
     }
     
     private class SetActionListener implements ActionListener{

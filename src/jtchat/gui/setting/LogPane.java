@@ -17,6 +17,7 @@ import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.text.BadLocationException;
 import jtchat.irc.IRCLogListener;
+import jtchat.profile.Language;
 import jtchat.profile.LanguageChangeListener;
 
 
@@ -41,8 +42,8 @@ public class LogPane extends JPanel implements IRCLogListener, LanguageChangeLis
         this.add(new JScrollPane(log),BorderLayout.CENTER);
         
         JPanel buttonPanel = new JPanel(new GridLayout(0,2));
-        bSave = new JButton("Save");
-        bClear = new JButton("Clear");
+        bSave = new JButton();
+        bClear = new JButton();
         buttonPanel.add(bSave);
         buttonPanel.add(bClear);
         this.add(buttonPanel,BorderLayout.SOUTH);
@@ -92,7 +93,12 @@ public class LogPane extends JPanel implements IRCLogListener, LanguageChangeLis
 
 
     public void languageChange() {
-        
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                bSave.setText(Language.ins().get("SetButSave"));
+                bClear.setText(Language.ins().get("LogSetButClear"));
+            }
+        });
     }
     
     private class SetActionListener implements ActionListener{

@@ -10,7 +10,9 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import jtchat.gui.util.JConfirmedFileChooser;
+import jtchat.profile.Language;
 import jtchat.profile.LanguageChangeListener;
 import jtchat.profile.Profile;
 
@@ -22,6 +24,7 @@ public class ProfilePane extends JPanel implements LanguageChangeListener{
     private JButton bLoad;
     private SetActionListener setActionListener = new SetActionListener();
     private SettingWindow setWinRef;
+    private JLabel lProfileNotice;
     
     public ProfilePane(SettingWindow setWinRef){
         this.setWinRef = setWinRef;
@@ -34,14 +37,14 @@ public class ProfilePane extends JPanel implements LanguageChangeListener{
         setLayout(new GridBagLayout());
         GridBagConstraints gbc;
         
-        bSave = new JButton("Save");
+        bSave = new JButton();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
         
         this.add(bSave,gbc);
         
-        bLoad = new JButton("Load");
+        bLoad = new JButton();
 
         //loadProfileList();
         gbc = new GridBagConstraints();
@@ -52,13 +55,13 @@ public class ProfilePane extends JPanel implements LanguageChangeListener{
         bSave.addActionListener(setActionListener);
         bLoad.addActionListener(setActionListener);
         
-        
+        lProfileNotice = new JLabel();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridwidth=2;
         
-        this.add(new JLabel("Password won't be saved or loaded"),gbc);
+        this.add(lProfileNotice,gbc);
         
         /*
         lProfileName = new JLabel("Profile: ");
@@ -79,7 +82,13 @@ public class ProfilePane extends JPanel implements LanguageChangeListener{
 
 
     public void languageChange() {
-        
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                bSave.setText(Language.ins().get("SetButSave"));
+                bLoad.setText(Language.ins().get("SetButLoad"));
+                lProfileNotice.setText(Language.ins().get("ProfileSetNote"));
+            }
+        });
     }
     
     private class SetActionListener implements ActionListener{

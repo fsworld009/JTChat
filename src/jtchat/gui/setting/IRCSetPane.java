@@ -18,6 +18,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import jtchat.profile.Language;
 import jtchat.profile.LanguageChangeListener;
 
 /**
@@ -47,7 +48,7 @@ public class IRCSetPane extends JPanel implements LanguageChangeListener{
         GridBagConstraints gbc;
         
         //Server
-        lIrcServer = new JLabel("Server: ");
+        lIrcServer = new JLabel();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -63,7 +64,7 @@ public class IRCSetPane extends JPanel implements LanguageChangeListener{
         this.add(tIrcServer,gbc);
 
         //Port
-        lIrcPort = new JLabel("Port: ");
+        lIrcPort = new JLabel();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -79,7 +80,7 @@ public class IRCSetPane extends JPanel implements LanguageChangeListener{
         this.add(tIrcPort,gbc);
         
         //Nick
-        lIrcNick = new JLabel("Nickname: ");
+        lIrcNick = new JLabel();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 2;
@@ -95,7 +96,7 @@ public class IRCSetPane extends JPanel implements LanguageChangeListener{
         this.add(tIrcNick,gbc);
         
         //Server Password
-        lIrcServerPass = new JLabel("Pass: ");
+        lIrcServerPass = new JLabel();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 3;
@@ -113,7 +114,7 @@ public class IRCSetPane extends JPanel implements LanguageChangeListener{
 
         
         //Channel
-        lIrcChannel = new JLabel("Channel: ");
+        lIrcChannel = new JLabel();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 4;
@@ -130,7 +131,7 @@ public class IRCSetPane extends JPanel implements LanguageChangeListener{
         
         //Connect
         
-        bApply = new JButton("Apply");
+        bApply = new JButton();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 5;
@@ -162,7 +163,16 @@ public class IRCSetPane extends JPanel implements LanguageChangeListener{
     }
 
     public void languageChange() {
-        
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                lIrcServer.setText(Language.ins().get("IRCSetServer"));
+                lIrcPort.setText(Language.ins().get("IRCSetPort"));
+                lIrcNick.setText(Language.ins().get("IRCSetNickname"));
+                lIrcServerPass.setText(Language.ins().get("IRCSetServerPass"));
+                lIrcChannel.setText(Language.ins().get("IRCSetChannel"));
+                bApply.setText(Language.ins().get("SetButApply"));
+            }
+        });
     }
     
     private class SetActionListener implements ActionListener{
