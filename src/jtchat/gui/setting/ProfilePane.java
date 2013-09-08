@@ -48,7 +48,7 @@ public class ProfilePane extends JPanel implements LanguageChangeListener{
         Scanner sc=null;
         for(int ix=0;ix<langFile.length;ix++){
             try{
-                sc = new Scanner(langFile[ix]);
+                sc = new Scanner(langFile[ix],"UTF-8");
             }catch(FileNotFoundException e){
                 System.err.printf("file not found\n");
             }
