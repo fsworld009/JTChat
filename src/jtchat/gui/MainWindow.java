@@ -71,7 +71,6 @@ public class MainWindow extends JFrame implements IRCMsgListener, IRCEventListen
             //initialize ircbot
             ircbot = new JtvIRCBot();
             ircbot.registerLogListener(settingWindow.logPaneRef());
-            ircbot.registerCommandListener(chatPane);
             ircbot.registerMsgListener(this);
             ircbot.registerEventListener(this);
         
@@ -232,6 +231,13 @@ public class MainWindow extends JFrame implements IRCMsgListener, IRCEventListen
         ircbot.sendRaw("JTVCLIENT");
     }
     
+    public void clearChat(){
+        chatPane.clearChat();
+    }
+    
+    public void clearMsgsFromBannedUser(String username){
+        chatPane.clearMsgsFromBannedUser(username);
+    }
     
     /*private void appendChatMsg(String nickname, String message){
         //append(String.format("%s: ",nickname),SettingTable.ins().ChatNickColor,SettingTable.ins().ChatNickFont);

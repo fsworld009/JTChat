@@ -2,7 +2,6 @@
 package jtchat.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -18,11 +17,10 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledEditorKit;
 import javax.swing.text.View;
 import javax.swing.text.ViewFactory;
-import jtchat.irc.IRCJtvCommandListener;
 import jtchat.profile.Profile;
 
 
-public class ChatroomPanel extends JPanel implements IRCJtvCommandListener{
+public class ChatroomPanel extends JPanel{
     JTextPane chatMsgsPane;
     private ChatMessage chatMsgs;
     
@@ -56,7 +54,6 @@ public class ChatroomPanel extends JPanel implements IRCJtvCommandListener{
     }*/
 
     public void clearChat() {
-        System.out.println("called");
         if(Profile.ins().ChatClear){
             chatMsgs.clearChat();
         }

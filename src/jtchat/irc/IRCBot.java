@@ -41,7 +41,7 @@ public class IRCBot {
     private Timer loginCheckTask;
     
     protected enum LogType{
-        SEND, RECEIVE, SYS
+        SEND, RECEIVE
     }
     
     protected void log(String log, IRCBot.LogType type ){
@@ -50,10 +50,10 @@ public class IRCBot {
             result+=">>> ";
         }else if(type == IRCBot.LogType.RECEIVE){
             result+="<<< ";
-        }else{
+        }/*else{
             //SYS
             result+="[SYS] ";
-        }
+        }*/
         String logWithoutReturn = log.replaceAll("\r\n", "");
         result+=logWithoutReturn;
         System.out.println(result);
@@ -62,9 +62,9 @@ public class IRCBot {
             onLog(result);
         }
         
-        if(type == IRCBot.LogType.SYS){
+        /*if(type == IRCBot.LogType.SYS){
             onSysMsg(logWithoutReturn);
-        }
+        }*/
     }
     
     public void sendRaw(String message){
@@ -108,7 +108,7 @@ public class IRCBot {
             socket = new Socket();
             socket.connect(new InetSocketAddress(server, port),10000);
             if(socket.isConnected()){
-                log(String.format("Connectted to %s:%s",socket.getInetAddress(),socket.getPort()),IRCBot.LogType.SYS);
+                onSysMsg(String.format("Connectted to %s:%s",socket.getInetAddress(),socket.getPort()));
                 //save connection info
 
                 
@@ -160,11 +160,11 @@ public class IRCBot {
         }catch(Exception e){
             if(e instanceof UnknownHostException){
                 //no such host
-                log(String.format("Cannot connect to %s\r\n",server),IRCBot.LogType.SYS);
+                onSysMsg(String.format("Cannot connect to %s\r\n",server));
             }else if(e instanceof IOException){
                 //threw by socket.getOutputStream( ) and socket.getInputStream( ) and writer, reader
                 //log(String.format("error when trying to establish I/O\r\n"),IRCBot.LogType.SYS);
-                log(String.format("Cannot connect to %s\r\n",server),IRCBot.LogType.SYS);
+                onSysMsg(String.format("Cannot connect to %s\r\n",server));
             }
             
         }
@@ -209,10 +209,10 @@ public class IRCBot {
                 socket.close();
                 //sendThread.interrupt();
                 //receiveThread.interrupt();
-                log("Disconnect from server",IRCBot.LogType.SYS);
+                onSysMsg("Disconnect from server");
             }else{
                 //socket has already closed
-                log("Connection has already closed",IRCBot.LogType.SYS);
+                onSysMsg("Connection has already closed");
             }
         }catch(Exception e){
             if(e instanceof IOException){
@@ -262,7 +262,7 @@ public class IRCBot {
             String parse[] = message.split(" ",3);
             //user succesffully joins a channel
             if(getUsername(parse[0].substring(1)).equals(lastIRCNickname)){
-                log(String.format("Joined %s",parse[2]),IRCBot.LogType.SYS);
+                onSysMsg(String.format("Joined %s",parse[2]));
             }
             
             //other users join the channel
@@ -425,7 +425,7 @@ public class IRCBot {
     private class LoginCheckTask extends TimerTask{
         public void run(){
             if(!loginSuccessful){
-                log("Incorrect login information",IRCBot.LogType.SYS);
+                onSysMsg("Incorrect login information");
                 IRCBot.this.close();
                 onLoginFailed();
             }

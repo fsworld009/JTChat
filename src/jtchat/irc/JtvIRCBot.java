@@ -9,14 +9,12 @@ public class JtvIRCBot extends IRCBot{
     Vector<IRCLogListener> logListeners;
     Vector<IRCMsgListener> msgListeners;
     Vector<IRCEventListener> eventListeners;
-    Vector<IRCJtvCommandListener>commandListeners;
     
     public JtvIRCBot(){
         super();
         logListeners = new Vector<IRCLogListener>();
         msgListeners = new Vector<IRCMsgListener>();
         eventListeners = new Vector<IRCEventListener>();
-        commandListeners = new Vector<IRCJtvCommandListener>();
     }
     
     public void registerLogListener(IRCLogListener listener){
@@ -42,15 +40,7 @@ public class JtvIRCBot extends IRCBot{
     public void removeCommandListener(IRCEventListener listener){
         eventListeners.remove(listener);
     }
-    
-    public void registerCommandListener(IRCJtvCommandListener listener){
-        commandListeners.add(listener);
-    }
-    
-    public void removeEventListener(IRCJtvCommandListener listener){
-        commandListeners.remove(listener);
-    }
-    
+      
     public void onLog(String log){
         for(int i=0;i<logListeners.size();i++){
             logListeners.get(i).onLog(log);
@@ -89,13 +79,13 @@ public class JtvIRCBot extends IRCBot{
             }else if(message.matches("^CLEARCHAT .*")){
                 String[] parse = message.split(" ",2);
                 //this.log(String.format("%s has been banned or timeoutted",parse[1]),IRCBot.LogType.SYS);
-                for(int i=0;i<commandListeners.size();i++){
-                    commandListeners.get(i).clearMsgsFromBannedUser(parse[1]);
+                for(int i=0;i<msgListeners.size();i++){
+                    msgListeners.get(i).clearMsgsFromBannedUser(parse[1]);
                 }
             }else if(message.matches("^CLEARCHAT")){
                 //this.log(String.format("chat has been cleared"),IRCBot.LogType.SYS);
-                for(int i=0;i<commandListeners.size();i++){
-                    commandListeners.get(i).clearChat();
+                for(int i=0;i<msgListeners.size();i++){
+                    msgListeners.get(i).clearChat();
                 }
             }else if(message.matches("^You are banned from talking in .*")){
                 
@@ -111,6 +101,7 @@ public class JtvIRCBot extends IRCBot{
         //auto reconnect
         reconnect();
     }
+    
     
     public void onSysMsg(String message){
         for(int i=0;i<msgListeners.size();i++){

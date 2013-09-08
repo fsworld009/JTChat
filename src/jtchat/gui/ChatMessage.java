@@ -4,19 +4,12 @@ import jtchat.profile.Profile;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
-import javax.swing.text.Element;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
-import jtchat.irc.IRCJtvCommandListener;
-import jtchat.irc.IRCMsgListener;
 import jtchat.irc.UserColorMapper;
 
 public class ChatMessage{
