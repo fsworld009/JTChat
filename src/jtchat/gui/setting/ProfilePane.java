@@ -27,10 +27,13 @@ public class ProfilePane extends JPanel implements LanguageChangeListener{
     private JButton bLoad;
     private SetActionListener setActionListener = new SetActionListener();
     private SettingWindow setWinRef;
+    private JLabel lLanguage;
     private JLabel lProfileNotice;
+    private JLabel lProfile;
     private File[] langFiles;
     
     private JComboBox languageList;
+    private JButton bApply;
     
     public ProfilePane(SettingWindow setWinRef){
         this.setWinRef = setWinRef;
@@ -62,6 +65,12 @@ public class ProfilePane extends JPanel implements LanguageChangeListener{
         setLayout(new GridBagLayout());
         GridBagConstraints gbc;
         
+        lLanguage = new JLabel("AAAAA");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        this.add(lLanguage,gbc);
         
         languageList = new JComboBox();
         gbc = new GridBagConstraints();
@@ -70,19 +79,33 @@ public class ProfilePane extends JPanel implements LanguageChangeListener{
         gbc.gridwidth = 2;
         this.add(languageList,gbc);
         
-        
+        bApply = new JButton();
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 2;
+        this.add(bApply,gbc);
         
         
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.gridwidth = 2;
-        this.add(new JLabel(" "),gbc);
+        gbc.gridheight = 2;
+        this.add(new JLabel(" \n "),gbc);
+        
+        
+        lProfile = new JLabel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.gridwidth = 2;
+        
+        this.add(lProfile,gbc);
         
         bSave = new JButton();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 4;
+        gbc.gridy = 6;
         
         this.add(bSave,gbc);
         
@@ -91,16 +114,17 @@ public class ProfilePane extends JPanel implements LanguageChangeListener{
         //loadProfileList();
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
-        gbc.gridy = 4;
+        gbc.gridy = 6;
         this.add(bLoad,gbc);
         
         bSave.addActionListener(setActionListener);
         bLoad.addActionListener(setActionListener);
+        bApply.addActionListener(setActionListener);
         
         lProfileNotice = new JLabel();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 5;
+        gbc.gridy = 7;
         gbc.gridwidth=2;
         
         this.add(lProfileNotice,gbc);
@@ -129,6 +153,9 @@ public class ProfilePane extends JPanel implements LanguageChangeListener{
                 bSave.setText(Language.ins().get("SetButSave"));
                 bLoad.setText(Language.ins().get("SetButLoad"));
                 lProfileNotice.setText(Language.ins().get("ProfileSetNote"));
+                lLanguage.setText(Language.ins().get("ProfileSetLanguage"));
+                lProfile.setText(Language.ins().get("ProfileSetProfile"));
+                bApply.setText(Language.ins().get("SetButApply"));
             }
         });
     }
@@ -152,6 +179,8 @@ public class ProfilePane extends JPanel implements LanguageChangeListener{
                        setWinRef.load();
                        setWinRef.applyChangeToChatroom();
                     }
+            }else if(e.getSource() == bApply){
+                    
             }
         }
     }
