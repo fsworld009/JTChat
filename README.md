@@ -39,10 +39,10 @@ Server: ajtvuser.jtvirc.com
 Port: 80, 443, or 6667 (Recommand: 443)
 Channel: #ajtvuser
 
-If you'd like to connect to a twitch user 連到Jtv帳號atwitchuser的聊天室's chatroom
+If you'd like to connect to a twitch user atwitchuser's chatroom
 Server: irc.twitch.tv
 Port: 80, 443, or 6667 (Recommand: 443)
-Channel: #連到Jtv帳號atwitchuser的聊天室
+Channel: #atwitchuser
 
 Licence
 ========
