@@ -13,8 +13,11 @@ import jtchat.profile.Profile;
 
 public class main {
     public static void main(String[] args){
-        
-        
+        File defaultLanguage = new File("language.ini");
+        if(!defaultLanguage.exists()){
+            //create default language ini
+            Language.createDefaultLanguageIni();
+        }
         
         File defaultProfile = new File("JTChat.ini");
         if(!defaultProfile.exists()){

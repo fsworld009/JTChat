@@ -3,11 +3,16 @@ package jtchat.profile;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Vector;
+import static jtchat.profile.Profile.colorToHexString;
+import static jtchat.profile.Profile.fontToString;
 
 /*   String Table: 
  *      reference language/en-US.ini
@@ -35,6 +40,19 @@ public class Language {
         return value==null?"(error)":value;
     }
     
+    public boolean loadDefaultLanguage(){
+        Scanner sc=null;
+        try{
+            sc = new Scanner(new File("language.ini"));
+        }catch(FileNotFoundException e){
+            System.err.printf("file not found\n");
+            return false;
+        }
+        String langCode = sc.nextLine();
+        sc.close();
+        return load(langCode);
+    }
+    
     public boolean load(String langCode){
         //apply change
         Scanner sc=null;
@@ -48,7 +66,6 @@ public class Language {
 
         while(sc.hasNext()){
             line = sc.nextLine();
-            System.out.println(line);
             String[] split = line.split("=",2);
             translate.put(split[0], split[1]);
         }
@@ -66,5 +83,29 @@ public class Language {
     
     public void removeLogListener(LanguageChangeListener listener){
         languageChangeListener.remove(listener);
+    }
+    
+    public static boolean createDefaultLanguageIni(){
+        FileWriter fstream = null;
+        try{
+            fstream = new FileWriter("language.ini");
+        }catch(java.io.FileNotFoundException e){
+            //cannot create file or don't have permission to write
+            System.err.println("Error: cannot create output file or don't have permission to write");
+            return false;
+        } catch (IOException ex) {
+            System.err.println("Error: IO error");
+            return false;
+        }
+        
+        BufferedWriter fout = new BufferedWriter(fstream);
+        try {
+            fout.write("en-US");
+            fout.close();
+        } catch (IOException ex) {
+            System.err.println("Error: IO error");
+            return false;
+        }
+        return true;
     }
 }

@@ -1,10 +1,13 @@
 package jtchat.gui.setting;
 
+import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -25,10 +28,32 @@ public class ProfilePane extends JPanel implements LanguageChangeListener{
     private SetActionListener setActionListener = new SetActionListener();
     private SettingWindow setWinRef;
     private JLabel lProfileNotice;
+    private File[] langFiles;
+    
+    private JComboBox languageList;
     
     public ProfilePane(SettingWindow setWinRef){
         this.setWinRef = setWinRef;
         init();
+        getLanguageList();
+        
+    }
+    
+    private void getLanguageList(){
+        File langFolder = new File("./language");
+        langFiles = langFolder.listFiles();
+        Scanner sc=null;
+        for(int ix=0;ix<langFiles.length;ix++){
+            try{
+                sc = new Scanner(langFiles[ix]);
+            }catch(FileNotFoundException e){
+                System.err.printf("file not found\n");
+            }
+            String split[] = sc.nextLine().split("=",2);
+            languageList.addItem(split[1]);
+            sc.close();
+        }
+        
     }
     
 
@@ -37,10 +62,27 @@ public class ProfilePane extends JPanel implements LanguageChangeListener{
         setLayout(new GridBagLayout());
         GridBagConstraints gbc;
         
+        
+        languageList = new JComboBox();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 2;
+        this.add(languageList,gbc);
+        
+        
+        
+        
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.gridwidth = 2;
+        this.add(new JLabel(" "),gbc);
+        
         bSave = new JButton();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 0;
+        gbc.gridy = 4;
         
         this.add(bSave,gbc);
         
@@ -49,7 +91,7 @@ public class ProfilePane extends JPanel implements LanguageChangeListener{
         //loadProfileList();
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
-        gbc.gridy = 0;
+        gbc.gridy = 4;
         this.add(bLoad,gbc);
         
         bSave.addActionListener(setActionListener);
@@ -58,7 +100,7 @@ public class ProfilePane extends JPanel implements LanguageChangeListener{
         lProfileNotice = new JLabel();
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 5;
         gbc.gridwidth=2;
         
         this.add(lProfileNotice,gbc);

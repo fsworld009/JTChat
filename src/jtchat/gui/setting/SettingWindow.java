@@ -41,7 +41,7 @@ public class SettingWindow extends JFrame implements LanguageChangeListener{
         Language.ins().registerLogListener(chatSetPane);
         Language.ins().registerLogListener(profilePane);
         Language.ins().registerLogListener(aboutPane);
-        Language.ins().load("en-US");
+        Language.ins().loadDefaultLanguage();
     }
     
     
