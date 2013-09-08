@@ -17,12 +17,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jtchat.gui.MainWindow;
+import jtchat.profile.LanguageChangeListener;
 
 
 
 
 
-public class ChatroomSetPane extends JPanel{
+public class ChatroomSetPane extends JPanel implements LanguageChangeListener{
     private JLabel lWindowSize;
     private JTextField tWindowWidth;
     private JTextField tWindowHeight;
@@ -366,6 +367,11 @@ public class ChatroomSetPane extends JPanel{
         this.chAlwaysOnTop.setSelected(Profile.ins().ChatAlwaysOnTop);
         this.chClear.setSelected(Profile.ins().ChatClear);
         this.chClearBannedMsg.setSelected(Profile.ins().ChatClearBannedMsg);
+    }
+
+
+    public void languageChange() {
+        
     }
     
     private class SetActionListener implements ActionListener{

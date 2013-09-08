@@ -18,12 +18,13 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import jtchat.profile.LanguageChangeListener;
 
 /**
  *
  * @author leeyc
  */
-public class IRCSetPane extends JPanel{
+public class IRCSetPane extends JPanel implements LanguageChangeListener{
     private JLabel lIrcServer;
     private JTextField tIrcServer;
     private JLabel lIrcPort;
@@ -77,37 +78,39 @@ public class IRCSetPane extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(tIrcPort,gbc);
         
-        //Server Password
-        lIrcServerPass = new JLabel("Pass: ");
-        gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        this.add(lIrcServerPass,gbc);
-
-        tIrcServerPass = new JPasswordField();
-        gbc = new GridBagConstraints();
-        gbc.gridx = 1;
-        gbc.gridy = 2;
-        gbc.weightx = 0.5;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        this.add(tIrcServerPass,gbc);
-        
         //Nick
         lIrcNick = new JLabel("Nickname: ");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(lIrcNick,gbc);
 
         tIrcNick = new JTextField();
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
-        gbc.gridy = 3;
+        gbc.gridy = 2;
         gbc.weightx = 0.5;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(tIrcNick,gbc);
+        
+        //Server Password
+        lIrcServerPass = new JLabel("Pass: ");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        this.add(lIrcServerPass,gbc);
+
+        tIrcServerPass = new JPasswordField();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        gbc.weightx = 0.5;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        this.add(tIrcServerPass,gbc);
+        
+
         
         //Channel
         lIrcChannel = new JLabel("Channel: ");
@@ -156,6 +159,10 @@ public class IRCSetPane extends JPanel{
         //profiles do not save password, so just clear it
         tIrcServerPass.setText("");
         tIrcChannel.setText(Profile.ins().IRCchannel);
+    }
+
+    public void languageChange() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     private class SetActionListener implements ActionListener{

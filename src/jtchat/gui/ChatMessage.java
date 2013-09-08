@@ -113,12 +113,12 @@ public class ChatMessage{
                                 }
                                 font = Profile.ins().ChatNickFont;
                                 setTextAttribute(font,color);
-                                doc.insertString(doc.getLength(), split[0], chatAttr);
+                                doc.insertString(doc.getLength(), split[0]+":", chatAttr);
                                 //draw text
                                 color = Profile.ins().ChatTextColor;
                                 font = Profile.ins().ChatTextFont;
                                 setTextAttribute(font,color);
-                                doc.insertString(doc.getLength(), ":"+split[1], chatAttr);
+                                doc.insertString(doc.getLength(), split[1], chatAttr);
                                 break;
                             case Action:
                                 split = messages.get(ix).split(" ",2);

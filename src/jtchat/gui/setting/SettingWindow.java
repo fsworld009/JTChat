@@ -7,9 +7,10 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import jtchat.gui.MainWindow;
+import jtchat.profile.LanguageChangeListener;
 
 
-public class SettingWindow extends JFrame{
+public class SettingWindow extends JFrame implements LanguageChangeListener{
     private JTabbedPane tabPane;
     private LogPane logPane;
     private ChatroomSetPane chatSetPane;
@@ -44,6 +45,11 @@ public class SettingWindow extends JFrame{
         tabPane.addTab("Profile", profilePane);
         tabPane.addTab("Log", logPane);
         tabPane.addTab("About", aboutPane);
+    }
+
+    
+    public void languageChange() {
+        
     }
     
 

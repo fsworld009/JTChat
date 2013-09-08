@@ -25,10 +25,11 @@ import javax.swing.SwingUtilities;
 import jtchat.irc.IRCEventListener;
 import jtchat.irc.IRCMsgListener;
 import jtchat.irc.JtvIRCBot;
+import jtchat.profile.LanguageChangeListener;
 
 
 
-public class MainWindow extends JFrame implements IRCMsgListener, IRCEventListener{
+public class MainWindow extends JFrame implements IRCMsgListener, IRCEventListener, LanguageChangeListener{
     private JtvIRCBot ircbot;
     private JTextField inputField;
     private JButton setButton;
@@ -167,6 +168,11 @@ public class MainWindow extends JFrame implements IRCMsgListener, IRCEventListen
 
         
       }
+
+    
+    public void languageChange() {
+        
+    }
     
     private class closeEventWindowListener extends WindowAdapter{
         public void windowClosing(WindowEvent e) {

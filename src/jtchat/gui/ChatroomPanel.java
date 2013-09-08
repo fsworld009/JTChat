@@ -65,7 +65,7 @@ public class ChatroomPanel extends JPanel{
         if(Profile.ins().ChatClearBannedMsg){
             chatMsgs.clearMsgsFromBannedUser(username);
         }
-        addMessage("[SYS] "+username+" has been banned/timeoutted",ChatMessage.MsgType.Sys);
+        addMessage("[SYS] "+username+" has been banned / timeoutted",ChatMessage.MsgType.Sys);
     }
     
     

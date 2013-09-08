@@ -2,7 +2,6 @@ package jtchat.gui.setting;
 
 import jtchat.gui.util.JConfirmedFileChooser;
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,21 +9,19 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 import javax.swing.text.BadLocationException;
 import jtchat.irc.IRCLogListener;
+import jtchat.profile.LanguageChangeListener;
 
 
 
-public class LogPane extends JPanel implements IRCLogListener{
+public class LogPane extends JPanel implements IRCLogListener, LanguageChangeListener{
     private JTextPane log;
     private JButton bSave;
     private JButton bClear;
@@ -91,6 +88,11 @@ public class LogPane extends JPanel implements IRCLogListener{
             System.err.println("Error: IO error");
             //System.exit(-1);
         }
+    }
+
+
+    public void languageChange() {
+        
     }
     
     private class SetActionListener implements ActionListener{

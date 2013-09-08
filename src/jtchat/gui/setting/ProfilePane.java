@@ -11,10 +11,11 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jtchat.gui.util.JConfirmedFileChooser;
+import jtchat.profile.LanguageChangeListener;
 import jtchat.profile.Profile;
 
 
-public class ProfilePane extends JPanel{
+public class ProfilePane extends JPanel implements LanguageChangeListener{
     //private JLabel lProfileName;
     //private JComboBox cbProfileList;
     private JButton bSave;
@@ -73,6 +74,11 @@ public class ProfilePane extends JPanel{
         gbc.gridx = 1;
         gbc.gridy = 0;
         this.add(cbProfileList,gbc);*/
+        
+    }
+
+
+    public void languageChange() {
         
     }
     
