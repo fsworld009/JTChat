@@ -9,7 +9,7 @@ Java Runtime Environment (7 or above)
 
 ChangeLog
 ===========
- - 2013.09.07
+ - 2013.09.08
    - support /clear command on Jtv/Twitch
    - support delete messages from banned users (/ban, /timeout command on Jtv/Twitch)
    - support manually set chatroom's position on screen

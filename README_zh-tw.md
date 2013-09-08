@@ -9,7 +9,7 @@ Java Runtime Environment (7 or above)
 
 改版紀錄
 ===========
- - 2013.09.07
+ - 2013.09.08
    - 支援Jtv/Twitch清除聊天室指令 (/clear)
    - 支援Jtv/Twitch清除被ban使用者的留言 (/ban或/timeout)
    - 可手動設定聊天室位置
