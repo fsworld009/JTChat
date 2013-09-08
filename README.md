@@ -1,44 +1,65 @@
 JTChat
 ===========
-自製IRC Client, 設計給Jtv/Twitch實況主抓取聊天室畫面使用
-目前還沒有欄位防呆設計，請不要回報因設定欄位格式不合(ex. Port填英文)所產生的錯誤 謝謝
+A IRC Client designed for Jtv/Twitch broadcasters to show their chatroom on their stream.
+Currently there is no input checking machanism, so please don't be too hard on my program, thanks.
 
-系統需求
+System requirement
 ===========
 Java Runtime Environment (7 or above)
 
-改版紀錄
+ChangeLog
 ===========
+ - 2013.09.07
+   - support /clear command on Jtv/Twitch
+   - support delete messages from banned users (/ban, /timeout command on Jtv/Twitch)
+   - support manually set chatroom's position on screen
+   - auto save/load last profile
+   - add Traditional Chinese support (choose from Setting→Profile→Language)
  - 2013.08.31
-   - 提示使用者被ban/timeout
-   - 帳號首字大寫
-   - 修正連線/離線按紐有時功能相反的問題
-   - 增加聊天室畫面邊框大小設定
-   - 支援滑鼠調整聊天室大小
+   - indicate that a user is banned/timeouttted
+   - capitalize first character of nickname
+   - fix: sometines Connect/Disconnect button displays incorrectly (text swapped)
+   - add border thinkness option
+   - support dragging the chatroom
  - 2013.08.27-2
-   - 修正過度使用CPU問題
-   - 禁止送出空白訊息
+   - fix: high CPU usage
+   - prevent from sending empty message
  - 2013.08.27
-   - 修正非英文字元無法正常顯示/傳送問題
+   - fix: non-English characters do not display correctly
  - 0.0
-   - 第一版
+   - first release
+   
+IRC Setting Guide
+========
+Nickname: your account on Jtv/Twitch
+Pass: your account's password on Jtv/Twitch
 
-授權條款
+If you'd like to connect to a jtv user ajtvuser's chatroom
+Server: ajtvuser.jtvirc.com
+Port: 80, 443, or 6667 (Recommand: 443)
+Channel: #ajtvuser
+
+If you'd like to connect to a twitch user 連到Jtv帳號atwitchuser的聊天室's chatroom
+Server: irc.twitch.tv
+Port: 80, 443, or 6667 (Recommand: 443)
+Channel: #連到Jtv帳號atwitchuser的聊天室
+
+Licence
 ========
 JTChat 採用 GNU GPL v3 做為授權條款
 
-下載
+Download
 ==========
 https://mega.co.nz/#F!udtRiARY!EyG9WCrm8FtbJwLBKbS94A
 
-原始碼
+Source Code
 ==========
 JTChat(GitHub):
 https://github.com/fuunkaosekai/JTChat
 
-關於作者
+Author
 ==========
-雖小臉世界
+Fuunkao Sekai
 http://fuunkao-sekai.blogspot.com
 
 Reference
