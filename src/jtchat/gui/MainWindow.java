@@ -174,8 +174,8 @@ public class MainWindow extends JFrame implements IRCMsgListener, IRCEventListen
 
     
     public void languageChange() {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
+        //SwingUtilities.invokeLater(new Runnable() {
+           // public void run() {
                 setButton.setText(Language.ins().get("MainButSetting"));
                 if(MainWindow.this.hitConnectButton){
                     connectButton.setText(Language.ins().get("MainButDisconnect"));
@@ -183,8 +183,8 @@ public class MainWindow extends JFrame implements IRCMsgListener, IRCEventListen
                     connectButton.setText(Language.ins().get("MainButConnect"));
                 }
                 
-            }
-        });
+            //}
+        //});
     }
     
     private class closeEventWindowListener extends WindowAdapter{
@@ -201,6 +201,7 @@ public class MainWindow extends JFrame implements IRCMsgListener, IRCEventListen
                 MainWindow.this.ircbot.close();
             }
             Profile.ins().saveProfile(new File("JTChat.ini"));
+            Language.ins().save();
         }
     }
     

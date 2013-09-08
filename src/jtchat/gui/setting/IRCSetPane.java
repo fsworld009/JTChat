@@ -163,16 +163,16 @@ public class IRCSetPane extends JPanel implements LanguageChangeListener{
     }
 
     public void languageChange() {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
+        //SwingUtilities.invokeLater(new Runnable() {
+            //public void run() {
                 lIrcServer.setText(Language.ins().get("IRCSetServer"));
                 lIrcPort.setText(Language.ins().get("IRCSetPort"));
                 lIrcNick.setText(Language.ins().get("IRCSetNickname"));
                 lIrcServerPass.setText(Language.ins().get("IRCSetServerPass"));
                 lIrcChannel.setText(Language.ins().get("IRCSetChannel"));
                 bApply.setText(Language.ins().get("SetButApply"));
-            }
-        });
+            //}
+        //});
     }
     
     private class SetActionListener implements ActionListener{

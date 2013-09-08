@@ -93,12 +93,12 @@ public class LogPane extends JPanel implements IRCLogListener, LanguageChangeLis
 
 
     public void languageChange() {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
+        //SwingUtilities.invokeLater(new Runnable() {
+            //public void run() {
                 bSave.setText(Language.ins().get("SetButSave"));
                 bClear.setText(Language.ins().get("LogSetButClear"));
-            }
-        });
+            //}
+        //});
     }
     
     private class SetActionListener implements ActionListener{

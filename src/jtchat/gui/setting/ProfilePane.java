@@ -30,7 +30,7 @@ public class ProfilePane extends JPanel implements LanguageChangeListener{
     private JLabel lLanguage;
     private JLabel lProfileNotice;
     private JLabel lProfile;
-    private File[] langFiles;
+    private File[] langFile;
     
     private JComboBox languageList;
     private JButton bApply;
@@ -38,27 +38,39 @@ public class ProfilePane extends JPanel implements LanguageChangeListener{
     public ProfilePane(SettingWindow setWinRef){
         this.setWinRef = setWinRef;
         init();
-        getLanguageList();
+        setLanguageList();
         
     }
     
-    private void getLanguageList(){
+    private void setLanguageList(){
         File langFolder = new File("./language");
-        langFiles = langFolder.listFiles();
+        File[] langFile = langFolder.listFiles();
         Scanner sc=null;
-        for(int ix=0;ix<langFiles.length;ix++){
+        for(int ix=0;ix<langFile.length;ix++){
             try{
-                sc = new Scanner(langFiles[ix]);
+                sc = new Scanner(langFile[ix]);
             }catch(FileNotFoundException e){
                 System.err.printf("file not found\n");
             }
             String split[] = sc.nextLine().split("=",2);
             languageList.addItem(split[1]);
-            sc.close();
         }
         
     }
     
+    //invoked by SettingWindow, after SettingWindow called Language.loadDefaultLanguage()
+    //need to be improved
+    public void setLanguageListToDefault(){
+        File langFolder = new File("./language");
+        File[] langFile = langFolder.listFiles();
+        String defaultCode = Language.ins().getCurrentLangCode();
+        for(int ix=0;ix<langFile.length;ix++){
+            String filename = langFile[ix].getName();
+            if(filename.substring(0,filename.indexOf('.')).equals(defaultCode)){
+                languageList.setSelectedIndex(ix);
+            }
+        }
+    }
 
     
     private void init(){
@@ -148,39 +160,44 @@ public class ProfilePane extends JPanel implements LanguageChangeListener{
 
 
     public void languageChange() {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
+        //SwingUtilities.invokeLater(new Runnable() {
+            //public void run() {
                 bSave.setText(Language.ins().get("SetButSave"));
                 bLoad.setText(Language.ins().get("SetButLoad"));
                 lProfileNotice.setText(Language.ins().get("ProfileSetNote"));
                 lLanguage.setText(Language.ins().get("ProfileSetLanguage"));
                 lProfile.setText(Language.ins().get("ProfileSetProfile"));
                 bApply.setText(Language.ins().get("SetButApply"));
-            }
-        });
+                
+                
+                
+            //}
+        //});
     }
     
     private class SetActionListener implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             if(e.getSource() == bSave){
-                    JFileChooser fChooser = new JConfirmedFileChooser();
-                    fChooser.setCurrentDirectory(new File("."));
-                    int returnVal = fChooser.showSaveDialog(ProfilePane.this);
-                    if (returnVal == JFileChooser.APPROVE_OPTION) {
-                       Profile.ins().saveProfile(fChooser.getSelectedFile());
-                       
-                    }
+                JFileChooser fChooser = new JConfirmedFileChooser();
+                fChooser.setCurrentDirectory(new File("."));
+                int returnVal = fChooser.showSaveDialog(ProfilePane.this);
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                   Profile.ins().saveProfile(fChooser.getSelectedFile());
+
+                }
             }else if(e.getSource() == bLoad){
-                    JFileChooser fChooser = new JConfirmedFileChooser();
-                    fChooser.setCurrentDirectory(new File("."));
-                    int returnVal = fChooser.showOpenDialog(ProfilePane.this);
-                    if (returnVal == JFileChooser.APPROVE_OPTION) {
-                       Profile.ins().loadProfile(fChooser.getSelectedFile());
-                       setWinRef.load();
-                       setWinRef.applyChangeToChatroom();
-                    }
+                JFileChooser fChooser = new JConfirmedFileChooser();
+                fChooser.setCurrentDirectory(new File("."));
+                int returnVal = fChooser.showOpenDialog(ProfilePane.this);
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                   Profile.ins().loadProfile(fChooser.getSelectedFile());
+                   setWinRef.load();
+                   setWinRef.applyChangeToChatroom();
+                }
             }else if(e.getSource() == bApply){
-                    
+                File langFolder = new File("./language");
+                File[] langFile = langFolder.listFiles();
+                Language.ins().load(langFile[languageList.getSelectedIndex()]);
             }
         }
     }

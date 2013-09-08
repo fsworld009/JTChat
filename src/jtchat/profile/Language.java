@@ -1,8 +1,6 @@
 
 package jtchat.profile;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,8 +9,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Vector;
-import static jtchat.profile.Profile.colorToHexString;
-import static jtchat.profile.Profile.fontToString;
 
 /*   String Table: 
  *      reference language/en-US.ini
@@ -22,9 +18,9 @@ public class Language {
     private static Language ins=null;
     private HashMap<String,String> translate;
     private Vector<LanguageChangeListener> languageChangeListener;
+    private String currentLangCode;
     
     public Language(){
-        translate = new HashMap<String,String>();
         languageChangeListener = new Vector<LanguageChangeListener>();
     }
     
@@ -48,16 +44,21 @@ public class Language {
             System.err.printf("file not found\n");
             return false;
         }
-        String langCode = sc.nextLine();
+        currentLangCode = sc.nextLine();
         sc.close();
-        return load(langCode);
+        return load(new File("./language/"+currentLangCode+".ini"));
     }
     
-    public boolean load(String langCode){
+    public String getCurrentLangCode(){
+        return currentLangCode;
+    }
+    
+    public boolean load(File langFile){
+        translate = new HashMap<String,String>();
         //apply change
         Scanner sc=null;
         try{
-            sc = new Scanner(new File("./language/"+langCode+".ini"),"UTF-8");
+            sc = new Scanner(langFile,"UTF-8");
         }catch(FileNotFoundException e){
             System.err.printf("file not found\n");
             return false;
@@ -74,6 +75,11 @@ public class Language {
         for(int ix=0;ix<languageChangeListener.size();ix++){
             languageChangeListener.get(ix).languageChange();
         }
+        //delete texts
+        String filename = langFile.getName();
+        currentLangCode = filename.substring(0, filename.indexOf('.'));
+        translate = null;
+        
         return true;
     }
     
@@ -85,7 +91,17 @@ public class Language {
         languageChangeListener.remove(listener);
     }
     
+    public void save(){
+        Language.save(this.currentLangCode);
+    }
+    
     public static boolean createDefaultLanguageIni(){
+        return save("en-US");
+    }
+    
+    
+    
+    public static boolean save(String langCode){
         FileWriter fstream = null;
         try{
             fstream = new FileWriter("language.ini");
@@ -100,7 +116,7 @@ public class Language {
         
         BufferedWriter fout = new BufferedWriter(fstream);
         try {
-            fout.write("en-US");
+            fout.write(langCode);
             fout.close();
         } catch (IOException ex) {
             System.err.println("Error: IO error");

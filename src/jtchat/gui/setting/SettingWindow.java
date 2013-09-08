@@ -42,6 +42,9 @@ public class SettingWindow extends JFrame implements LanguageChangeListener{
         Language.ins().registerLogListener(profilePane);
         Language.ins().registerLogListener(aboutPane);
         Language.ins().loadDefaultLanguage();
+        
+        //need improved
+        profilePane.setLanguageListToDefault();
     }
     
     
@@ -64,16 +67,16 @@ public class SettingWindow extends JFrame implements LanguageChangeListener{
 
     
     public void languageChange() {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
+        //SwingUtilities.invokeLater(new Runnable() {
+            //public void run() {
                 SettingWindow.this.setTitle(Language.ins().get("SetWinTitle"));
                 tabPane.setTitleAt(0, Language.ins().get("IRCSetTabName"));
                 tabPane.setTitleAt(1, Language.ins().get("ChatSetTabName"));
                 tabPane.setTitleAt(2, Language.ins().get("ProfileSetTabName"));
                 tabPane.setTitleAt(3, Language.ins().get("LogSetTabName"));
                 tabPane.setTitleAt(4, Language.ins().get("AboutTabName"));
-            }
-        });
+            //}
+        //});
     }
     
 

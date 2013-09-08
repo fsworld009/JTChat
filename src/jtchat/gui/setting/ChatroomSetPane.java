@@ -373,8 +373,8 @@ public class ChatroomSetPane extends JPanel implements LanguageChangeListener{
 
 
     public void languageChange() {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
+        //SwingUtilities.invokeLater(new Runnable() {
+            //public void run() {
                 lWindowSize.setText(Language.ins().get("ChatSetSize"));
                 lWindowPos.setText(Language.ins().get("ChatSetPos"));
                 lBorder.setText(Language.ins().get("ChatSetBorderThick"));
@@ -391,8 +391,8 @@ public class ChatroomSetPane extends JPanel implements LanguageChangeListener{
                 chClear.setText(Language.ins().get("ChatSetChatClear"));
                 chClearBannedMsg.setText(Language.ins().get("ChatSetChatClearBannedMsg"));
                 bApply.setText(Language.ins().get("SetButApply"));
-            }
-        });
+            //}
+        //});
     }
     
     private class SetActionListener implements ActionListener{
