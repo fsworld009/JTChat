@@ -31,17 +31,18 @@ ChangeLog
    
 IRC Setting Guide
 ========
-Nickname: your account on Jtv/Twitch
-Pass: your account's password on Jtv/Twitch
-
 If you'd like to connect to a jtv user ajtvuser's chatroom
-Server: ajtvuser.jtvirc.com
+Server: irc.justin.tv
 Port: 80, 443, or 6667 (Recommand: 443)
+Nickname: your account on Jtv
+Pass: your account's password on Jtv
 Channel: #ajtvuser
 
 If you'd like to connect to a twitch user atwitchuser's chatroom
 Server: irc.twitch.tv
 Port: 80, 443, or 6667 (Recommand: 443)
+Nickname: your account on Twitch
+Pass: get password of IRC at http://www.twitchapps.com/tmi/
 Channel: #atwitchuser
 
 Licence

@@ -35,14 +35,18 @@ IRC設定說明
 伺服器密碼為你在Jtv/Twitch的帳號密碼
 
 連到Jtv帳號ajtvuser的聊天室,
-伺服器位址為 ajtvuser.jtvirc.com
-伺服器Port為80、443、6667選一 (推薦443)
-聊天頻道為 #ajtvuser
+伺服器位址: irc.justin.tv
+伺服器Port: 80、443、6667選一 (推薦443)
+暱稱: 你的Jtv帳號
+伺服器密碼: 你的Jtv帳號密碼
+聊天頻道: #ajtvuser
 
-連到Jtv帳號atwitchuser的聊天室,
-伺服器位址為 irc.twitch.tv
-伺服器Port為80、443、6667選一 (推薦443)
-聊天頻道為 #atwitchuser
+連到Twitch帳號atwitchuser的聊天室,
+伺服器位址: irc.twitch.tv
+伺服器Port: 80、443、6667選一 (推薦443)
+暱稱: 你的Twitch帳號
+伺服器密碼: 到http://www.twitchapps.com/tmi/ 取得
+聊天頻道: #atwitchuser
 
 授權條款
 ========
