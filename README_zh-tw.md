@@ -1,3 +1,8 @@
+請轉移至JTChat2
+===========
+以後的更新都在JTChat2
+http://github.com/fsworld009/JTChat2
+
 JTChat
 ===========
 自製IRC Client, 設計給Jtv/Twitch實況主抓取聊天室畫面使用

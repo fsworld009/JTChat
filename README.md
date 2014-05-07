@@ -1,3 +1,8 @@
+Please go to JTChat2
+===========
+I will continue the development at JTChat2
+http://github.com/fsworld009/JTChat2
+
 JTChat
 ===========
 A IRC Client designed for Jtv/Twitch broadcasters to show their chatroom on their stream.
@@ -47,7 +52,7 @@ Channel: #atwitchuser
 
 Licence
 ========
-JTChat 採用 GNU GPL v3 做為授權條款
+GNU GPL v3
 
 Download
 ==========
