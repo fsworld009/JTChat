@@ -1,7 +1,9 @@
-Please go to JTChat2
+Discontinued
 ===========
-I will continue the development at JTChat2
-http://github.com/fsworld009/JTChat2
+Personal status makes me unable to maintain this project.
+This project was just a Java socket practice program back in Summer 2013, a lot of flawed design was involved, and not it's hard to maintain or extend its functionality.
+My plan was to rewrite a completely new version of JTChat, but currently I don't have that amount of time to do that.
+Besides, there are many alternatives to IRC program or customized IRC program for Twitch, so it's time to end this project.
 
 JTChat
 ===========
