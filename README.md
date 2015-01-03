@@ -1,8 +1,8 @@
 Discontinued
 ===========
-Personal status makes me unable to maintain this project.
-This project was just a Java socket practice program back in Summer 2013, a lot of flawed design was involved, and not it's hard to maintain or extend its functionality.
-My plan was to rewrite a completely new version of JTChat, but currently I don't have that amount of time to do that.
+Personal status makes me unable to maintain this project anymore.
+This project was just a Java socket practice back in Summer 2013, a lot of flawed design was involved, and now it's hard to maintain or extend its functionality.
+My plan was to rewrite a completely new version of JTChat, but currently I don't have time to do that.
 Besides, there are many alternatives to IRC program or customized IRC program for Twitch, so it's time to end this project.
 
 JTChat
